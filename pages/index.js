@@ -1,66 +1,91 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import HomePage from './homePage';
+import React from 'react'
+import ButtonAppBar from '../components/headbar'
+import Footer from '../components/footer'
+import FilterTabbar from '../components/filterTabbar'
+import Sidebar from '../components/sidebar'
 
-export default function Main() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Spook</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+import MediaCard from '../components/item'
+import { Shopname } from '../constants'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar';
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+const useStyles = makeStyles((theme) => ({
+  root: {
+		margin:"auto",
+    display: 'grid',
+		gridTemplateColumns:"auto auto auto",
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+	},
+	contentArea:{
+		display:'flex',
+		flexDirection:'row',
+	},
+		cover: {
+			marginTop: 0,
+			height:70,
+			margin:'auto',
+  },
+	appsidebar:{
+		position:"sticky",
+		top:100,
+		right:0,
+		height:600+"px",
+		width:250+"px",
+		backgroundColor:'pink',
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+	},
+}));
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+export default function HomePage(props){
+
+const classes = useStyles();
+
+  const [isloaded,setIsLoaded] = React.useState(true);
+
+	return(
+		<div>
+		<Head>
+			<title>Spook</title>
+			<link rel="icon" href="/favicon.ico" />
+		</Head>
+
+		<ButtonAppBar itemName={Shopname}/>
+
+
+      <div className={classes.cover}>
+			</div>
+			<FilterTabbar />
+			 <div className={classes.contentArea}>
+			 <div className={classes.root} >
+
+					<MediaCard />
+					<MediaCard />
+					<MediaCard />
+					<MediaCard />
+<MediaCard />
+<MediaCard />
+<MediaCard />
+<MediaCard />
+<MediaCard />
+<MediaCard />
+
+			 </div>
+
+			 </div>
+
+       <Footer />
+		</div>
+	);
+
+
+
 }
