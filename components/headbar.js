@@ -25,6 +25,9 @@ import {CLR_HEAD} from '../themes.js'
 
 import Link from 'next/link'
 
+
+
+
 const useStyles = makeStyles((theme) => ({
 	paper: {
      marginRight: theme.spacing(2),
@@ -91,6 +94,8 @@ logo:{
   },
 }));
 
+const headerimg = "https://upload.wikimedia.org/wikipedia/commons/2/28/Red_rose.jpg"
+
 export default function ButtonAppBar(props) {
   const classes = useStyles();
 	const [drawerState,setDrawerState] = React.useState(false);
@@ -111,7 +116,7 @@ export default function ButtonAppBar(props) {
 				            <div>weeeeeewrw</div>
 				          </Drawer>
           </IconButton>
-					<img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Red_rose.jpg" style={{width:50,height:60}} />
+					<img src={headerimg} style={{width:50,height:60}} />
 
           <Typography variant="h6" className={classes.title}>
             {props.itemName}
