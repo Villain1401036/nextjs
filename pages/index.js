@@ -8,7 +8,6 @@ import Sidebar from '../components/sidebar'
 
 
 
-import MediaCard from '../components/item'
 import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -67,16 +66,7 @@ const classes = useStyles();
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >
 
-					<MediaCard />
-					<MediaCard />
-					<MediaCard />
-					<MediaCard />
-<MediaCard />
-<MediaCard />
-<MediaCard />
-<MediaCard />
-<MediaCard />
-<MediaCard />
+
 
 			 </div>
 
