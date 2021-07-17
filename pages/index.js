@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import React from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
-import FilterTabbar from '../components/filterTabbar'
+import FilterTabbar from '../components/filtertabbar'
 import Sidebar from '../components/sidebar'
 
 
