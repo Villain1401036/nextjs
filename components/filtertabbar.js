@@ -12,27 +12,35 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     position:'sticky'
-  },
+  }, 
 	appbar:{
 		flexGrow: 1,
 		backgroundColor:'lightgreen',
-		justifyContent:'center'
+		justifyContent:'center',
+		top: 10+"vh5240",
+		position:'sticky',
+		
 
 
 	},
 	Linkbutt:{
-   marhin:10,
+     marhin:10,
 	 padding:10,
 	 borderRadius:3,
 	 borderWidth:1,
 	 borderStyle:'solid',
 	 borderColor:'grey',
-
+	 top: 60+'px',
+	 position:'sticky',
+	 
+ 
 	},
 	ops:{
-		alignItems:'center',
+		alignItems:'center' ,
 		display:'flex',
 		flexDirection:'row',
+		top: 6+'px',
+		position:'sticky',
 		'& > *': {
       margin: theme.spacing(1),
     },
@@ -49,7 +57,7 @@ export default function FilterTabbar(props) {
   const classes = useStyles();
 
   return (
-    <div  className={classes.root}>
+    
 		<div className={classes.appbar}>
 	             <div className={classes.ops}>
 							  <Link name={"Repair"} url={"http://localhost:3000"}/>
@@ -58,7 +66,7 @@ export default function FilterTabbar(props) {
 								  <Link name={"exchange"} url={"http://localhost:3000"}/>
 	            	</div>
 		</div>
-    </div>
+   
   );
 }
 

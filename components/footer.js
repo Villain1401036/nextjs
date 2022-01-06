@@ -9,19 +9,21 @@ import IconButton from '@material-ui/core/IconButton';
 //import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  foot: {
     flexGrow: 1,
+	position:'sticky',
+	bottom:0,
   },
 	 infoblocks: {
 	    flexGrow: 1,
 			display:'flex',
 			flexDirection:'column',
-			margin:60,
+			margin:10,
 	  },
 
 	link:{
-   fontSize:11,
-	 color:'grey',
+   fontSize:11, 
+	 color:'grey' ,
 
 	},
 	appbar:{
@@ -42,9 +44,9 @@ export default function Footer(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.foot}>
 		<div className={classes.appbar}>
-      <Locationblocks />
+      		<Locationblocks />
 			<Aboutblocks />
 			<Followblocks />
 		</div>

@@ -1,0 +1,248 @@
+syntax = "proto3";
+package user;
+
+
+
+option go_package = "/protofiles";
+
+//protoc -I=C:\Users\kr716\apps\goBackend\protobuffs --go_out=protobuffs --plugin=C:\Users\kr716\go\bin\protoc-gen-go  C:\Users\kr716\apps\goBackend\protobuffs\user.proto
+
+//protoc --proto_path=C:\Users\kr716\apps\nextjs --js_out=import_style=commonjs,binary:build\gen  user.proto
+//user message 
+message User {
+
+  int64 user_key = 1;
+  string user_id = 2;
+  string user_name = 3;
+  string aadhar = 4;
+  string identity = 5;
+  string email = 6;
+  string phone = 7;
+
+}
+
+message Users {
+
+   repeated User Musers = 1;
+
+}
+
+
+//worker message
+
+message Worker {
+
+  	int64 userkey = 1;
+	string uuid = 2;
+	string first_name = 3;
+	string last_name = 4;
+	int64 aadhar_id = 5; 
+    string passport = 6;  
+	string pancard = 7;
+	string driver_license = 8; 
+	repeated string skills = 9; 
+	string designation = 10; 
+	bytes metadata = 11;
+	string email = 12;
+	int64 phone = 13;
+	int64 created_at = 14;
+	
+}
+
+message Workers {
+
+	repeated Worker Mworkers = 1;
+ 
+ }
+
+//customer message
+
+message Customer {
+
+  	int64 userkey = 1;
+	string uuid = 2;
+	string first_name = 3;
+	string last_name = 4;
+	int64 phone_number = 5;
+	string email = 6;
+	int64 aadhar_id =7;
+	bytes metadata = 8;
+
+}
+
+message Customers {
+
+	repeated Customer Mcustomers = 1;
+ 
+ }
+
+//task 
+
+message Task {
+
+  int64 task_key = 1;
+	string task_id =2;
+  string	description =3; 
+	int64 created_at =4;
+	int32 price = 5; 
+	string deno = 6;
+	int64 scheduled_at = 7;
+	int64 duration = 8;
+  enum Taskstatus {
+    progress = 0; 
+    created = 1;
+    acknowledge = 2;
+    in_progress = 3;
+    done = 4;
+    paid = 5 ;
+        }
+	Taskstatus taskstatus = 9 ;
+	bytes metadata = 10;
+	string tasktype = 11;
+	bytes location = 12;
+	string place = 13;
+	repeated string tags = 14;
+	repeated string category = 15;
+	int64 customer_key = 16;
+	
+
+}
+
+message Tasks {
+
+	repeated Task Mtasks = 1;
+ 
+ }
+
+//work
+
+message Work {
+  int64 work_key = 1;
+	int64 task_key = 2;
+	int64 worker_key  = 3;
+	int64 start_time = 4;
+	int64 end_time = 5;
+	string description = 6;
+  enum Workstatus {
+    progress = 0; 
+    created = 1;
+    delayed = 2;
+    in_progress = 3;
+    done = 4;
+    
+        }
+	Workstatus work_status = 7;
+	bytes metadata = 8;
+	string work_id = 9;
+
+}
+
+message Works {
+
+	repeated Work Mworks = 1;
+ 
+ }
+
+//delay
+
+message Delay{
+  int64 delay_key = 1;
+	string delay_id = 2;
+	int64 work_key = 3;
+	int64 start_date = 4 ; 
+	int64 end_date = 5 ;
+	int64 delay_type = 6;
+	
+	bytes metadata = 7;
+
+}
+
+message Delays {
+
+	repeated Delay Mdelays = 1;
+ 
+ }
+
+//services 
+
+message Service{
+	int64 service_key = 1;
+	string service_id =2;
+    string	description =3; 
+	int64 created_at =4;
+	int32 price = 5; 
+	string deno = 6;
+	int64 duration = 8;
+	int64 worker_key = 9 ;
+	bytes metadata = 10;
+	string servicetype = 11;
+	bytes location = 12;
+	string place = 13;
+	repeated string tags = 14;
+	repeated string category = 7;
+	
+
+}
+
+message Services {
+
+	repeated Service Mservices = 1;
+ 
+ }
+
+//invoice
+
+message Invoice{
+  int64 invoice_key = 1;
+	string invoice_id  =2;
+	int64 task_key = 3;
+	int64 invoice_date =4;
+	
+ 	bytes metadata = 5;
+}
+
+message Invoices {
+
+	repeated Invoice Minvoices = 1;
+ 
+ }
+
+//guarantee 
+
+message Guarantee {
+  int64 guarantee_key = 1;
+	int64 task_key = 2;
+	int64 start_date =3;
+	int64 duration =4;
+	
+	bytes metadata = 5;
+  
+}
+
+message Guarantees {
+
+	repeated Guarantee Mguarantees = 1;
+ 
+ }
+
+
+ message Bid {
+	int64 bid_key = 1;
+	string bid_id = 2;
+	int64 task_key = 3;
+	int64 worker_key = 4;
+	int32 bidprice = 5;
+	int64 completion_time = 6;
+    int64 available_at = 7;
+
+	
+	bytes metadata = 8;
+  
+ } 
+
+ 
+message Bids {
+
+	repeated Bid Mbids = 1;
+ 
+ }
