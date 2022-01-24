@@ -20,7 +20,8 @@ export default function Logincontainer() {
   async function handleSubmit(event) {
     event.preventDefault();
     await getTokens("http://localhost:9082/user/login", email , password ).then((value)=>{
-      authContext.login()
+      
+      
       router.push("http://localhost:3000/home")
     })
   }

@@ -20,8 +20,8 @@ export const getdata = async(url, obj, options) => {
       headers: { 'Authorization' : localStorage.getItem("access_token")}
     }
     ).then(response  => {
-
-   
+  
+   console.log(response.data);
    try {
    //when request is successful check if data can be serialized
    switch ( obj){
@@ -39,8 +39,11 @@ export const getdata = async(url, obj, options) => {
         var data = proto.user.Workers.toObject(false,proto.user.Workers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworkersList }) ; return data.mworkersList
       case "bids":
           var data = proto.user.Bids.toObject(false,proto.user.Bids.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbidsList }) ; return data.mbidsList
-        
-        default:
+      case "address":
+          var data = proto.user.Addresses.toObject(false,proto.user.Addresses.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
+      case "items":
+            var data = proto.user.Items.toObject(false,proto.user.Items.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
+      default:
         var data = proto.user.Tasks.toObject(false,proto.user.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
    }
    }
@@ -53,20 +56,27 @@ export const getdata = async(url, obj, options) => {
    ).catch(error => {
     //failed result
         if (error.response.status == 401){
-    
-          
-           refreshTokens("http://localhost:9082/user/refreshtoken").then(
-          
-              (tokens)=> { getdata(url,obj).then((response)=>{ console.log(response); })}
-            
-          )
+
+           refreshTokens("http://localhost:9082/user/refreshtoken")
+           
+
         }
+
+        else if (error.response.status == 500){
+            console.log("bad error");
+            throw Error("url not ok")
+        }
+        else {
+          console.log("dont know error");
+            throw Error("other than unauthorized and internal server")
+        }
+
        // console.log(error.response.config.url);
         // console.log("error in axios");
 
 
      });
-
+     
      return k
     }
 
@@ -104,8 +114,49 @@ export const getTokens = async(url , user , pass ) =>{
 }
    ).catch(error => {
     //failed result
-         console.log("error in axios");
+         console.log(error.response.status);
+         console.log(error);
+
+         return error.response
      });
+     console.log(k);
+     return k
+}
+
+
+export const postsignup = async(url , formdata ) =>{
+
+
+  var k = await axios( {method: 'post' , 
+  url: url,
+  data:formdata,
+  headers: {
+      'Content-Type': `multipart/form-data`
+  },}
+  )
+  .then(response  => {
+     console.log(response);
+   try {
+   //when request is successful check if data can be serialized
+   console.log(response.data.access_token)
+
+   localStorage.setItem("access_token",response.data.access_token )
+   localStorage.setItem("refresh_token",response.data.refresh_token )
+
+   }
+   catch (e) {
+    //when request is successful but not good
+      console.log(e);
+  }
+}
+   ).catch(error => {
+    //failed result
+         console.log(error.response.status);
+         console.log(error);
+
+         return error.response
+     });
+     console.log(k);
      return k
 }
 
@@ -142,7 +193,9 @@ export const refreshTokens = async(url ) =>{
    ).catch(error => {
     //failed result
          console.log("error in axios");
+         return error
      });
+     
      return k
 }
 

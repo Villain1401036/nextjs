@@ -10,6 +10,7 @@ import Workdashboard from '../components/containers/workdashboard'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
+import Itemcontainer from '../components/itemcontainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ProfilePage(props){
+export default function ItemPage(props){
 
 const classes = useStyles();
 const [profile , setProfile] = React.useState();
@@ -85,11 +86,8 @@ onRefresh(authContext);
 
 	<ButtonAppBar itemName={Shopname}/>
 	
-	<Profilesummary />
-	
-	<Allordercontainer />
+    <Itemcontainer />
 
-	<Workdashboard />
 
   
 	</div>

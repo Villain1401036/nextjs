@@ -8,6 +8,8 @@ option go_package = "/protofiles";
 //protoc -I=C:\Users\kr716\apps\goBackend\protobuffs --go_out=protobuffs --plugin=C:\Users\kr716\go\bin\protoc-gen-go  C:\Users\kr716\apps\goBackend\protobuffs\user.proto
 
 //protoc --proto_path=C:\Users\kr716\apps\nextjs --js_out=import_style=commonjs,binary:build\gen  user.proto
+
+//
 //user message 
 message User {
 
@@ -244,5 +246,50 @@ message Guarantees {
 message Bids {
 
 	repeated Bid Mbids = 1;
+ 
+ }
+
+ message Address {
+
+	int64 address_key = 1;
+    string address_id = 2;
+    string address_line_1 = 3;
+    string address_line_2 = 4;
+    string city = 5;
+    string state = 6;
+    string country = 7;
+    string pincode = 8;
+    bytes location = 9;
+    string landmark = 10;
+    bytes metadata = 11;
+    int64 customer_key = 12;
+}
+
+message Addresses {
+
+	repeated Address Maddresses = 1;
+ 
+ }
+
+ message Item {
+
+
+	int64 item_key  = 1;
+	string item_id  = 2 ;
+	int64 customer_key  = 3;
+	string description  = 4;
+	int64 created_at = 5;
+	int32 price= 6;
+	string deno = 7;
+	bool negotiable  = 8;
+	bytes metadata  = 9;
+	repeated string tags = 10;
+	repeated string category = 11;
+	string place = 12;
+}
+
+message Items {
+
+	repeated Item Mitems = 1;
  
  }

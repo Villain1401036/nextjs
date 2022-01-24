@@ -4,20 +4,16 @@ import React, { useContext } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
 import FilterTabbar from '../components/filtertabbar'
-import Sidebar from '../components/sidebar'
 import { useRouter } from 'next/router'
 
 
 import { Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
 import Latestwork from '../components/containers/lastestwork'
 import Ongoingwork from '../components/containers/ongoingwork'
-import { Button } from '@material-ui/core'
 import { AuthContext } from '../context'
 import LoginPage from './login'
-import { getTokens } from '../networking/getdata'
+import Bidcontainer from '../components/containers/bidcontainer'
 
 
 
@@ -109,8 +105,8 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 				
 				 <div  >
 				 
-				<Latestwork />
-				<Ongoingwork />
+				
+				<Bidcontainer />
 				 
 				 </div >
 				 

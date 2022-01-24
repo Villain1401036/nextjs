@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 import Taskcard from '../taskcard';
 import { MapSharp } from '@material-ui/icons';
 import Addresscard from '../addresscard';
+import { callwithcache, geturlFormdata, setValue } from '../../constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,31 +65,62 @@ export default function Profilesummary(props){
 
     const [loaded,setLoaded] = React.useState(false); 
     
-    const [addresslist,setAddresslist] = React.useState([]);
     const classes = useStyles();
-
+	const [profile , setProfile] = React.useState({});
     const [edit , setEdit] = React.useState(true);
+
+	    
+    var urlForm = geturlFormdata("customer","get",  {"user_id":63 }) //localStorage.getItem("customerid") }  )
+    var url = urlForm.url
+
     
-  
+	useEffect (()=>{
+		if (!loaded){
+			refreshprofile();
+		}
+		
+	 }); 
+
+	 
+const refreshprofile = async () =>{
+
+	callwithcache(getdata, url, "customers" ).then((value) =>{
+
+        
+		console.log(value);
+        setValue(value[0],refreshprofile ,setProfile )}).then((val)=>{
+			setLoaded(true);
+		}).catch((err) =>{
+          console.log(err);
+        }
+        )
+
+}
+
+
+
+   var  picurl = "https://images.pexels.com/photos/53141/rose-red-blossom-bloom-53141.jpeg?cs=srgb&dl=pexels-pixabay-53141.jpg&fm=jpg"
 
 	return(
-
+		<>
+       { loaded && 
 		<div style={{alignSelf:"center" , textAlign:"center" }}>
 			<div><Button onClick={()=>{ console.log(edit); ;  setEdit(!edit)}}  >edit</Button> </div>
-                <img src = {props.profilepic} className={classes.profilepic}/>
+                <img src = {picurl} className={classes.profilepic}/>
                 <div>
 				
-                    {edit?<div style={{width:100+"vw"   }}><span className={classes.proname} >{props.name}</span></div>:<input inputMode="numeric"></input>}
+                    {edit?<div style={{width:100+"vw"   }}><span className={classes.proname} >{profile.firstName}</span></div>:<input inputMode="numeric"></input>}
                     
                     </div>
                    
-                    {edit?<div style={{width:100+"vw"  }}><span className={classes.proname} >contact no. -{props.contact}</span></div>:<input inputMode="numeric"></input>}
-					{edit?<div style={{width:100+"vw" , backgroundColor:"green"  }}><span className={classes.proname} >{props.description}</span></div>:<input inputMode="numeric"></input>}
+                    {edit?<div style={{width:100+"vw"  }}><span className={classes.proname} >contact no. -{profile.phoneNumber}</span></div>:<input inputMode="numeric"></input>}
+					{edit?<div style={{width:100+"vw"  }}><span className={classes.proname} >email - {profile.email}</span></div>:<input inputMode="numeric"></input>}
              <div>
   
              </div>
              </div>
-
+	   }
+	   </>
 	);
 
 }

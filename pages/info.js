@@ -1,20 +1,16 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import React from 'react'
+
+import React, { useContext } from 'react'
 import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
-import FilterTabbar from '../components/filtertabbar'
-import Sidebar from '../components/sidebar'
 
 
 
 import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
 import Ongoingwork from '../components/containers/ongoingwork';
 import Histwork from '../components/containers/histwork'
 import Notifications from '../components/containers/notifications'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
 
 
 
@@ -52,11 +48,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomePage(props){
 
-
+  const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);
   const classes = useStyles();
 	
 	return(
+
+<>
+{ authContext.isLoggedIn && 
+	(
 		<div >
 
         
@@ -74,6 +74,14 @@ export default function HomePage(props){
 
        
 		</div>
+
+)
+}
+{
+	!authContext.isLoggedIn && (<Logincontainer />)
+}
+
+</>
 	);
 
 

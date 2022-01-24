@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import Taskcard from '../taskcard';
 import { MapSharp } from '@material-ui/icons';
 import Addresscard from '../addresscard';
-import { geturl } from '../../constants';
+import { callwithcache, geturlFormdata, setValuesfrommap } from '../../constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,11 +54,11 @@ export default function Addresses(props){
     const [addresslist,setAddresslist] = React.useState([]);
     const classes = useStyles();
     
-    var url = geturl("address","get", {"customerid":"63"}) //address links
- 
+
     useEffect (()=>{
        if (!loaded){
        refreshlatest();
+       setLoaded(true);
        //setVal(openaddresslist);
        }
     });
@@ -66,31 +66,24 @@ export default function Addresses(props){
 
     const refreshlatest =  () =>{
         //call the function to update with the latest tasks 
-        count = count + 1;
-        console.log(count);
-       getdata(url).then((value) =>{ console.log( value );  setLoaded(true) ;setVal(value);})
-       
+        var urlForm = geturlFormdata("address","get", {"customer_key":0}) //address links
+        var url = urlForm.url
+     
+        callwithcache(getdata, url, "address").then((value) =>{
+
+          
+          setValuesfrommap(value,refreshlatest ,setAddresslist , taskmap ,"addressId")}).catch((err) =>{
+            console.log(err);
+          }
+          )
     }
 
-    
-    const maping =(list) =>{
 
-      list.forEach(element => {
-        taskmap.set(element.taskId , element)
-      });
-      tlist = []
-      ftest();
-      console.log(tlist);
-    }
-       
-
-    const setVal = (val) =>{ openaddresslist = openaddresslist.concat(...val) ; console.log(openaddresslist); ; maping(openaddresslist); setAddresslist(tlist);console.log(addresslist);} 
 
    
-   const ftest = () => taskmap.forEach( (value) => { tlist.push(value) })
    
-  const filllatest =  addresslist.map( (item) =>  <Addresscard key={item.taskId} address={item.taskId} ></Addresscard> )
-  const [isloaded,setIsLoaded] = React.useState(true);
+  const filllatest =  addresslist.map( (item) =>  <Addresscard key={item.addressId} address={item.addressId} ></Addresscard> )
+
 
 	return(
 		<div style={{ backgroundColor:'red'}}>

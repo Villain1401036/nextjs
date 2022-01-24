@@ -7,7 +7,9 @@ import { Button, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Taskcard from '../taskcard';
 import { Refresh } from '@material-ui/icons';
-import { ongoingwork } from '../../constants';
+import { callwithcache, geturlFormdata, ongoingwork, setValuesfrommap } from '../../constants';
+import { CLR_RCARD2 } from '../../themes';
+import Workcard from '../workcard';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,78 +46,51 @@ const useStyles = makeStyles((theme) => ({
 
 
 const taskmap = new Map();
-const opentasklist = [];
-const tlist =[]
-var count = 0;
-//this will be a container for all the recent work that is going om
+
 
 export default function Ongoingwork(props){
   
   const [loaded,setLoaded] = React.useState(false); 
 
-    const [tasklist,setTasklist] = React.useState([]);
+    const [worklist,setWorklist] = React.useState([]);
     
-    var url = "http://localhost:9082/task/get?taskid="+ ongoingwork   //64bokar7~64bokar7s~64bokar7sxzc";
-
-  
+    const [worker , setWorker] = React.useState(1);
 
     useEffect (()=>{
       if (!loaded){
       refreshongoing();
-      //setVal(opentasklist);
+      //setVal(openworklist);
       }
    });
 
+   console.log("ongoing is updated");
 
    const refreshongoing =  () =>{ 
        //call the function to update with the latest tasks
-       count = count + 1;
-       console.log(count);
-      getdata(url).then((value) =>{ 
-        console.log( value );  
-        setLoaded(true) ;
-        setVal(value);}).catch((err) =>{
-          console.log(err);
-        }
-        )
-      
+       var urlForm = geturlFormdata("work" , "get" , {"worker_key":worker} , {}) //localStorage.getItem("customerid") }  )
+       var url = urlForm.url
+
+       callwithcache(getdata, url, "works").then((value) =>{
+         setLoaded(true);
+         setValuesfrommap(value,refreshongoing ,setWorklist , taskmap ,"workId" )}).catch((err) =>{
+           console.log(err);
+         }
+         )
    }
 
+
+
+  const filllatest =  worklist.map( (item) =>  <Workcard key={item.workId} name={item.workId} workKey={item.workKey} description={item.description}  maplink="https://www.google.com/maps?q=23,88"   workobj={item} ></Workcard>  )
    
-   const maping =(list) =>{
-
-    list.forEach(element => { taskmap.set(element.taskId , element)});
-    tlist = []
-    //converting the map into a list 
-    taskmap.forEach( (value) => { tlist.push(value) } )
-    // ftest();
-    console.log(tlist);
-  }
-
-  //const ftest = () => taskmap.forEach( (value) => { tlist.push(value) } )
-
-
-   const setVal = (val) =>{ 
-     try{
-       opentasklist = opentasklist.concat(...val) ; maping(opentasklist); setTasklist(tlist); console.log(tasklist);
-     }
-     catch(e){
-       console.log(e);
-     }
-      } 
-  
-      const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.taskId} name={item.taskId} taskKey={item.taskKey} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88"></Taskcard>  )
-   
-
-    const classes = useStyles();
+  const classes = useStyles();
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
 	return(
-		<div style={{backgroundColor:"lightgrey" , alignItems:"center"}} >
+		<div style={{backgroundColor:CLR_RCARD2 }} >
                 
-             <Button onClick={async()=>{refreshongoing()}} title="ongoingTask" style={{alignItems:"center"}} >
-               <div > Ongoing Tasks</div>
+             <Button onClick={async()=>{refreshongoing()}} title="ongoingWork" style={{alignItems:"center"}} >
+               <div > Ongoing Works</div>
                <Refresh />
              </Button> 
              <div style={{display: "grid" , gridTemplateColumns: "auto" , padding: 5+"vw" ,paddingTop:0}}>
@@ -125,3 +100,5 @@ export default function Ongoingwork(props){
 	);
 
 }
+
+

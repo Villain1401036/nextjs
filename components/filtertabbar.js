@@ -6,6 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import { CLR_FBAR, CLR_HEAD } from '../themes';
+import router, { useRouter } from 'next/router';
 //import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,31 +17,40 @@ const useStyles = makeStyles((theme) => ({
   }, 
 	appbar:{
 		flexGrow: 1,
-		backgroundColor:'lightgreen',
+		backgroundColor:CLR_FBAR,
 		justifyContent:'center',
-		top: 10+"vh5240",
+		top: 12+"vw",
 		position:'sticky',
-		
-
+		opacity: 1.0,
+		zIndex:10,
+		overflowX: 'scroll',
+		maxHeight:8+"vw"
 
 	},
 	Linkbutt:{
-     marhin:10,
-	 padding:10,
-	 borderRadius:3,
-	 borderWidth:1,
-	 borderStyle:'solid',
+     margin:1+"vh",
+	 padding:0+"vh",
+	 overflowX: "scroll",
 	 borderColor:'grey',
 	 top: 60+'px',
 	 position:'sticky',
+	 textAlign:"center",
 	 
- 
+	},
+	link:{
+
+		fontSize:100+"%",
+		paddingRight:10,
+		borderWidth:0,
+		borderRightWidth:1,
+		borderStyle:'solid',
+
 	},
 	ops:{
 		alignItems:'center' ,
 		display:'flex',
 		flexDirection:'row',
-		top: 6+'px',
+		//top: 7+'vw',
 		position:'sticky',
 		'& > *': {
       margin: theme.spacing(1),
@@ -64,6 +75,14 @@ export default function FilterTabbar(props) {
 							   <Link name={"Chores"} url={"http://localhost:3000"}/>
 								 <Link name={"Party"} url={"http://localhost:3000"}/>
 								  <Link name={"exchange"} url={"http://localhost:3000"}/>
+								  <Link name={"dones"} url={"http://localhost:3000"}/>
+								  <Link name={"owler"} url={"http://localhost:3000"}/>
+								  <Link name={"Repair"} url={"http://localhost:3000"}/>
+							   <Link name={"Chores"} url={"http://localhost:3000"}/>
+								 <Link name={"Party"} url={"http://localhost:3000"}/>
+								  <Link name={"exchange"} url={"http://localhost:3000"}/>
+								  <Link name={"dones"} url={"http://localhost:3000"}/>
+								  <Link name={"owler"} url={"http://localhost:3000"}/>
 	            	</div>
 		</div>
    
@@ -72,12 +91,12 @@ export default function FilterTabbar(props) {
 
 function Link(props) {
   const classes = useStyles();
-
+  const router = useRouter(); 
 	return (
-		<div className={classes.Linkbutt} >
-		<a href={props.url} className={classes.link}>
+		<div   >
+		<div  onClick={() => router.push("/")} className={classes.link}>
        {props.name}
-    </a>
+    </div>
     </div>
 	);
 

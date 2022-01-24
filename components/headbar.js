@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { latestworkobj, ongoingwork, Shopname, user } from '../constants'
 
 import AppBar from '@material-ui/core/AppBar';
@@ -33,6 +33,15 @@ import { AuthContext } from '../context';
 
 const useStyles = makeStyles((theme) => ({
   
+  drawButt:{
+    width:60+"vw",
+    padding:2+"vh",
+    borderStyle:"solid",
+    borderWidth:0,
+    borderTopWidth:1+"px",
+    borderColor:"grey",
+    
+  },
 	paper: {
      marginRight: theme.spacing(2),
    },
@@ -50,10 +59,14 @@ logo:{
 
   
 	appbar:{ 
-		height:10+"vh",
+    boxShadow:0+"px",
+		height:12+"vw",
   	elevation: 0,
     width:100+"vw" ,
-		backgroundColor: CLR_HEAD
+		backgroundColor: CLR_HEAD,
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      width: '80%'
+    }
 	},
   menuButton: {
     marginRight: theme.spacing(2),
@@ -103,6 +116,22 @@ logo:{
   },
   drawer :{
     minWidth: 35+"vw"
+  },
+
+  createbtn: {
+    backgroundColor:"white",
+    width: 10+"vw" ,
+    height: 50+"%" ,
+    margin:1+"vw", 
+    fontWeight:"bold",
+    fontSize: 50+"%"
+
+  },
+  menuback:{
+    //backgroundColor:"purple",
+    width:7+"vw",
+    height:7+"vw",
+    //borderRadius:5+"vw"
   }
 
 }));
@@ -114,7 +143,7 @@ export default function ButtonAppBar(props) {
 	const [drawerState,setDrawerState] = React.useState(false);
   const router = useRouter()
   
-
+  const authContext = useContext(AuthContext);
 
   const toogleDstate = () => {
       setDrawerState(!drawerState); 
@@ -131,24 +160,28 @@ export default function ButtonAppBar(props) {
 return (
    
       <AppBar position="sticky" classes={{root:classes.appbar}}>
-        <Toolbar style={{height:10+"%"}}>
+        <Toolbar style={{height:10+"%"}}>    
           <IconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>toogleDstate()} >
 
             <MenuIcon />
 
-					<Drawer anchor={"left"} open={drawerState} onClose={()=>console.log("closed")} variant='persistent'>
+					<Drawer anchor={"left"} open={drawerState} onClose={()=>console.log("closed")} variant='temporary'>
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
           <Button onClick={()=>router.push("/home")}>
-					<img src={headerimg} className={classes.logo} />
+					{/*<img src={headerimg} className={classes.logo} />*/}
 
           <Typography variant="h6" className={classes.title}>
             {props.itemName }
           </Typography>
           </Button>
-            <Button  style={{backgroundColor:"white"}} onClick={()=>{router.push("/newTask")}}>create Task</Button>
-            <Button  style={{backgroundColor:"white"}} onClick={()=>{router.push("/newService")}}>create Service</Button>
+             {
+               authContext.accounttype?
+             <Button  className={classes.createbtn} onClick={()=>{router.push("/newTask")}}>create Task</Button>
+            :
+            <Button  className={classes.createbtn} onClick={()=>{router.push("/newService")}}>create Service</Button>
+            }
           {true?
             <div></div>:
             <div className={classes.search}>
@@ -418,26 +451,42 @@ function Drawercomponent(props){
 const authContext = React.useContext(AuthContext);
 
   return (
-    <div>
-      {user.acctype?<span>work</span>:<span>user</span>}<Switch checked={user.acctype} onChange={()=>{user.acctype = !user.acctype;router.push("/home")}}></Switch>
-<div>
-    <div  onClick={()=>{router.push("/profile")}}>{user.name}</div>
+    <div style={{padding:10+"px"}}>
+       <div className={classes.title} style={ {paddingBottom:10}}>Freebees</div>
+  
+
+     <div style={{width:60+"vw"}} >
+      <span style={{fontSize:5+"vw"}} >Account type:</span>
+      {!authContext.accounttype?<span style={{fontSize:6+"vw"}}>   work    </span>:<span style={{fontSize:6+"vw"}}>   user   </span>}<Switch  checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
+      </div>
+
+<div className={classes.drawButt}>
+      {authContext.isLoggedIn ?
+      <>
+      <span style={{paddingRight:50 }} onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      <span  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      </>:
+<>
+     <span style={{paddingRight:50 }} onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      <span  onClick={()=>{router.push("/profile") }} >{"logout"}</span>
+</>
+}
     </div>
 
-    <div>
+    <div className={classes.drawButt}>
     <div  onClick={()=>{router.push("/address")}}>{"addresses"}</div>
     </div>
 
-    <div>
+    <div className={classes.drawButt}>
     <div  onClick={()=>{router.push("/info")}}>{"info"}</div>
     </div>
 
-    <div>
+    <div className={classes.drawButt}>
     <div  onClick={()=>{router.push("/orders")}}>{"orders"}</div>
     </div>
 
 
-    <div>
+    <div className={classes.drawButt}>
     <div  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</div>
     </div>
     </div>

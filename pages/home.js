@@ -1,23 +1,21 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import React, { useContext } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
 import FilterTabbar from '../components/filtertabbar'
-import Sidebar from '../components/sidebar'
+
 import { useRouter } from 'next/router'
 
-
-import { Shopname, user } from '../constants'
+import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
+
 import Latestwork from '../components/containers/lastestwork'
 import Ongoingwork from '../components/containers/ongoingwork'
-import { Button } from '@material-ui/core'
+
 import { AuthContext } from '../context'
 import LoginPage from './login'
-import { getTokens } from '../networking/getdata'
+import Latestitem from '../components/containers/latestitem'
+
 
 
 
@@ -57,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomePage(props){
 
+	//////
+
+console.log(props.msg);
+
 const classes = useStyles();
 const router = useRouter();
 
@@ -73,48 +75,48 @@ console.log(typeof window);
 
 // 	}
 
+//<button onClick={()=>{ localStorage.removeItem("refresh_token");localStorage.removeItem("access_token");  authContext.logout() }}>logout</button>
 
-
-if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") == "false") { console.log("login"); ;authContext.login() }}
+if(typeof window === 'undefined'){
+	//put("C:/Users/kr716/OneDrive/Pictures/RAHUL.jpeg")
+}
 
   const [isloaded,setIsLoaded] = React.useState(true);
   //const [isloaded,setIsLoaded] = React.useState(true);
   console.log("refresh");
 
-  if ( typeof window !== "undefined" ){ 
-	  console.log(localStorage.getItem("refresh_token"))
-	}
 
-	if ( typeof window !== "undefined" ){ 
-		if (localStorage.getItem("refresh_token") != undefined){
-				authContext.login()
-		}
-	  }
-
+  onRefresh(authContext)
   
   
 	return(
    <>
 		{ authContext.isLoggedIn && (
-			<div style={{minHeight:100+"vh"}}>
+
+  
+
+			<div style={{minHeight:100+"vh" ,display:"flex", flex:1 , flexDirection:"column"}}>
 			<Head>
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
 				<FilterTabbar />
-				 <button onClick={()=>{authContext.logout() }}>logout</button>
-				
-				 <div  >
+				 
+    <div style={{overflowY:"hidden" , display:'flex' ,flex:1, flexDirection:'row'   }}>
+       
+
+				 <div style={{width:100+"vw", overflowY:"hidden"}} >
 				 
 				<Latestwork />
 				<Ongoingwork />
+				<Latestitem />
 				 
 				 </div >
-				 
+				 </div>
+                 
 				 <Footer />
 				 
-			
 				
 			</div>
 		)
@@ -138,3 +140,20 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 	
 
 }
+
+// HomePage.getInitialProps = () => {
+// 	//...
+// 	  // Fetch data from external API
+// 	  const fs = require('fs')
+// 	  // Pass data to the page via props
+
+// 	console.log("=======================)==========================");
+// 	  put()
+// 	  return { props}
+//   }
+
+  export function getStaticProps() {
+	
+	return { props: { msg: 'hello world' } }
+
+  }

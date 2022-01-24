@@ -1,29 +1,28 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
 
-import { Shopname } from '../constants'
+
+import { gettaskonpage, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { Serviceform, Taskform } from '../components/create'
 import { useRouter } from 'next/router'
+import Bidcontainer from '../components/containers/bidcontainer';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
 		margin:"auto",
 		
-    display: 'grid',
-		gridTemplateColumns:"auto auto auto",
 
     '& > *': {
       margin: theme.spacing(1),
     },
 	},
 	contentArea:{
-		display:'flex',
-		flexDirection:'row',
+		
+	
 	},
 		cover: {
 			marginTop: 0,
@@ -43,22 +42,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-var tasksdata = []
 
-export default function NewService(props){
 
+export default function Taskpage(props){
+
+const [taskdata , setTaskdata] = useState({});
 const classes = useStyles();
 const router = useRouter();
-  const [isloaded,setIsLoaded] = React.useState(true);
+  const [isloaded,setIsLoaded] = React.useState(false);
   React.useEffect(() => {
     // Update the document title using the browser API
+	if (!isloaded){
+		setTaskdata(gettaskonpage());
+		setIsLoaded(true);
+	}
+    
 
   });
    
- 	
-
-	
-  
+  console.log(taskdata);
+   
 	return(
 		<div>
 		<Head>
@@ -70,12 +73,17 @@ const router = useRouter();
 
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >
-				 <Serviceform />
+				<div style={{ minHeight:40+"vh" }}>
+					<div>{taskdata.description}</div>
+				</div>
+				 
+				 
+				{ isloaded && <Bidcontainer taskKey={taskdata.taskKey} taskobj={taskdata}/> }
 			 </div>
 
 			 </div>
 
-       <Footer />
+        
 		</div>
 	);
 

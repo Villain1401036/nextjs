@@ -1,15 +1,14 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useContext } from 'react'
 import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
-import FilterTabbar from '../components/filtertabbar'
 
 
 
-
-import { Shopname } from '../constants'
+import { onRefresh, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import Addresses from '../components/containers/addresses'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,11 +49,17 @@ export default function Addresspage(props){
 
 
 
-const classes = useStyles();
+	
 
+const classes = useStyles();
+const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);
 
+  onRefresh(authContext)
 	return(
+    <>
+		{ authContext.isLoggedIn && 
+			(
 		<div>
 		<Head>
 			<title>Spook</title>
@@ -69,13 +74,17 @@ const classes = useStyles();
 			  
 
 			 <Addresses />
-
-			 
-
 			 </div>
 
        
 		</div>
+		)
+		}
+		{
+			!authContext.isLoggedIn && (<Logincontainer />)
+		}
+
+</>
 	);
 
 

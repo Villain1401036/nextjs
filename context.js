@@ -2,7 +2,9 @@ import { createContext } from 'react';
 
 export const AuthContext = createContext({
     isLoggedIn: true,
+    accounttype: true ,
+    changeaccount: () => {accounttype = !accounttype},
     login: () => {isLoggedIn = true},
-    logout: () =>{isLoggedIn = false},
+    logout: () =>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token");isLoggedIn = false },
 });
 

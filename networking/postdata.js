@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { refreshTokens } from './getdata';
 
 export const postdata = async(url , object , formdata , options ) => {
 
@@ -7,7 +8,8 @@ export const postdata = async(url , object , formdata , options ) => {
     url: url,
     data:formdata,
     headers: {
-        'Content-Type': `multipart/form-data`
+        'Content-Type': `multipart/form-data`,
+       'Authorization' : localStorage.getItem("access_token")
     },}
     )
     .then(response  => {
@@ -23,8 +25,28 @@ export const postdata = async(url , object , formdata , options ) => {
 }
      ).catch(error => {
       //failed result
-           console.log("error in axios");
+      //failed result
+      if (error.response.status == 401){
+
+       refreshTokens("http://localhost:9082/user/refreshtoken")
+        return 401
+        
+        
+
+     }
+
+     else if (error.response.status == 500){
+         console.log("bad error");
+         throw Error("url not ok")
+     }
+     else {
+       console.log("dont know error");
+         throw Error("other than unauthorized and internal server")
+     }
+
+         
        });
+       
        return k
   }
   

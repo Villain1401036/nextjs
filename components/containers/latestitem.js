@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -5,14 +6,12 @@ import { getdata } from '../../networking/getdata';
 import { Button, TextField } from '@material-ui/core';
 import Taskcard from '../taskcard';
 import { ArrowDropDown, ArrowDropUp, DockRounded, Filter, Fireplace, MapSharp, Refresh } from '@material-ui/icons';
-import { callwithcache, convertToJson, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
+import { callwithcache, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
 import { CLR_RCARD, CLR_RCARD1 } from '../../themes';
 import { Form, FormGroup } from 'react-bootstrap';
-import { BinaryWriter } from 'google-protobuf';
-import { BinaryReader } from 'google-protobuf';
+import Itemcard from '../itemcard';
 
 
-const taskmap = new Map();
 const useStyles = makeStyles((theme) => ({
 
  
@@ -44,9 +43,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 	},
-}));//this will be a container for all the recent work that is going on
+}));
 
-export default function Latestwork(props){
+const taskmap = new Map();
+
+//this will be a container for all the recent work that is going on
+
+export default function Latestitem(props){
 
     const [loaded,setLoaded] = React.useState(false); 
     
@@ -66,30 +69,24 @@ export default function Latestwork(props){
     // var tags = filter.tags
     // var category = filter.category
     // var price = filter.price
-
     
 
 
     // before call the request check if there is some filters or not in the 
        useEffect (()=>{
+
        if (!loaded){
-         console.log(filter);
+       console.log(filter);
        refreshlatest(filter);
-       setLoaded(true)
-       //setVal(opentasklist);
-       console.log("latestwork is updated 1st time");
+       //setLoaded(true)
+
        }
     });
     
-    console.log("latestwork is updated");
-    
-    console.log(filterops);
-      
-    console.log(filter);
 
 
 
-    const changefilter = f =>{
+    const changefilter = (f) =>{
 
        setFilter(f);
       setFilterops(false);
@@ -97,33 +94,30 @@ export default function Latestwork(props){
         
       // setFilter({"place": place , "lat": lat , "lon":lon , "distance":distance , "tags":tags , "category" :category , "price":price })
     }
+
+  
    
 
     const refreshlatest =  (f) =>{ 
         //call the function to update with the latest tasks
-        var urlForm
-       if (props.type == "customer" ){
-          urlForm = geturlFormdata("task" , "get" , {"customerid":64 } ,{}   ) //localStorage.getItem("customerid") }  )
-        } 
-        else{
-          urlForm = geturlFormdata("task" , "get" , { "lat":f.lat , "lon":f.lon ,"distance":f.distance , "place":f.place , "category":f.category , "tags":f.tags  , "price" : f.price} ,{}   ) //localStorage.getItem("customerid") }  )
-        }
-       
+
+        console.log(f);
+        var urlForm = geturlFormdata("item", "get" ,{ "gettype": "t" ,"tags": f.tags , "category":f.category , "place" : f.place } , {} )
         var url = urlForm.url
         console.log(url);
-        callwithcache(getdata, url, "tasks").then((value) =>{
-          taskmap.clear()
+
+        callwithcache(getdata, url, "items").then((value) =>{
           setLoaded(true);
           console.log(value);
-          setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "taskId" )}).catch((err) =>{
+          setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
             console.log(err);
           }
           )
-  
+          
     }
 
 
-      const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.taskId}  image={convertToJson(item.metadata).images[0]} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink={item.location} taskobj={item} ></Taskcard>  )
+      const filllatest =  tasklist.map( (item) =>  <Itemcard key={item.taskId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard>  )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -142,14 +136,14 @@ export default function Latestwork(props){
                 <div style={{    display:"flex" , flexDirection: "row"  }}>
 
                 <Button onClick={async()=>{refreshlatest(filter)}} title="latesttask" style={{alignItems:"center"}} >
-               <div >LATEST TASKS</div>
+               <div >LATEST ITEMS</div>
                <Refresh  />
              </Button>
 
              <div style={{display:"flex"  }}></div>
           <div style={{display:"flex" ,flex:1, flexDirection: "row-reverse"  }}>
           
-             <Button onClick={()=>{ setHidden(!hidden) }} title="latesttask"  >
+             <Button onClick={()=>{ setHidden(!hidden) }} title="latesttask"  > 
                
                { !hidden ?<ArrowDropDown  />:<ArrowDropUp/> }
              </Button>
@@ -188,7 +182,7 @@ export default function Latestwork(props){
                   
              </div>
 
-             { !hidden ?<div style={{overflowY : "scroll" }} >{filllatest}
+             { !hidden ?<div style={{overflowY : "scroll" , display:"grid" , gridTemplateColumns: "auto auto" , gridColumnGap:0+"vw" , gridRowGap: .5+"vw"}} >{filllatest}
              </div>:<></>}
              
              </div>

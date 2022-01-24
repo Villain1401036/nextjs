@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Taskcard from '../taskcard';
 import { unix } from 'dayjs';
-import { geturlFormdata } from '../../constants';
+import { cachexpire, callwithcache, geturlFormdata, setValuesfrommap } from '../../constants';
 import { cache } from '../../cache';
 
 
@@ -46,15 +46,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const taskmap = new Map();
-const opentasklist = [];
-const tlist =[]
-var count = 0;
+
+
+
+
 //this will be a container for all the recent work that is going om
-
-
-
-
 
 //const cache = new NodeCache({  stdTTL: 5 , checkperiod:5 } );
 
@@ -62,82 +58,44 @@ var count = 0;
 
 export default function Allordercontainer(props){
 
- console.log( Date.now() );
+    const taskmap = new Map();
 
-  const [loaded,setLoaded] = React.useState(false); 
+    const classes = useStyles();
+
+    const [loaded,setLoaded] = React.useState(false);
 
     const [tasklist,setTasklist] = React.useState([]);
     
-    var urlForm = geturlFormdata("task","get",  {"customerid":63}  )
-
+    var urlForm = geturlFormdata("task","get",  {"customerid":63 }) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 
-    console.log( cache.get(url));
-    //cache.del(url)
-
-
+   
     useEffect (()=>{
       if (!loaded){
       refreshongoing(); 
-      //setVal(opentasklist);
       }
    });
 
-    const check = async (func, url) =>{
-        if (cache.get(url) && cache.get(url).expire > Date.now() ){
-          return cache.get(url).data
-        }
-        console.log("http--------------------------------------------------------------------------------------------------------------------");
-        cache.del(url)
-       return func(url)
-    }
 
-   const refreshongoing =  async () =>{ 
+
+
+   const refreshongoing =  async () =>{
        //call the function to update with the latest tasks
-       count = count + 1;
-       console.log(count);
-     
-      //getdata(url)
-      check(getdata, url).then((value) =>{
-        
-       // console.log( value ); 
-        setLoaded(true) ;
-        setVal(value);}).catch((err) =>{
+
+      callwithcache(getdata, url, "tasks").then((value) =>{
+
+        setLoaded(true);
+        setValuesfrommap(value,refreshongoing ,setTasklist , taskmap ,"taskId")}).catch((err) =>{
           console.log(err);
         }
         )
       
    }
 
-   
-   const maping =(list) =>{
-
-    list.forEach(element => { taskmap.set(element.taskId , element)});
-    tlist = []
-    //converting the map into a list 
-    taskmap.forEach( (value) => { tlist.push(value) } )
-    // ftest();
-    console.log(tlist);
-  }
-
-  //const ftest = () => taskmap.forEach( (value) => { tlist.push(value) } )
-
-
-   const setVal = (val) =>{ 
-     try{
-       opentasklist = opentasklist.concat(...val) ; maping(opentasklist); setTasklist(tlist); console.log(tasklist);
-     }
-     catch(e){
-       console.log(e);
-     }
-      } 
   
-      const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.taskId} name={item.taskId} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88"></Taskcard>  )
+  const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.taskId} name={item.taskId} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88"></Taskcard>  )
    
 
-    const classes = useStyles();
-
-  const [isloaded,setIsLoaded] = React.useState(true);
 
 	return(
 		<div style={{ backgroundColor:'red'}}>

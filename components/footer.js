@@ -6,13 +6,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
+import { CLR_FBAR } from '../themes';
 //import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   foot: {
     flexGrow: 1,
-	position:'sticky',
+	//position:'sticky',
 	bottom:0,
+	zIndex:10
   },
 	 infoblocks: {
 	    flexGrow: 1,
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 		  flexGrow: 1,
 			display:'flex',
 			flexDirection:'row',
-		backgroundColor:'lightgreen',
+		backgroundColor:CLR_FBAR,
 	},
   menuButton: {
     marginRight: theme.spacing(2),

@@ -1,38 +1,51 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import React from 'react'
+
+import React, { useContext } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
-import FilterTabbar from '../components/filtertabbar'
-import Sidebar from '../components/sidebar'
 
 
 
-import { Shopname } from '../constants'
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import AppBar from '@material-ui/core/AppBar';
-import Ongoingwork from '../components/containers/ongoingwork'
+
+import { Shopname ,onRefresh} from '../constants'
+
 import Allordercontainer from '../components/containers/allordercontainer'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
+import Latestwork from '../components/containers/lastestwork'
 
 
 
 
 export default function Orderpage(props){
 
+   const authContext = useContext(AuthContext);
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
+  onRefresh(authContext)
+  
 	return(
+
+
+<>
+{ authContext.isLoggedIn && 
+  (
 		<div>
 
         <ButtonAppBar  itemName={Shopname}/>
 			
-        <Allordercontainer />
+        <Latestwork type={"customer"} />
         
 
        <Footer />
 		</div>
+)
+}
+{
+  !authContext.isLoggedIn && (<Logincontainer />)
+}
+
+</>
 	);
 
 
