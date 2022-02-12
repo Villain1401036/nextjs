@@ -82,6 +82,14 @@ export const callwithcache = async (func, url ,obj) =>{
   }
 }
 
+export const getfromLS = ( key) =>{
+  if(typeof window != 'undefined'){
+    var k = localStorage.getItem(key)
+    return k
+  }
+   return 
+}
+
 
 // export const postwitherror = async (func, url ,obj, formdata) =>{
 

@@ -13,6 +13,7 @@ import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
 import Latestwork from '../components/containers/lastestwork'
 import Bookingorders from '../components/containers/allbookings'
+import Bookingcontainer from '../components/containers/bookingreq'
 
 
 
@@ -32,10 +33,13 @@ export default function Orderpage(props){
 { authContext.isLoggedIn && 
   (
 		<div>
-
+        
+        
         <ButtonAppBar  itemName={Shopname}/>
 			
-        <Bookingorders />
+        <Bookingcontainer />
+
+        
         
 
        <Footer />

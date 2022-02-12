@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import ButtonAppBar from '../components/headbar'
 
 
@@ -11,6 +11,10 @@ import Histwork from '../components/containers/histwork'
 import Notifications from '../components/containers/notifications'
 import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
+import Infoput from '../components/containers/infoput';
+import Userinfo from '../components/containers/userinfo';
+import { Confirm } from '../components/containers/confirmation';
+import { Button } from 'react-bootstrap';
 
 
 
@@ -51,39 +55,58 @@ export default function HomePage(props){
   const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);
   const classes = useStyles();
+
+
+  const onselect = (data) => {
+	console.log(data);
+  }
 	
 	return(
 
 <>
-{ authContext.isLoggedIn && 
-	(
+
+	
 		<div >
 
         
 			<div className={classes.contentArea}>
               <ButtonAppBar  itemName={Shopname}/>
-			 
 
-			  <Notifications />
-			  <Histwork />
-			  <Ongoingwork />
-			  
+			{/* <Userinfo />
+			 <Infoput />
+			  <Confirm /> */}
 			</div>
 			
         
-
+			  <ChooseAccType onselect={(e)=>onselect(e)} />
        
 		</div>
 
-)
-}
-{
-	!authContext.isLoggedIn && (<Logincontainer />)
-}
+
+
 
 </>
 	);
 
 
+}
 
+function ChooseAccType(props){
+
+	const [hide , setHide] = useState("visible");
+
+	return(
+		<>
+		<div style={{textAlign:"center",  marginTop:20+"vh" , display:hide}} >
+
+			<Button style={{margin:5+"vh"}}  onClick={()=>{props.onselect("work");setHide("none")}} >I am here for work</Button>
+
+			<Button style={{margin:5+"vh"}}  onClick={()=>{props.onselect("user");setHide("none")}}>I am here for using the services</Button>
+
+			<Button style={{margin:5+"vh"}} onClick={()=>{props.onselect("userwork");setHide("none")}}>I am here for both</Button>
+			
+			</div>
+
+		</>
+	);
 }

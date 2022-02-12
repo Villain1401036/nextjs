@@ -9,7 +9,6 @@ option go_package = "/protofiles";
 
 //protoc --proto_path=C:\Users\kr716\apps\nextjs --js_out=import_style=commonjs,binary:build\gen  user.proto
 
-//
 //user message 
 message User {
 
@@ -69,6 +68,7 @@ message Customer {
 	string email = 6;
 	int64 aadhar_id =7;
 	bytes metadata = 8;
+	string gender = 9;
 
 }
 
@@ -240,7 +240,7 @@ message Guarantees {
 	
 	bytes metadata = 8;
   
- } 
+ }
 
  
 message Bids {
@@ -249,7 +249,28 @@ message Bids {
  
  }
 
- message Address {
+ message Biditem {
+	int64 bid_key = 1;
+	string bid_id = 2;
+	int64 item_key = 3;
+	int64 customer_key = 4;
+	int32 bidprice = 5;
+	int64 created_at = 6;
+    string bid_message = 7;
+
+	
+	bytes metadata = 8;
+  
+ }
+
+ 
+message Biditems {
+
+	repeated Biditem Mbiditems = 1;
+ 
+ }
+
+message Address {
 
 	int64 address_key = 1;
     string address_id = 2;
@@ -286,10 +307,45 @@ message Addresses {
 	repeated string tags = 10;
 	repeated string category = 11;
 	string place = 12;
+	
 }
 
 message Items {
 
 	repeated Item Mitems = 1;
  
+ }
+
+ message Booking{
+
+	int64 booking_key = 1 ;
+	string booking_id = 2 ;
+	int64 customer_key = 3;
+	int64 lender = 4;
+	int32 booking_price = 5;
+	int64 booking_time = 6;
+	string place = 7;
+	bytes location = 8 ;
+	bytes metadata = 9 ;
+	int64 book_from = 10;
+	int64 book_to = 11;
+	int64 item_key = 12;
+	int32 status = 13;
+
+ }
+
+ message Bookings{
+	repeated  Booking Mbookings = 1;
+ }
+
+ message Confirmcode{
+
+	int64 booking_key = 1 ;
+	string confirm_code = 2 ;
+	string confirm_ncode = 3 ;
+	bytes metadata = 4 ;
+ }
+
+ message Confirmcodes{
+	repeated  Confirmcode Mconfirmcodes = 1;
  }

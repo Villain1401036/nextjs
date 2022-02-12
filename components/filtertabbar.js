@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
 		opacity: 1.0,
 		zIndex:10,
 		overflowX: 'scroll',
-		maxHeight:8+"vw"
+		maxHeight:8+"vw",
+		maxWidth:100+"vw"
 
 	},
 	Linkbutt:{

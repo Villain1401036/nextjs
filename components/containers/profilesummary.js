@@ -70,7 +70,7 @@ export default function Profilesummary(props){
     const [edit , setEdit] = React.useState(true);
 
 	    
-    var urlForm = geturlFormdata("customer","get",  {"user_id":63 }) //localStorage.getItem("customerid") }  )
+    var urlForm = geturlFormdata("customer","get",  {"user_id":"sdfsdfsd" , idtype:"email" }) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 
     

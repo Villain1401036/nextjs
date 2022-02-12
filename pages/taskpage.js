@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ButtonAppBar from '../components/headbar'
 
 
-import { gettaskonpage, Shopname } from '../constants'
+import { convertToJson, gettaskonpage, s3rooturl, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -63,6 +63,8 @@ const router = useRouter();
   console.log(taskdata);
    
 	return(
+<>
+		{isloaded?
 		<div>
 		<Head>
 			<title>Spook</title>
@@ -74,6 +76,7 @@ const router = useRouter();
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >
 				<div style={{ minHeight:40+"vh" }}>
+					<img style={{width:90+"vw"}} src={s3rooturl + convertToJson(taskdata.metadata).images[0]}></img>
 					<div>{taskdata.description}</div>
 				</div>
 				 
@@ -85,6 +88,7 @@ const router = useRouter();
 
         
 		</div>
+		:<></>}</>
 	);
 
 

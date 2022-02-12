@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { getdata } from '../../networking/getdata';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Chip, Slider, TextField } from '@material-ui/core';
 import Taskcard from '../taskcard';
 import { ArrowDropDown, ArrowDropUp, DockRounded, Filter, Fireplace, MapSharp, Refresh } from '@material-ui/icons';
 import { callwithcache, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
@@ -205,9 +205,16 @@ function EditFilter(props){
   const[place, setPlace] = React.useState(props.filters.place);
   const[distance, setDistance] = React.useState(props.filters.distance);
   const[price, setPrice] = React.useState(props.filters.price);
+  const[pricerange, setPricerange] = React.useState([0,1000]);
   const[tags, setTags] = React.useState(props.filters.tags);
+  const[tag, setTag] = React.useState();
+  const[categorys, setCategorys] = React.useState(props.filters.category);
   const[category, setCategory] = React.useState(props.filters.category);
   const[location, setLocation] = React.useState();
+
+  const [alltags, setAlltags] = useState(new Set());
+  const [allcat, setAllcat] = useState(new Set());
+
   
 
   const passdata = () =>{
@@ -215,20 +222,107 @@ function EditFilter(props){
      return ({"place": place , "lat":latestworkobj.lat , "lon": latestworkobj.lon ,  "distance":distance , "tags":tags , "category" :category , "price":price })
   }
 
+
+  const handleChange = (event, newValue) => {
+    setPricerange(newValue);
+    setPrice(newValue[0].toString()+"~"+newValue[1].toString());
+  };
+
+  const  valuetext = (value) => {
+    return `${value}°C`;
+  }
+
+  const handleKeyPress =(e) => {
+
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       alltags.add(tag)
+       console.log(alltags);
+       
+       var s = ""
+       alltags.forEach( (item) =>  {s = s + "~" + item})
+       setTags(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("tags").value = ""
+     }
+   }
+
+   const handleKeyPressc =(e) => {
+    
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       allcat.add(category)
+       console.log(allcat);
+       
+       var s = ""
+       allcat.forEach( (item) =>  {s = s + "~" + item})
+       setCategorys(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("category").value = ""
+     }
+   }
+   const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+
+   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+   
+   var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+     const getloc = () => { navigator.geolocation.getCurrentPosition( (pos) => {
+    var crd = pos.coords;
+  
+    // console.log('Your current position is:');
+    // console.log(`Latitude : ${crd.latitude}`);
+    // console.log(`Longitude: ${crd.longitude}`);
+    // console.log(`More or less ${crd.accuracy} meters.`);
+    setLocation([crd.latitude,crd.longitude])
+    console.log(location);
+  } , (e) =>{console.log(e)} , options ) }
+   
+ 
   return (
     <>
 
-      <FormGroup>
-        
-<TextField  id="place" label="short_name" variant="outlined" value= {place} onChange={(e) => setPlace(e.target.value) }  ></TextField>
-<TextField  id="distance" label="description" variant="outlined" value= {distance} onChange={(e) => setDistance(e.target.value) } ></TextField>
-<TextField  id="price" label="price" variant="outlined" value= {price} onChange={(e) => setPrice(e.target.value) } ></TextField>
-<TextField  id="tags" label="tags" variant="outlined" value= {tags} onChange={(e) => setTags(e.target.value) } ></TextField>
-<TextField  id="category" label="category" variant="outlined" value= {category} onChange={(e) => setCategory(e.target.value) } ></TextField>
-<TextField  id="location" label="location" variant="outlined" value= {location} onChange={(e) => setLocation(e.target.value) } ></TextField>
+      <FormGroup style={{textAlign:"center"}}>
+        <div style={{margin:2+"vh"}}>
+<TextField  id="place" label="place"   onChange={(e)  => setPlace(e.target.value) }  ></TextField>
+</div>
+      <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
+<Slider style={{width:80+"vw"}} onChange={(e,value) => {console.log(value);setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
+
+<div style={{ fontWeight:"bold" }}>Under price range INR <span style={{ fontSize:8+"vw" , color:"blue" }}>{pricerange[0]}</span> to <span style={{fontSize:8+"vw" , color:"blue" }}>{pricerange[1]}</span></div>
+
+
+<Slider
+style={{width:80+"vw"}}
+        min={50} max={50000}
+        getAriaLabel={() => 'Temperature range'}
+        value={pricerange}
+         onChange={handleChange}
+        valueLabelDisplay="auto"
+       getAriaValueText={valuetext}
+
+      />
+
+<h5>tags</h5> <div>{filtertags}</div>
+<TextField  id="tags" label="add new tag"    style={{margin:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleKeyPress(e)}}></TextField>
+
+<h5>categories</h5> <div>{filtercategory}</div>
+<TextField  id="category" label="add new category"     style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleKeyPressc(e)}}></TextField>
+<div>
+<button  id="location" label="location"   style={{margin:2+"vh"}} onClick={getloc} >current Location</button>
+</div>
 </FormGroup >
 
-<button onClick={()=>{ props.onClickgetfilter(passdata()) }} >Search</button>
+
+<button onClick={()=>{ props.onClickgetfilter(passdata()) }} >Save Filters</button>
          </>
   )
 }

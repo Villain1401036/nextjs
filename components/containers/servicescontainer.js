@@ -10,7 +10,6 @@ import { CLR_RCARD, CLR_RCARD1 } from '../../themes';
 import { Form, FormGroup } from 'react-bootstrap';
 import { BinaryWriter } from 'google-protobuf';
 import { BinaryReader } from 'google-protobuf';
-import { handleEnterKeyPress } from '../../utils';
 
 
 const taskmap = new Map();
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));//this will be a container for all the recent work that is going on
 
-export default function Latestwork(props){
+export default function ServicesContainer(props){
 
     const [loaded,setLoaded] = React.useState(false); 
     
@@ -103,20 +102,21 @@ export default function Latestwork(props){
     const refreshlatest =  (f) =>{ 
         //call the function to update with the latest tasks
         var urlForm
-       if (props.type == "customer" ){
-          urlForm = geturlFormdata("task" , "get" , {"customerid":64 } ,{}   ) //localStorage.getItem("customerid") }  )
-        } 
-        else{
-          urlForm = geturlFormdata("task" , "get" , { "lat":f.lat , "lon":f.lon ,"distance":f.distance  , "place":f.place , "category":f.category , "tags":f.tags  , "price" : f.price} ,{}   ) 
-        }
+    //    if (props.type == "customer" ){
+    //       urlForm = geturlFormdata("task" , "get" , {"customerid":64 } ,{}   ) //localStorage.getItem("customerid") }  )
+    //     } 
+    //     else{
+    //       urlForm = geturlFormdata("task" , "get" , { "lat":f.lat , "lon":f.lon ,"distance":f.distance  , "place":f.place , "category":f.category , "tags":f.tags  , "price" : f.price} ,{}   ) 
+    //     }
        
+    urlForm = geturlFormdata("service" , "get" , {"customerid":64 } ,{}   ) //localStorage.getItem("customerid") }  )
         var url = urlForm.url
         console.log(url);
-        callwithcache(getdata, url, "tasks").then((value) =>{
+        callwithcache(getdata, url, "services").then((value) =>{
           taskmap.clear()
           setLoaded(true);
           console.log(value);
-          setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "taskId" )}).catch((err) =>{
+          setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "serviceId" )}).catch((err) =>{
             console.log(err);
           }
           )
@@ -124,7 +124,7 @@ export default function Latestwork(props){
     }
 
 
-      const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.taskId}  image={convertToJson(item.metadata).images[0]} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink={item.location} taskobj={item} ></Taskcard>  )
+      const filllatest =  tasklist.map( (item) =>  <Taskcard key={item.serviceId}   description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink={item.location} taskobj={item} ></Taskcard>  )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -143,7 +143,7 @@ export default function Latestwork(props){
                 <div style={{    display:"flex" , flexDirection: "row"  }}>
 
                 <Button onClick={async()=>{refreshlatest(filter)}} title="latesttask" style={{alignItems:"center"}} >
-               <div >LATEST TASKS</div>
+               <div >LATEST SERVICES</div>
                <Refresh  />
              </Button>
 
@@ -156,7 +156,7 @@ export default function Latestwork(props){
              </Button>
 
              <div style={{minWidth:20+"vw",height:100+"%",textAlign:"center",alignItems:"center"}} >
-             <Button  style={{margin:"auto", backgroundColor:"white"}} onClick={()=>{ setFilterops(!filterops) ; console.log("filter") }} >change filters</Button>
+             <Button  style={{margin:"auto", fontSize:3+"vws", backgroundColor:"white"}} onClick={()=>{ setFilterops(!filterops) ; console.log("filter") }} >change filters</Button>
 
              </div>
              </div>
@@ -241,8 +241,43 @@ function EditFilter(props){
     setPrice(newValue[0].toString()+"~"+newValue[1].toString());
   };
 
+  const  valuetext = (value) => {
+    return `${value}°C`;
+  }
 
+  const handleKeyPress =(e) => {
 
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       alltags.add(tag)
+       console.log(alltags);
+       
+       var s = ""
+       alltags.forEach( (item) =>  {s = s + "~" + item})
+       setTags(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("tags").value = ""
+     }
+   }
+
+   const handleKeyPressc =(e) => {
+    
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       allcat.add(category)
+       console.log(allcat);
+       
+       var s = ""
+       allcat.forEach( (item) =>  {s = s + "~" + item})
+       setCategorys(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("category").value = ""
+     }
+   }
    const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
 
    const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
@@ -256,6 +291,10 @@ function EditFilter(props){
      const getloc = () => { navigator.geolocation.getCurrentPosition( (pos) => {
     var crd = pos.coords;
   
+    // console.log('Your current position is:');
+    // console.log(`Latitude : ${crd.latitude}`);
+    // console.log(`Longitude: ${crd.longitude}`);
+    // console.log(`More or less ${crd.accuracy} meters.`);
     setLocation([crd.latitude,crd.longitude])
     console.log(location);
   } , (e) =>{console.log(e)} , options ) }
@@ -281,15 +320,15 @@ style={{width:80+"vw"}}
         value={pricerange}
          onChange={handleChange}
         valueLabelDisplay="auto"
-
+       getAriaValueText={valuetext}
 
       />
 
 <h5>tags</h5> <div>{filtertags}</div>
-<TextField  id="tags" label="add new tag"    style={{margin:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></TextField>
+<TextField  id="tags" label="add new tag"    style={{margin:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleKeyPress(e)}}></TextField>
 
 <h5>categories</h5> <div>{filtercategory}</div>
-<TextField  id="category" label="add new category"     style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setCategorys,allcat,category,"category")}}></TextField>
+<TextField  id="category" label="add new category"     style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleKeyPressc(e)}}></TextField>
 <div>
 <button  id="location" label="location"   style={{margin:2+"vh"}} onClick={getloc} >current Location</button>
 </div>

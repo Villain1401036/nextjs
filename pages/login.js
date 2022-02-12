@@ -1,5 +1,6 @@
 
 import React from 'react'
+import Logincomponent from '../components/containers/logincomponent';
 import Logincontainer from '../components/containers/logincontainer'
 
 
@@ -16,13 +17,17 @@ export default function LoginPage(props){
 	return(
 		<div>
 
-       
-              
-			
-			 <Logincontainer />
+<div style={{width :100+"vw" , textAlign:"center"} } className="outer">
+        <div style={{marginTop:20+"vh"}} className="inner">
 
-       
-		</div>
+		<Logincomponent />
+
+			 {/* <Infoput /> */}
+
+        </div>
+      </div>
+
+		</div>	
 	);
 
 

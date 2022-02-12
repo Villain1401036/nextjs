@@ -34,13 +34,16 @@ const bidhandler = () =>{
         image={s3rooturl + convertToJson(props.itemobj.metadata).images[0]}
         alt="green iguana"
       />
-                <div name="category">{props.category}</div>
-                <div name="description">{props.description}</div>
-                <div name="place">{props.place}</div>
-                <div name="price">{props.price}</div>
+        <div style={{fontSize:3+"vw", margin:1+"vw"}}>
+                <div name="description" style={{fontSize:3+"vw"}}>{props.description}</div>
+                
+                <div name="price"style={{fontSize:3+"vw"}}><span>price: </span><span style={{ fontWeight:"bold",color:"red" }}>{props.price}</span></div>
                 <div name="distance">{props.distance}</div>
-                <div name="scheduled_at">{props.scheduled_at}</div>
-                <div name="duration">{props.duration}</div>
+
+                <span name="discount"style={{ fontSize:3.5+"vw",fontWeight:"bold",fontStyle:"italic" ,color:"green" }}>{"upto 50% cashback"}</span>
+                </div>
+                
+                
 
             </Card>
 

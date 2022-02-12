@@ -10,6 +10,7 @@ import Workdashboard from '../components/containers/workdashboard'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,9 +88,10 @@ onRefresh(authContext);
 	
 	<Profilesummary />
 	
-	<Allordercontainer />
-
-	<Workdashboard />
+	
+     <BigButton name={"Address"} onClick={()=>{console.log("Address")}} />
+	 <BigButton name={"All Orders"} onClick={()=>{console.log("all order");}} />
+	 
 
   
 	</div>
@@ -103,5 +105,11 @@ onRefresh(authContext);
 	);
 
 }
+
+function BigButton(props){
+	return(
+<Button style={{width:100+"vw",fontSize:5+"vw" , borderTop:".1vw solid black"   }} onClick={props.onClick} >{props.name}</Button>
+	);
+} 
 
 

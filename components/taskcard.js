@@ -64,20 +64,20 @@ const bidtask = () =>{
 
 	return(
 		
-            <Card variant='outlined'  style={{ margin:2+"vw"}} >
+            <Card variant='outlined'  style={{ margin:0.4+"vw"}} >
                 {/*<div name="name">{props.name}</div>*/}
                 <div onClick={() =>{ console.log(props.taskobj) ;pushtask(props.taskobj) ; router.push("/taskpage") }}>
                 <CardMedia
         component="img"
-        style={{ maxHeight:70+"vw" , minHeight:50+"vw",  objectFit:"contain" , backgroundColor: "lightgrey" }}
+        style={{ maxHeight:70+"vw" , minHeight:40+"vw",  objectFit:"contain" , backgroundColor: "lightgrey" }}
         image={rooturl+props.image}
         
         alt="green iguana"
       />
-                <div name="description">{props.taskobj.taskKey}</div>
-                <div name="description">{props.description}</div>
-                <div name="place">{props.place}</div>
-                <div name="price">{props.price}</div>
+                <div name="description" style={{fontSize:3+"vw"}}>{props.taskobj.taskKey}</div>
+                <div name="description"  style={{fontSize:3+"vw"}}>{props.description}</div>
+                <div name="place"  style={{fontSize:3+"vw"}}>{props.place}</div>
+                <div name="price"  style={{fontSize:3+"vw"}}>{props.price}</div>
                 <div name="distance">{props.distance}</div>
                 <div name="scheduled_at">{props.scheduled_at}</div>
                 <div name="duration">{props.duration}</div>
@@ -85,12 +85,12 @@ const bidtask = () =>{
                 
                 </div>
                 <div style={{display:"flex" , flexDirection:"row-reverse" }}>
-                <button name="bid" onClick={() => bidtask()} style={{width:20+"%",height:10+"vw" , backgroundColor:"white", margin:1+"vw", borderStyle:"solid" , borderRadius:2+"vw", borderColor:"purple" ,   textAlign:"center" }} >
+                <button name="bid" onClick={() => bidtask()} style={{ fontSize:3+"vw",backgroundColor:"white", margin:1+"vw", borderStyle:"solid" , borderRadius:2+"vw", borderColor:"purple" ,   textAlign:"center" }} >
                   BID
                   </button>
-                <button name="takework" onClick={() => catchtask()} style={{width:20+"%",height:10+"vw" , margin:1+"vw", borderStyle:"solid" , borderRadius:2+"vw", borderColor:"purple" ,   textAlign:"center" , backgroundColor:"white" }} >takework</button>
+                <button name="takework" onClick={() => catchtask()} style={{fontSize:3+"vw", margin:1+"vw", borderStyle:"solid" , borderRadius:2+"vw", borderColor:"purple" ,   textAlign:"center" , backgroundColor:"white" }} >takework</button>
                 <div style={{display:"flex" , flex:1, flexDirection:"row" }}></div>
-                <div name="maplink"  style={{width:10+"vw", padding:1+"vw"}} onClick={() => open(props.maplink)} ><PinDropTwoTone fontSize="large" /></div>
+                <div name="maplink"  style={{width:10+"vw", padding:1+"vw"}} onClick={() => open(props.maplink)} ><PinDropTwoTone fontSize="small" /></div>
                 </div>
             </Card>
 

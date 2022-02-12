@@ -58,7 +58,24 @@ export function put(files){
   var promises=[];
   for(var i=0;i<files.length;i++){
       var file = files[i];
-      promises.push(uploadLoadToS3(file));
+      promises.push(uploadLoadToS3(file,'testbucket'));
+  }
+  Promise.all(promises).then(function(data){
+    console.log('Uploadedd');
+    return mediaarr
+}).catch(function(err){
+  console.log(err.stack);
+})
+    console.log("--------------------------------put-------------------------------");
+
+}
+
+export function putverify(files){
+  mediaarr = []
+  var promises=[];
+  for(var i=0;i<files.length;i++){
+      var file = files[i];
+      promises.push(uploadLoadToS3(file,'verificationdata'));
   }
   Promise.all(promises).then(function(data){
     console.log('Uploadedd');
@@ -71,10 +88,10 @@ export function put(files){
 }
 
 
-function uploadLoadToS3(file){
+function uploadLoadToS3(file,bucket){
 
   var filename = createrandomfilename(file.name)
-  var params = { Bucket: 'testbucket', Key: filename ,ContentType: file.type , Body:file};
+  var params = { Bucket: bucket, Key: filename ,ContentType: file.type , Body:file};
   
   s3.upload(params,(err,data)=>{
     if (err) throw err;

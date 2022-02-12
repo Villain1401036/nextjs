@@ -29,7 +29,7 @@ export const postdata = async(url , object , formdata , options ) => {
       if (error.response.status == 401){
 
        refreshTokens("http://localhost:9082/user/refreshtoken")
-        return 401
+        throw Error(401)
         
         
 

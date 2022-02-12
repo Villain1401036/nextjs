@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
 import FilterTabbar from '../components/filtertabbar'
@@ -15,6 +15,8 @@ import Ongoingwork from '../components/containers/ongoingwork'
 import { AuthContext } from '../context'
 import LoginPage from './login'
 import Latestitem from '../components/containers/latestitem'
+import { Button, Navbar, Tab, Tabs } from 'react-bootstrap'
+import ServicesContainer from '../components/containers/servicescontainer'
 
 
 
@@ -31,8 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
 	},
 	contentArea:{
-		display:'flex',
-		flexDirection:'column',
+		
 		height:100+'%',
 	},
 		cover: {
@@ -48,6 +49,18 @@ const useStyles = makeStyles((theme) => ({
 		width:250+"px",
 		backgroundColor:'pink',
 
+
+	},
+	appbar:{
+		
+		backgroundColor:"white",
+
+		top: 12+"vw",
+		position:'sticky',
+		
+	
+	
+	
 
 	},
 }));
@@ -88,37 +101,52 @@ if(typeof window === 'undefined'){
 
   onRefresh(authContext)
   
+  const [key,setKey] = useState();
   
 	return(
    <>
 		{ authContext.isLoggedIn && (
 
   
-
-			<div style={{minHeight:100+"vh" ,display:"flex", flex:1 , flexDirection:"column"}}>
+     <>
+			
 			<Head>
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
-				<FilterTabbar />
-				 
-    <div style={{overflowY:"hidden" , display:'flex' ,flex:1, flexDirection:'row'   }}>
-       
+			
 
-				 <div style={{width:100+"vw", overflowY:"hidden"}} >
+  <div 	className={classes.appbar} >
+				 <Tabs
+      id="controlled-tab-example"
+      activeKey={key}
+      onSelect={(k) => setKey(k)}
+
+
+
+    >
+      <Tab eventKey="item" title="Item" >
+	  <Latestitem />
+      </Tab>
+      {/* <Tab eventKey="Services" title="Services">
+      <ServicesContainer />
+      </Tab>
+      <Tab eventKey="Tasks" title="Tasks" >
+	  <Latestwork />
+      </Tab> */}
+    </Tabs>
+				</div>
+				
+				
+				
 				 
-				<Latestwork />
-				<Ongoingwork />
-				<Latestitem />
-				 
-				 </div >
-				 </div>
+				<Footer />
                  
-				 <Footer />
+			</>
 				 
 				
-			</div>
+			
 		)
 
 		}
@@ -156,4 +184,19 @@ if(typeof window === 'undefined'){
 	
 	return { props: { msg: 'hello world' } }
 
+  }
+
+
+  function Sections(props){
+
+	  const children = props.sections.map((item) => <div style={{display:"flex",flexDirection:"row" , flex:1 }} onClick={()=>{
+
+	  }}>{item}</div>)
+
+	  return (
+		  <>
+			<div id="sec-container" style={{display:"flex",flexDirection:"row" , flex:1 }} >{children}</div>
+			
+		  </>
+	  );
   }

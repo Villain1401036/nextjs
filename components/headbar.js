@@ -27,6 +27,7 @@ import {CLR_HEAD} from '../themes.js'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { AuthContext } from '../context';
+import { Dropdown } from 'react-bootstrap';
 
 
 
@@ -72,7 +73,7 @@ logo:{
     marginRight: theme.spacing(2),
   },
   title: {
-    
+    color:"white",
     width:100+"%"
   },
 	search: {
@@ -182,6 +183,7 @@ return (
             :
             <Button  className={classes.createbtn} onClick={()=>{router.push("/newService")}}>create Service</Button>
             }
+            <Button  className={classes.createbtn} onClick={()=>{router.push("/")}}>Post Item</Button>
           {true?
             <div></div>:
             <div className={classes.search}>
@@ -452,12 +454,11 @@ const authContext = React.useContext(AuthContext);
 
   return (
     <div style={{padding:10+"px"}}>
-       <div className={classes.title} style={ {paddingBottom:10}}>Freebees</div>
-  
 
-     <div style={{width:60+"vw"}} >
-      <span style={{fontSize:5+"vw"}} >Account type:</span>
-      {!authContext.accounttype?<span style={{fontSize:6+"vw"}}>   work    </span>:<span style={{fontSize:6+"vw"}}>   user   </span>}<Switch  checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
+       
+     <div style={{width:60+"vw", display:"flex", flex:1 , flexDirection:"row-reverse" }} >
+      {!authContext.accounttype?<div style={{fontSize:6+"vw"}}>   work    </div>:<div style={{fontSize:6+"vw"}}>   user   </div>}<Switch  checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
+      <div className={classes.title} style={ { fontSize:8+"vw",paddingBottom:10}}>Freebees</div>
       </div>
 
 <div className={classes.drawButt}>
@@ -473,23 +474,28 @@ const authContext = React.useContext(AuthContext);
 }
     </div>
 
-    <div className={classes.drawButt}>
-    <div  onClick={()=>{router.push("/address")}}>{"addresses"}</div>
-    </div>
-
-    <div className={classes.drawButt}>
-    <div  onClick={()=>{router.push("/info")}}>{"info"}</div>
-    </div>
 
     <div className={classes.drawButt}>
     <div  onClick={()=>{router.push("/orders")}}>{"orders"}</div>
     </div>
 
-
     <div className={classes.drawButt}>
-    <div  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</div>
+    <div  onClick={()=>{router.push("/settings")}}>{"settings"}</div>
     </div>
+     <Catdrop />
     </div>
   );
 
+}
+
+
+function Catdrop(props){
+  const classes = useStyles();
+  return(
+    <>
+      <div className={classes.drawButt} ><span >Plumber</span> 
+        
+      </div>
+    </>
+  );
 }

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
 import FilterTabbar from '../components/filtertabbar'
@@ -14,6 +14,11 @@ import Ongoingwork from '../components/containers/ongoingwork'
 import { AuthContext } from '../context'
 import LoginPage from './login'
 import Bidcontainer from '../components/containers/bidcontainer'
+import Bookingcontainer from '../components/containers/bookingreq'
+import Bookingorders from '../components/containers/allbookings'
+import { Itemform } from '../components/create'
+import SimpleBottomNavigation from '../components/bottomnav'
+import { getQrCode } from '../utils'
 
 
 
@@ -75,7 +80,7 @@ console.log(typeof window);
 
 if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") == "false") { console.log("login"); ;authContext.login() }}
 
-  const [isloaded,setIsLoaded] = React.useState(true);
+  const [isloaded,setIsLoaded] = React.useState(false);
   //const [isloaded,setIsLoaded] = React.useState(true);
   console.log("refresh");
 
@@ -89,7 +94,23 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 		}
 	  }
 
-  
+	  useEffect(() => {
+
+		if(!isloaded){
+          setIsLoaded(true);
+		  
+		}
+		 else{
+			
+		 }
+    
+ 
+		
+		//Our draw come here
+	  
+	  })
+
+   console.log();
   
 	return(
    <>
@@ -101,18 +122,19 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
 				<FilterTabbar />
-				 <button onClick={()=>{authContext.logout() }}>logout</button>
+				 
 				
 				 <div  >
 				 
-				
-				<Bidcontainer />
-				 
+				<Bookingcontainer />
+				{/* <Bookingorders />
+				<Itemform />
+				  */}
 				 </div >
-				 
+				
 				 <Footer />
-				 
-			
+				 <SimpleBottomNavigation />
+			     
 				
 			</div>
 		)

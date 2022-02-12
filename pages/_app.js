@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import { Routes, Route, Link } from "react-router-dom";
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../context';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 function MyApp({ Component, pageProps }) {
 

@@ -1,6 +1,6 @@
-import { Button, TextareaAutosize, TextField } from "@material-ui/core";
+import { Button, Chip, TextareaAutosize, TextField } from "@material-ui/core";
 
-import React from "react";
+import React, { useState } from "react";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -18,6 +18,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { geturlFormdata } from "../constants";
+import { handleEnterKeyPress } from "../utils";
 
 
 
@@ -302,38 +304,142 @@ React.useEffect (()=>{
 <TextField  id="location" label="location" variant="outlined" value= {location} onChange={(e) => setLocation(e.target.value) } ></TextField>
 <TextField  id="worker_key" label="worker_key" variant="outlined" value= {worker_key} onChange={(e) => setWorker_key(e.target.value) } ></TextField>
 
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DesktopDatePicker
-          label="For desktop"
-          value={value}
-          minDate={new Date('2017-01-01')}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        <MobileDatePicker
-          label="For mobile"
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-         <StaticTimePicker
-        displayStaticWrapperAs="mobile"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-      />
-      
-        </LocalizationProvider>
+
  </FormGroup>
+
  <div><Button onClick={()=>{ readyform()}}>Submit</Button></div>
         </div>
     );
+}
+
+
+
+export function Itemform(props){
+
+  const[loaded,setLoaded] = React.useState(false);
+ 
+  const [value, setValue] = React.useState(new Date());
+
+
+  const[customerkey, setCustomerkey] = React.useState();
+  const[description, setDescription] = React.useState();
+
+  const[price, setPrice] = React.useState();
+  const[deno, setDeno] = React.useState();
+
+  const[tags, setTags] = React.useState("");
+  const[category, setCategory] = React.useState();
+
+  const[negotiable, setNegotiable] = React.useState();
+  
+
+  const[tag, setTag] = React.useState();
+ 
+  
+  const[categorys, setCategorys] = React.useState("");
+
+
+  const [alltags, setAlltags] = useState(new Set());
+const [allcat, setAllcat] = useState(new Set());
+
+ 
+React.useEffect (()=>{
+  if (!loaded){
+     
+  setLoaded(true)
+  //setVal(opentasklist);
+  }
+});
+
+
+const filtertags =  tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+
+const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+
+const [files, setFiles] = React.useState([]); 
+
+const router = useRouter();
+
+const handleupload = (file) =>{
+if(typeof window != 'undefined'){
+  
+  
+    put(file)
+ 
+ }
+}
+
+const makearr =() =>{
+  
+  var s = ""
+  mediaarr.forEach(element => {
+    s += `"/testbucket/${element}",`
+  });
+  console.log(s);
+  return s.slice(0,-1)
+}
+
+const  readyform = () => {
+  var formdatas = new FormData();
+ 
+  
+  formdatas.append("customer_key", 63)
+  if (description){ formdatas.append("description", description)}
+
+  if (price){ formdatas.append("price", price)}
+  if (deno){ formdatas.append("deno", deno)}
+
+  if (tags){ formdatas.append("tags", tags)}
+  if (category){ formdatas.append("category", category)}
+
+  if (negotiable){ formdatas.append("negotiable", negotiable)}
+
+  formdatas.set("metadata", `{"images":[${makearr()}]}` )
+ 
+  postdata(geturlFormdata("item","create",{}).url , "item" , formdatas )
+  
+ console.log(formdatas.getAll("description")); 
+
+}
+
+const fillpics = Array.from(files).map(file => 
+  <img style={{width:80+"vw"}} src={URL.createObjectURL(file)}></img>
+)
+
+const handlesubmit = async () =>{
+  await handleupload(files);
+  readyform()
+
+}
+
+
+  return (
+      <div style={{textAlign:"center"}}>
+       
+        <h1 >NEW ITEM</h1>
+          <FormGroup>
+          
+
+<TextField  id="description" label="description" variant="outlined"  onChange={(e) => setDescription(e.target.value) } ></TextField>
+<TextField  id="price" label="price" variant="outlined"  onChange={(e) => setPrice(e.target.value) } ></TextField>
+<TextField  id="deno" label="deno" variant="outlined"  onChange={(e) => setDeno(e.target.value) } ></TextField>
+<TextField  id="negotiable" label="negotiable" variant="outlined" onChange={(e) => setNegotiable(e.target.value) } ></TextField>
+
+<h5>tags</h5> <div>{alltags.size>0?filtertags:<></>}</div>
+<TextField  id="tags" label="add new tag"    style={{margin:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></TextField>
+
+<h5>categories</h5> <div>{allcat.size >0?filtercategory:<></>}</div>
+<TextField  id="category" label="add new category"   style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setCategorys,allcat,category,"category")}}></TextField>
+</FormGroup>
+
+<div><Button onClick={()=>{ readyform()}}>Submit</Button></div>
+<input type="file" name="file" accept="image/png, image/gif, image/jpeg" multiple  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFiles(file) }} />
+{ files!= [] ?<>{fillpics}</>:<></> }
+            <>
+            <div><Button onClick={()=>{ handlesubmit() }}>Submit</Button></div>
+            </>
+      </div>
+  );
 }
 
 
