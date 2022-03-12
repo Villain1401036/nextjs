@@ -1,17 +1,31 @@
 //task card for a new task that has been posted
-import { Button, Card, CardMedia, divField } from '@material-ui/core';
+import { Button, Card, CardMedia, divField, makeStyles } from '@material-ui/core';
 import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { geturlFormdata, pushtask } from '../constants';
+import { convertToJson, geturlFormdata, pushtask } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 import { getQrCode } from '../utils';
 
 
+const useStyles = makeStyles((theme) => ({    
+   returnbutt:{
+     fontSize:60+"%",
+     borderRadius:1+"vw",
+     borderStyle: "solid",
+     borderColor:"green",
+     borderWidth:2+"px",
+     margin:1+"vw",
+     backgroundColor:"white",
+     color:"Black"
+
+   }
+}));
+
 
 export default function Bookingreqcard(props){
 
-//const classes = useStyles();
+const classes = useStyles();
 
   const [isloaded,setIsLoaded] = React.useState(false);
   const [status,setStatus] = React.useState(props.status);
@@ -22,11 +36,6 @@ const bidhandler = () =>{
   open(props.maplink)
 
 }
-
-
-
-
-
 
   console.log(props.location);
   const router = useRouter();
@@ -65,37 +74,41 @@ const bidhandler = () =>{
 
 	return(
 		
-            <Card variant='outlined'  style={{ margin:0.4+"vw"}} >
+            <Card variant='outlined'  style={{ margin:1+"vw"}} >
                 {/*<div name="name">{props.name}</div>*/}
-                <div onClick={() =>{ console.log(props.bookingobj) }}>
+                <div style={{display:"flex"}} onClick={() =>{ console.log(props.bookingobj) }}>
                 <CardMedia
         component="img"
-        style={{ maxHeight:70+"vw" , minHeight:40+"vw",  objectFit:"contain" , backgroundColor: "lightgrey" }}
-        image={rooturl+props.image}
+        style={{ margin:1+"vw" , maxHeight:70+"vw" , minHeight:40+"vw", maxWidth:50+"%", objectFit:"contain" , backgroundColor: "lightgrey" }}
+        image={rooturl+ convertToJson(props.bookingobj.metadata).images[1]}
         
         alt="green iguana"
       />
-                
+      <div style={{padding:2+"vw"}}>
+                <div name="name"  style={{fontSize:5+"vw"}}>{props.name}</div>
                 <div name="description"  style={{fontSize:3+"vw"}}>{props.description}</div>
                 
-                <div name="price"  style={{fontSize:4+"vw"}}>Price: {props.price}</div>
+                <div name="price"  style={{fontSize:4+"vw"}}>Booking Price: <span style={{ fontWeight:"bold"}}>{props.price}</span></div>
                 
-                <div name="book_from" style={{fontSize:5+"vw"}}>FROM : {props.book_from.getUTCDate()}-{props.book_from.getUTCMonth()}-{props.book_from.getUTCFullYear()}</div>
-                <div name="book_to" style={{fontSize:5+"vw"}}>TO : {props.book_to.toUTCString()}</div>
-                
+                <div name="book_from" style={{fontSize:4+"vw"}}>Booking from: <span>{props.book_from.getUTCFullYear()} {props.book_from.toUTCString().substring(8,11)} {props.book_from.getUTCDate()}</span></div>
+                <div name="book_to" style={{fontSize:4+"vw"}}>Booking to: {props.book_to.getUTCFullYear()} {props.book_to.toUTCString().substring(8,11)} {props.book_to.getUTCDate()}</div>
+              </div>  
                 
                 </div>
-                <div style={{display:"flex" , flexDirection:"row-reverse" }}>
+                <div style={{display:"flex" , flexDirection:"row" }}>
                     
-              {status < 2? 
+              {/* {status < 2? 
                 <button onClick={()=>{
                     catchbooking("status",2,props.name)
                 }}>confirm booking</button>
                 : <><button disabled onClick={()=>{
                     
-                }}>confirmed</button><button onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Verify Pickup</button> </>}
+                }}>confirmed</button><button onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Verify Pickup</button> </>} */}
 
-               
+                {status == "1" && <Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",2,props.name)}}>confirm booking</Button> }
+                {status == "2" && <><Button className={classes.returnbutt}  style={{color:"white",backgroundColor:"green", opacity:20+"%"}} disabled onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange"}} onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Verify Pickup</Button> </>}
+                {status == "3" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"}} onClick={() => props.Verifyreturn(props.booking_id, props.bookingobj)}>Verify Return</Button> </>}
+                {status == "4" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"  , backgroundColor:"purple",color:"white" , opacity:20+"%" }} onClick={() => props.Verifyreturn(props.booking_id, props.bookingobj)} disabled>Returned</Button> </>}
                 </div>
             </Card>
 

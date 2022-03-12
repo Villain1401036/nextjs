@@ -13,7 +13,7 @@ import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
 import Infoput from '../components/containers/infoput';
 import Userinfo from '../components/containers/userinfo';
-import { Confirm } from '../components/containers/confirmation';
+import  Confirm  from '../components/containers/confirmation';
 import { Button } from 'react-bootstrap';
 
 
@@ -70,16 +70,17 @@ export default function HomePage(props){
 
         
 			<div className={classes.contentArea}>
+			
               <ButtonAppBar  itemName={Shopname}/>
-
-			{/* <Userinfo />
-			 <Infoput />
-			  <Confirm /> */}
+			
+			<Userinfo />
+			
+			  {/* <Confirm /> */}
 			</div>
 			
         
-			  <ChooseAccType onselect={(e)=>onselect(e)} />
-       
+			  {/* <ChooseAccType onselect={(e)=>onselect(e)} />
+        */}
 		</div>
 
 

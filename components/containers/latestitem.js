@@ -11,6 +11,8 @@ import { CLR_RCARD, CLR_RCARD1 } from '../../themes';
 import { Form, FormGroup } from 'react-bootstrap';
 import Itemcard from '../itemcard';
 
+import { FaFilter } from 'react-icons/fa';
+import { getlocal, storelocal } from '../../localstore';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -43,6 +45,28 @@ const useStyles = makeStyles((theme) => ({
 
 
 	},
+  itemsbucket:{
+    width:98+"vw",
+    overflowY : "scroll" ,
+    display:"grid" , 
+    gridTemplateColumns: "48vw 48vw" ,
+    gridColumnGap:1+"vw" ,
+    gridRowGap: 1+"vw",
+    marginBottom:1+"vw",
+    margin: 1+"vw",
+    
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      width:75+"vw",
+      overflow:"hidden",
+     
+      gridTemplateColumns: "18vw 18vw 18vw 18vw" ,
+      gridRowGap: 1+"vw",
+      gridColumnGap:1+"vw" ,
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      
+    }
+  }
 }));
 
 const taskmap = new Map();
@@ -98,17 +122,22 @@ export default function Latestitem(props){
   
    
 
-    const refreshlatest =  (f) =>{ 
+    const refreshlatest =  (f) =>{
         //call the function to update with the latest tasks
 
         console.log(f);
-        var urlForm = geturlFormdata("item", "get" ,{ "gettype": "t" ,"tags": f.tags , "category":f.category , "place" : f.place } , {} )
+
+         //storelocal("place","bokaro")
+        // storelocal("category","Furniture")
+        var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") } , {} )
         var url = urlForm.url
         console.log(url);
 
         callwithcache(getdata, url, "items").then((value) =>{
           setLoaded(true);
           console.log(value);
+          taskmap.clear() //for clearing every thing
+
           setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
             console.log(err);
           }
@@ -117,7 +146,7 @@ export default function Latestitem(props){
     }
 
 
-      const filllatest =  tasklist.map( (item) =>  <Itemcard key={item.taskId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard>  )
+      const filllatest =  tasklist.map( (item) =>  <Itemcard key={item.itemId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard>  )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -131,15 +160,15 @@ export default function Latestitem(props){
       
 
 	return(
-		<div style={{top:13+"vw" ,position:"static",backgroundColor:CLR_RCARD1 }} >
+		<div style={{top:13+"vw" ,position:"static",backgroundColor:'white' , margin:"auto" , justifyContent:"center"  }} >
                 
                 <div style={{    display:"flex" , flexDirection: "row"  }}>
 
-                <Button onClick={async()=>{refreshlatest(filter)}} title="latesttask" style={{alignItems:"center"}} >
-               <div >LATEST ITEMS</div>
+                {/* <Button onClick={async()=>{refreshlatest(filter)}} title="latesttask" style={{alignItems:"center"}} >
+               <div >{filter.category}</div>
                <Refresh  />
              </Button>
-
+ 
              <div style={{display:"flex"  }}></div>
           <div style={{display:"flex" ,flex:1, flexDirection: "row-reverse"  }}>
           
@@ -149,10 +178,12 @@ export default function Latestitem(props){
              </Button>
 
              <div style={{minWidth:20+"vw",height:100+"%",textAlign:"center",alignItems:"center"}} >
-             <div  style={{margin:"auto"}} onClick={()=>{ setFilterops(true) ; console.log("filter") }} >change filters</div>
+             <div  style={{margin:"auto"}} onClick={()=>{ setFilterops(!filterops) ; console.log("filter") }} ><FaFilter fontSize={"large"}/></div>
 
              </div>
-             </div>
+             </div> */}
+
+             
              </div>
 
               { filterops && <div style={{width:100+"vw", minHeight:20+"vw", overflowX:"scroll", minHeight:20+"vw" }}>
@@ -163,13 +194,12 @@ export default function Latestitem(props){
                   
               </div> }
 
-             <div style={{width:100+"vw", overflowX:"scroll", minHeight:2+"vw" , display:"flex"}}>
+             {/* <div style={{width:100+"vw", overflowX:"scroll", minHeight:2+"vw" , display:"flex"}}>
                  
-             <div style={{   display:"flex",flexDirection:"row"}}>
+             
+
                <div >place:</div>
                  {filterplace}
-                 </div>
-
                   <div>tags:</div>
                   {filtertags}
                   <div>category:</div>
@@ -180,10 +210,9 @@ export default function Latestitem(props){
                   {filterdistance}
 
                   
-             </div>
-
-             { !hidden ?<div style={{overflowY : "scroll" , display:"grid" , gridTemplateColumns: "auto auto" , gridColumnGap:0+"vw" , gridRowGap: .5+"vw"}} >{filllatest}
-             </div>:<></>}
+             </div> */}
+              <div style={{margin:2+"vw"}}>Showing Top results for <span style={{fontWeight:"bold"}}>{getlocal("category")}</span> </div>
+             { !hidden ?<div className={classes.itemsbucket} >{filllatest}</div>:<></>}
              
              </div>
 	);

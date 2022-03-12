@@ -5,9 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { getdata } from '../../networking/getdata';
 import { Button } from '@material-ui/core';
 import Taskcard from '../taskcard';
-import { MapSharp } from '@material-ui/icons';
+import { Edit, EditAttributesOutlined, EditOutlined, MapSharp } from '@material-ui/icons';
 import Addresscard from '../addresscard';
 import { callwithcache, geturlFormdata, setValue } from '../../constants';
+import { CLR_HEAD, CLR_RCARD2 } from '../../themes';
+import { getlocal } from '../../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,16 +46,42 @@ const useStyles = makeStyles((theme) => ({
 		height:50+"vw",
 		width:50+"vw",
 		objectFit:"cover",
-		borderRadius:25+"vw",
-		borderColor:"black"	,
-		borderWidth:3,
-		borderStyle:"solid"
+		borderRadius:2+"vw",
+		// borderColor:"black"	,
+		// borderWidth:3,
+		// borderStyle:"solid"
 	},
 	proname:{
 		fontSize:5+"vw",
 		fontWeight:"bold"
 
-	}
+	},
+
+	nbuttonroot:
+     
+	{
+	  display:"flex",
+	  backgroundColor:CLR_HEAD,
+	  color:CLR_RCARD2 ,
+	   margin:2+"vw" ,
+	   height:10+"vw",
+	   
+	   borderRadius:2+"vw",
+	   borderColor:CLR_RCARD2,
+	   borderStyle:"solid",
+	   borderWidth:1+"px",
+	   
+	   justifyContent:"center",
+	   alignItems: "center",
+	  
+	  },
+	  divMode:{
+		
+	  },
+	  inputmode:{
+
+	  }
+	  
 }));
 
 const taskmap = new Map();
@@ -70,8 +98,7 @@ export default function Profilesummary(props){
     const [edit , setEdit] = React.useState(true);
 
 	    
-    var urlForm = geturlFormdata("customer","get",  {"user_id":"sdfsdfsd" , idtype:"email" }) //localStorage.getItem("customerid") }  )
-    var url = urlForm.url
+    
 
     
 	useEffect (()=>{
@@ -83,12 +110,13 @@ export default function Profilesummary(props){
 
 	 
 const refreshprofile = async () =>{
-
+	var urlForm = geturlFormdata("customer","get",  {"user_id":getlocal("temp_id") , idtype:"email" }) //localStorage.getItem("customerid") }  )
+    var url = urlForm.url
 	callwithcache(getdata, url, "customers" ).then((value) =>{
 
         
 		console.log(value);
-        setValue(value[0],refreshprofile ,setProfile )}).then((val)=>{
+        setValue(value[0],refreshprofile , setProfile )}).then((val)=>{
 			setLoaded(true);
 		}).catch((err) =>{
           console.log(err);
@@ -103,19 +131,29 @@ const refreshprofile = async () =>{
 
 	return(
 		<>
+
        { loaded && 
 		<div style={{alignSelf:"center" , textAlign:"center" }}>
-			<div><Button onClick={()=>{ console.log(edit); ;  setEdit(!edit)}}  >edit</Button> </div>
-                <img src = {picurl} className={classes.profilepic}/>
-                <div>
+			<h1 style={{color:CLR_HEAD}}>User Profile</h1>
+
+			
+                <img src = {picurl} className={classes.profilepic}></img>
+				<div onClick={()=>{ console.log("edit profile picture"); }}><a>Change picture</a></div>
+
+
+                <div style={{margin:10+"vw"}} >
 				
-                    {edit?<div style={{width:100+"vw"   }}><span className={classes.proname} >{profile.firstName}</span></div>:<input inputMode="numeric"></input>}
+                    {edit?<div><span className={classes.proname} >{profile.firstName} {profile.lastName}</span></div>:<input inputMode="numeric"></input>}
                     
+					<div ><span className={classes.proname} >{"Email :"} {profile.email}</span><span style={{fontSize:50+"%"}}>change Email</span></div> 
+					
+					<div ><span className={classes.proname} >{"Phone :"} {profile.phoneNumber}</span><span style={{fontSize:50+"%"}}>change Phone</span></div>
+
+
                     </div>
-                   
-                    {edit?<div style={{width:100+"vw"  }}><span className={classes.proname} >contact no. -{profile.phoneNumber}</span></div>:<input inputMode="numeric"></input>}
-					{edit?<div style={{width:100+"vw"  }}><span className={classes.proname} >email - {profile.email}</span></div>:<input inputMode="numeric"></input>}
-             <div>
+                      
+					
+					 <div>
   
              </div>
              </div>
@@ -123,5 +161,17 @@ const refreshprofile = async () =>{
 	   </>
 	);
 
+}
+
+
+function InputDiv(props){
+	const classes = useStyles();
+	 
+    return(
+		
+		
+        <input className={classes.divMode} value="akysgdkasj" disabled onClick={props.onClick} />
+  
+	);
 }
  

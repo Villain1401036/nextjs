@@ -10,17 +10,55 @@ export const getobjlocal = (key) =>{
 
 }
 
-const localkeys = {
+export const storelocal = (key , value) =>{
+      localStorage.setItem(key, value);
+}
+
+export const getlocal = (key) =>{
+
+     return localStorage.getItem(key)
+
+}
+
+
+
+export const localkeys = {
     "access_token" : "",
     "refresh_token" : "",
-    "user":{ "customer" : customerObj , "worker" : workerObj  },
-    "settings" : settingsObj, 
-    
+    "user":{ "customer" : {} , "worker" : {}  },
+    "settings" : {},
+
 }
+
 export const stateobj = {
 
       "user" :{
         
       }
 }
+
+/**
+ * what are the filter options - 
+ * 1 place  ==>  filter_place
+ * 2 price range 
+ * 3 location
+ * 4 distance
+ * 5 tags
+ * 6 categories
+ * 7 sub categories
+ */
+
+/**
+ * user infos -
+ * 1 access_token
+ * 2 refresh_token
+ * 3 user_data -> json -> (user_key) -> 
+ */
+
+/**
+ * single page data - 
+ * items 
+ * bookings 
+ * bookingreqs
+ */
 

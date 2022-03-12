@@ -14,6 +14,8 @@ import router from 'next/router';
 import { getfromLS, geturlFormdata, setValue } from '../../constants';
 import { put, putverify } from '../../networking/getmedia';
 import { postdata } from '../../networking/postdata';
+import { getlocal, getobjlocal } from '../../localstore';
+import {  getallCategories, placedataobj } from '../../utils';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,6 +73,7 @@ export default function Userinfo(props){
 
     const [verify , setVerify] = React.useState(false);
     
+    const [page , setPage] = React.useState("gen");
     //var urlform = geturlFormdata("customer","create",{},{})
  
     useEffect (()=>{
@@ -85,6 +88,9 @@ export default function Userinfo(props){
     const [email , setEmail ] = useState();
     const [phone , setPhone ] = useState();
     const [aadhar , setAadhar ] = useState();
+    const [country , setCountry ]  = useState();
+    const [district , setDistrict] = useState();
+    const [state , setState] = useState();
 
 const handleSubmit = async () =>{
     
@@ -97,22 +103,43 @@ const handleSubmit = async () =>{
     if (fname){ formdatas.set("first_name", fname)}
     if (lname){ formdatas.set("last_name", lname)}
     if (gender){ formdatas.set("gender", gender)}
-    if (email){ formdatas.set("email", email)}
-    if (phone){ formdatas.set("phone_number", phone)}
+    
+    
     if (aadhar){ formdatas.set("aadhar_id", aadhar)}
+      var temp = getlocal("temp_id")
+      console.log(temp);
+    if(temp.startsWith("+")){
+       formdatas.set("phone_number", getlocal("temp_id"))
+    }else{
+       formdatas.set("email", getlocal("temp_id"))
+    }
+    formdatas.set("iden", getlocal("temp_id"))
+    formdatas.set("metadata",`{"country":"${country}","state":"${state}" ,"district":"${district}"}`)
+    console.log(`{"country":"${country}","state":"${state}" ,"district":"${district}"}`);
     console.log(formdatas.getAll("first_name"));
     console.log(fname);
     await postdata(urlform.url , "customer" ,formdatas )
     
-
-    await getdata(geturlFormdata("customer","get",{"user_id":email, "idtype":"email"}).url , "customers").then((value)=> {
+    var temp = getlocal("temp_id")
+    console.log(temp);
+    var urlform = null;
+  if(temp.startsWith("+")){
+     urlform = geturlFormdata("customer","get",{"user_id":temp, "idtype":"phone"})
+  }else{
+    urlform = geturlFormdata("customer","get",{"user_id":temp, "idtype":"email"})
+  }
+    
+    await getdata(urlform.url , "customers").then((value)=> {
         console.log(value);
+        router.push("/home")
+    }).catch((e)=>{
+      console.log(e);
     })
     }
     catch(e){
         console.log(e);
     }
-    router.push("/home")
+    
 
 }
 const canvasRef = React.useRef(null)
@@ -121,55 +148,129 @@ const canvasRef = React.useRef(null)
   useEffect(() => {
     
  
-    var QRCode = require('qrcode')
+ 
 
-    QRCode.toCanvas('1723 7165 2698 1876 6123 1653 1232 1233', { errorCorrectionLevel: 'H' }, function (err, canvas) {
-      if (err) throw err
-    
-      var container = document.getElementById('container')
-      
-        container.replaceChildren(canvas)
-      
-     
-    
-    })
     //Our draw come here
   
   })
+
+
+  var selectedcategory = new Set()
+  const onselectcategory =( item ) =>{
+
+    if (selectedcategory.has(item)){
+      selectedcategory.delete(item)
+    }
+    else{
+      selectedcategory.add(item)
+    }
+    console.log(selectedcategory);
+    
+}
+
+   const placedata = placedataobj
+  const countryops = [
+    {value:"India" , label:"India"}
+  ]
+ 
+ const getstate = () =>{
+  const stateopts  = new Array()
+   placedata["states"].forEach(element => {
+     stateopts.push({value: element["state"] , label:element["state"]  })
+   });
+   return stateopts
+ }
+
+ const getdistrict = (state) =>{
+  const districtopts  = new Array()
+  if (state == null){
+    return districtopts
+  }
   
+  var i = 0
+  while (i < placedata["states"].length){
+    if (placedata["states"][i]["state"] == state){
+        break
+    }
+    i++
+  }
+
+
+  placedata["states"][i]["districts"].forEach(element => {
+     districtopts.push({value: element , label:element  })
+   });
+ 
+  return districtopts
+ }
+
+  const listcategory = getallCategories()
+ const chipscategory = listcategory.map((item) => <> <SelectChip item={item} onselect={(val)=> onselectcategory(val)} /></> )
 
 	return(
 <>
-		{
-            !verify
-       ?
-            <FormGroup>
 
-            <TextField type='text'  id="First Name" label="First Name" variant="outlined" onChange={(e)=>{ setFname(e.target.value); }} ></TextField>
-<TextField  id="description" label="Last Name" variant="outlined"  onChange={(e) => setLname(e.target.value) } ></TextField>
+<FormGroup style={{width:90+"vw"}}>
 
-
-
-<TextField  id="price" label="Email" variant="outlined"  onChange={(e) => setEmail(e.target.value) } ></TextField>
-<TextField  id="deno" label="Phone" variant="outlined" onChange={(e) => setPhone(e.target.value) } ></TextField>
-
-<h5>Gender</h5>
-
-<div style={{width:50+"%", marginBottom:10+"vh"} }>
-    
+  { page == "gen" && 
+   
+         
+<>
+<input type='text' className='btn' style={{margin:2+"vw" , border :"solid" , borderWidth:1+"px"}}  id="First Name" label="First Name" variant="outlined" placeholder='First Name' onChange={(e)=>{ setFname(e.target.value); }} ></input>
+<input  id="lname" className='btn' style={{margin:2+"vw" , border :"solid" , borderWidth:1+"px"}} label="Last Name" variant="outlined" placeholder='Last Name'  onChange={(e) => setLname(e.target.value) } ></input>
+<div style={{width:50+"%", marginBottom:10+"vh" , display:"flex" , flexDirection:"row"} }>
+<h3>Gender</h3>
 <Select  options={[{value:"Male" , label:"Male"},{value:"Female" , label:"Female"}]} onChange={(value)=>{ setGender(value["value"])}}/>
 
 </div>
-<div style={{margin:"auto"}} id={"container"}></div>
-<button onClick={()=>{handleSubmit()}}>Submit</button>
 
-   <button onClick={()=>{ console.log("ID verify");setVerify(true) }}>GO TO ID VERIFICATION</button>
+<button onClick={()=>{setPage("place")}} disabled={false} >Next</button>
+</>} 
+
+{page == "place" && <>             <div style={{margin:1+"vh" , marginBottom:1+"vh"}} > <Select    options={countryops} onChange={(val)=>{setCountry(val["value"]);}} /></div>
+             <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getstate()} onChange={(value)=>{ setState(value["value"])}} /></div>
+              <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getdistrict(state)} onChange={(val)=>{setDistrict(val["value"]);}}/></div>
+              <button onClick={()=>{setPage("cats")}} disabled={false} >Next</button>
+</>}
+{/* <TextField  id="email" label="Email" variant="outlined"  onChange={(e) => setEmail(e.target.value) } ></TextField>
+<TextField disabled id="deno" label="Phone" variant="outlined"  onChange={(e) => setPhone(e.target.value) } ></TextField> */}
+
+
+
+{
+  page=="cats" && <>
+<h3>choose Categories you want to look for</h3>
+
+<div style={{width:100+"%"}}>
+
+{chipscategory}
+</div>
+
+<button onClick={()=>{handleSubmit()}}>Submit</button>
+  </>
+}
+
+{
+  page=="complete" && <>
+<h3>choose Categories you want to look for</h3>
+
+<div style={{width:100+"%"}}>
+
+{chipscategory}
+</div>
+
+
+<button onClick={()=>{ console.log("ID verify");setVerify(true) }}>GO TO ID VERIFICATION</button>
+  </>
+}
+
+
+
+  
 
             </FormGroup>
-              :<>
-                 <IdVerification />
-              </>
-        }
+            
+            
+        
             
 
              
@@ -227,6 +328,8 @@ const [sign, setSign] = React.useState([]);
          {value:"Aadhar Id" , label:"Aadhar Id"},
          {value:"Voter Id" , label:"Voter Id"},
      ]
+
+
 
 
      const uploadforverification = () =>{
@@ -296,8 +399,24 @@ const [sign, setSign] = React.useState([]);
         </div>:
         <>
             <h4>Verification in progress</h4> 
+            {/* <button onClick={()=>{console.log("go back");}>Back</button> */}
+
         </>
 }
         </>
     );
+}
+
+
+function SelectChip(props){
+
+  const [select, setSelect] = useState(false);
+   return(
+     <>{
+       !select?
+      <Chip label={props.item} variant="outlined" component="a"  onClick={()=> {setSelect(!select);props.onselect(props.item) }}/>:
+      <Chip label={props.item} component="a" color={"primary"}  onClick={()=> {setSelect(!select);props.onselect(props.item) }}/>
+      
+     }</>
+     );
 }

@@ -22,10 +22,18 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
 	},
-	contentArea:{
-		display:'flex',
-		flexDirection:'row',
-	},
+	contentArea:{ 
+        
+        marginTop:10+"vw",
+        
+    
+        '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+          marginTop: 5+"vw"
+        },
+        '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+            marginTop: 15+"vw"
+        }
+        },
 		cover: {
 			marginTop: 0,
 			height:70,
@@ -85,8 +93,11 @@ onRefresh(authContext);
 	</Head>
 
 	<ButtonAppBar itemName={Shopname}/>
-	
-    <Itemcontainer />
+	<div >
+	<Itemcontainer />
+
+	</div>
+   
 
 
   

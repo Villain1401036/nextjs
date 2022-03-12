@@ -69,7 +69,7 @@ message Customer {
 	int64 aadhar_id =7;
 	bytes metadata = 8;
 	string gender = 9;
-
+	string iden = 10;
 }
 
 message Customers {

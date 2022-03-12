@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { latestworkobj, ongoingwork, Shopname, user } from '../constants'
 
 import AppBar from '@material-ui/core/AppBar';
@@ -8,12 +8,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
 import { fade, makeStyles  } from '@material-ui/core/styles';
-import {Switch, useMediaQuery } from '@material-ui/core';
+import {Chip, Input, OutlinedInput, Popover, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
-import Modal from '@material-ui/core/Modal';
+
 
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -22,27 +22,23 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 
-import {CLR_HEAD} from '../themes.js'
+import {CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3} from '../themes.js'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { AuthContext } from '../context';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, FormGroup, ModalDialog ,Modal } from 'react-bootstrap';
+import { collapseClasses, Dialog } from '@mui/material';
+import { LocationCitySharp, MapSharp, PinDrop } from '@material-ui/icons';
 
-
+import {FiMapPin , FiFilter} from 'react-icons/fi';
+import { FaFilter} from 'react-icons/fa';
+import { getlocal, localkeys, storelocal } from '../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
   
-  drawButt:{
-    width:60+"vw",
-    padding:2+"vh",
-    borderStyle:"solid",
-    borderWidth:0,
-    borderTopWidth:1+"px",
-    borderColor:"grey",
-    
-  },
+ 
 	paper: {
      marginRight: theme.spacing(2),
    },
@@ -52,7 +48,7 @@ logo:{
 
 },
   root: {
-    width:100+"%",
+    width:100+"vw",
     flexGrow: 1 ,
 	elevation: 0,
 
@@ -60,15 +56,47 @@ logo:{
 
   
 	appbar:{ 
-    boxShadow:0+"px",
-		height:12+"vw",
+    boxShadow:0+"vw",
+    elevation: 0,
+    width:100+"vw" ,
+    backgroundColor: CLR_HEAD,
+		// height:10+"vw",
+
+    // '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+    //   height: 5+"vw"
+    // },
+    // '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+    //   height: 15+"vw"
+    // }
+
+    boxShadow: "0px 0px"
+	},
+
+  toolbar:{ 
+    
+    height:10+"vw",
+    
   	elevation: 0,
     width:100+"vw" ,
 		backgroundColor: CLR_HEAD,
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-      width: '80%'
+      height: 5+"vw"
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      height: 15+"vw"
     }
+
 	},
+  createbtn: {
+    backgroundColor:"white",
+    width: 10+"vw" ,
+    height: 50+"%" ,
+    margin:1+"vw", 
+    fontWeight:"bold",
+    fontSize: 50+"%"
+
+  },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -115,19 +143,38 @@ logo:{
       },
     },
   },
-  drawer :{
-    minWidth: 35+"vw"
+  drawerroot :{
+    backgroundColor:CLR_HEAD,
+    
+    height:100+"%"
+  },
+  drawButt:{
+    width:60+"vw",
+    padding:2+"vw",
+    borderStyle:"solid",
+    borderWidth:0,
+    borderTopLeftRadius:2+"vw",
+    borderBottomLeftRadius:2+"vw",
+    borderTopWidth:1+"px",
+    opacity:100,
+    textAlign:"right",
+    backgroundColor:CLR_RCARD2,
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      width:20+"vw",
+    },
+
+  
+  
+    
+  },
+  drawButtinner:{
+    fontSize: 150+"%"
+  },
+  type:{
+    fontSize:40+"px",
+    color:CLR_RCARD2
   },
 
-  createbtn: {
-    backgroundColor:"white",
-    width: 10+"vw" ,
-    height: 50+"%" ,
-    margin:1+"vw", 
-    fontWeight:"bold",
-    fontSize: 50+"%"
-
-  },
   menuback:{
     //backgroundColor:"purple",
     width:7+"vw",
@@ -143,30 +190,48 @@ export default function ButtonAppBar(props) {
   const classes = useStyles();
 	const [drawerState,setDrawerState] = React.useState(false);
   const router = useRouter()
-  
-  const authContext = useContext(AuthContext);
 
+  const [isloaded,setIsloaded] = React.useState(false);
+  const [locfocus , setLocfocus] = React.useState(false);
+
+  const [filteropen , setFilteropen] = React.useState(false);
+  const authContext = useContext(AuthContext);
+  const [refresh , setRefresh] = React.useState(false);
+
+
+    const [location ,setLocation] = useState("bokaro");//get from the database
   const toogleDstate = () => {
       setDrawerState(!drawerState); 
 	}
+
+  React.useEffect(() => {
+
+    // Update the document title using the browser API
+    if ( !isloaded){
+        setLocation(getlocal("place"))
+        setIsloaded(true)
+    }
+     
+    
+  });
 
   
 
   console.log(user);
   console.log(ongoingwork);
-  console.log(latestworkobj);
+  //console.log(latestworkobj);
 
   
  
 return (
-   
-      <AppBar position="sticky" classes={{root:classes.appbar}}>
-        <Toolbar style={{height:10+"%"}}>    
+   <>
+      <AppBar position="sticky" className={classes.appbar}>
+        <Toolbar className={classes.toolbar}>    
           <IconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>toogleDstate()} >
 
             <MenuIcon />
 
-					<Drawer anchor={"left"} open={drawerState} onClose={()=>console.log("closed")} variant='temporary'>
+					<Drawer anchor={"left"} open={drawerState}  onClose={()=>console.log("closed")} variant='temporary'>
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
@@ -177,34 +242,75 @@ return (
             {props.itemName }
           </Typography>
           </Button>
-             {
+             {/* {
                authContext.accounttype?
              <Button  className={classes.createbtn} onClick={()=>{router.push("/newTask")}}>create Task</Button>
             :
             <Button  className={classes.createbtn} onClick={()=>{router.push("/newService")}}>create Service</Button>
             }
-            <Button  className={classes.createbtn} onClick={()=>{router.push("/")}}>Post Item</Button>
-          {true?
+            <Button  className={classes.createbtn} onClick={()=>{router.push("/newItem")}}>Post Item</Button> */}
+          {false?
             <div></div>:
-            <div className={classes.search}>
-					 <div className={classes.searchIcon}>
-						 <SearchIcon />
-					 </div>
+            <>
+            {/* <div className={classes.search}>
+					
 					 <InputBase
-						 placeholder="Search…"
+						 placeholder="Search items…"
 						 classes={{
 							 root: classes.inputRoot,
 							 input: classes.inputInput,
 						 }}
 						 inputProps={{ 'aria-label': 'search' }}
 					 />
-				 </div>
+           </div> */}
+           <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row-reverse"}} >
+           <div style={{height:100+"%",marginLeft:20+"px",marginTop:2+"px"}} ><FaFilter fontSize={150+"%"} onClick={()=>{setFilteropen(!filteropen)}} /></div>
+        
+            <>{
+              locfocus? <div><InputBase
+              placeholder="Location"
+              style={{color: CLR_HEAD , backgroundColor: CLR_RCARD1 , borderRadius:3+"px" , paddingRight:5+"%" ,paddingLeft:5+"%" , textAlign:"center"  }}
+              
+              autoFocus
+              onChange={(e)=>{if(e.target.value){setLocation(e.target.value)};console.log(location);}}
+
+              onKeyPress={(event)=>{ if(event.key === 'Enter'){
+                console.log('enter press here! ');
+                storelocal("place",location);
+                router.reload()
+                setLocfocus(false)
+                
+              }}}
+            ></InputBase></div>:
+            <div style={{ maxWidth: 200+"px" ,  display: "flex",flex:1, flexDirection:"row-reverse",borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} >
+             <div style={{ borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} ><FiMapPin fontSize={"large"}  style={{height:100+"%", marginLeft:5+"px" , marginRight: 5+"px" }} onClick={()=>{console.log("get location");}} /></div>
+           
+            <div
+              style={{color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
+              onClick={()=>setLocfocus(true)} 
+            >{location}</div>
+
+            </div>
+
+            }
+            </>
+               </div>
+				 </>
           }
 					
 
         </Toolbar>
       </AppBar>
-    
+      <>
+      
+        <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{console.log(data);setFilteropen(false);setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
+       {/* <EditFilter filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />
+         */}
+         </Modal>
+      
+        </>
+      </>
+  
   );
 
   
@@ -217,232 +323,6 @@ return (
     setOpen(false);
   };  */}
 
-function MenuListTeachers() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  return (
-    <div className={classes.root}>
-
-      <div>
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-          Toggle Menu Grow
-        </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-
-
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    </div>
-  );
-}
-
-
-function MenuListStudents() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-	const handleOpen = () => {
-	    setOpen(true);
-	  };
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  return (
-    <div className={classes.root}>
-
-      <div>
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-          Toggle Menu Grow
-        </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
-    </div>
-  );
-}
-
-function MenuListParents() {
-
-	const [openm, setOpenm] = React.useState(false);
-
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
-	const handleOpen = () => {
-	    setOpen(true);
-	  };
-
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpen(false);
-    }
-  }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
-
-  return (
-    <div className={classes.root}>
-
-      <div>
-        <Button
-          ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={handleToggle}
-        >
-          Parents
-        </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-
-
-
-                    <MenuItem onClick={handleClose}><div><Link href="/student/registerpage"><a>this page!</a></Link></div></MenuItem>
-                    <MenuItem onClick={handleClose}>Who we Are</MenuItem>
-
-
-                  </MenuList>
-                </ClickAwayListener>
-
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-
-      </div>
-    </div>
-  );
-}
 
 function Drawercomponent(props){
 
@@ -453,36 +333,51 @@ function Drawercomponent(props){
 const authContext = React.useContext(AuthContext);
 
   return (
-    <div style={{padding:10+"px"}}>
-
+    <div className={classes.drawerroot}>
+   <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}>
+   <img style={{width:100+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
+      <span style={{ marginTop:8+"vw"}}>MOR</span>
+   </div>
+      
+     {/* <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
        
-     <div style={{width:60+"vw", display:"flex", flex:1 , flexDirection:"row-reverse" }} >
-      {!authContext.accounttype?<div style={{fontSize:6+"vw"}}>   work    </div>:<div style={{fontSize:6+"vw"}}>   user   </div>}<Switch  checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
-      <div className={classes.title} style={ { fontSize:8+"vw",paddingBottom:10}}>Freebees</div>
-      </div>
+      {!authContext.accounttype?
+      <div className={classes.type} >   work    </div>:<div className={classes.type} >   user   </div>}
+      
+      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
+       <div className={classes.title} style={ { fontSize:8+"vw",paddingBottom:10}}>Freebees</div> 
+      </div> */}
 
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
       <>
-      <span style={{paddingRight:50 }} onClick={()=>{router.push("/profile")}}>{user.name}</span> 
-      <span  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      
       </>:
 <>
-     <span style={{paddingRight:50 }} onClick={()=>{router.push("/profile")}}>{user.name}</span> 
-      <span  onClick={()=>{router.push("/profile") }} >{"logout"}</span>
+<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"login"}</span>
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}></span> 
 </>
 }
+
     </div>
 
 
     <div className={classes.drawButt}>
-    <div  onClick={()=>{router.push("/orders")}}>{"orders"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
     </div>
 
     <div className={classes.drawButt}>
-    <div  onClick={()=>{router.push("/settings")}}>{"settings"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div>
     </div>
-     <Catdrop />
+
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/settings")}}>{"settings"}</div>
+    </div >
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
+    </div>
     </div>
   );
 
@@ -498,4 +393,135 @@ function Catdrop(props){
       </div>
     </>
   );
+}
+
+
+function EditFilter(props){
+
+  const[place, setPlace] = React.useState(props.filters.place);
+  const[distance, setDistance] = React.useState(props.filters.distance);
+  const[price, setPrice] = React.useState(props.filters.price);
+  const[pricerange, setPricerange] = React.useState([0,1000]);
+  const[tags, setTags] = React.useState(props.filters.tags);
+  const[tag, setTag] = React.useState();
+  const[categorys, setCategorys] = React.useState(props.filters.category);
+  const[category, setCategory] = React.useState(props.filters.category);
+  const[location, setLocation] = React.useState();
+
+  const [alltags, setAlltags] = useState(new Set());
+  const [allcat, setAllcat] = useState(new Set());
+
+  
+
+  const passdata = () =>{
+      console.log("passdata");
+     return ({"place": place , "lat":latestworkobj.lat , "lon": latestworkobj.lon ,  "distance":distance , "tags":tags , "category" :category , "price":price })
+  }
+
+
+  const handleChange = (event, newValue) => {
+    setPricerange(newValue);
+    setPrice(newValue[0].toString()+"~"+newValue[1].toString());
+  };
+
+  const  valuetext = (value) => {
+    return `${value}°C`;
+  }
+
+  const handleKeyPress =(e) => {
+
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       alltags.add(tag)
+       console.log(alltags);
+       
+       var s = ""
+       alltags.forEach( (item) =>  {s = s + "~" + item})
+       setTags(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("tags").value = ""
+     }
+   }
+
+   const handleKeyPressc =(e) => {
+    
+    var key=e.keyCode || e.which;
+     if (key==13){
+       
+       allcat.add(category)
+       console.log(allcat);
+       
+       var s = ""
+       allcat.forEach( (item) =>  {s = s + "~" + item})
+       setCategorys(s.slice(1))
+
+        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ;document.getElementById("category").value = ""
+     }
+   }
+   const filtertags =   tags.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }} onClick={()=>{console.log(item);}}  size="medium"/> )
+
+   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }}  onClick={()=>{console.log(item);}}  size="medium"/> )
+   
+   var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+
+     const getloc = () => { navigator.geolocation.getCurrentPosition( (pos) => {
+    var crd = pos.coords;
+  
+    // console.log('Your current position is:');
+    // console.log(`Latitude : ${crd.latitude}`);
+    // console.log(`Longitude: ${crd.longitude}`);
+    // console.log(`More or less ${crd.accuracy} meters.`);
+    setLocation([crd.latitude,crd.longitude])
+    console.log(location);
+  } , (e) =>{console.log(e)} , options ) }
+   
+ 
+  return (
+    <>
+     <div style={{textAlign:"center", backgroundColor: "white", borderRadius:5+"px"}}>
+      <FormGroup >
+        <div style={{margin:2+"vh"}}>
+<TextField  id="place" label="place"   onChange={(e)  => {setPlace(e.target.value);storelocal("place",e.target.value) }}  ></TextField>
+</div>
+      <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
+<Slider style={{width:80+"vw"}} onChange={(e,value) => {console.log(value);setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
+
+<div style={{ fontWeight:"bold" }}>Under price range INR <span style={{ fontSize:8+"vw" , color:"blue" }}>{pricerange[0]}</span> to <span style={{fontSize:8+"vw" , color:"blue" }}>{pricerange[1]}</span></div>
+
+
+<Slider
+style={{width:80+"vw"}}
+        min={50} max={50000}
+        getAriaLabel={() => 'Temperature range'}
+        value={pricerange}
+         onChange={handleChange}
+        valueLabelDisplay="auto"
+       getAriaValueText={valuetext}
+
+      />
+
+<h5 style={{color:CLR_HEAD }}>tags</h5> <div>{filtertags}</div>
+<TextField  id="tags" label="add new tag"    style={{margin:2+"vh" , color:CLR_HEAD}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleKeyPress(e)}}></TextField>
+
+<h5 style={{color:CLR_HEAD }}>categories</h5> <div>{filtercategory}</div>
+<TextField  id="category" label="add new category"     style={{margin:2+"vh", color:CLR_HEAD}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleKeyPressc(e)}}></TextField>
+<div>
+<button  id="location" label="location"   style={{margin:2+"vh"}} onClick={getloc} >current Location</button>
+</div>
+</FormGroup >
+
+
+<button onClick={()=>{ props.onClickgetfilter(passdata()) }} >Save Filters</button>
+
+<button onClick={()=>{ props.closemodal(passdata()) }} >cancel</button>
+</div> 
+         </>
+  )
 }

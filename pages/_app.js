@@ -3,6 +3,9 @@ import { Routes, Route, Link } from "react-router-dom";
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../context';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {initializeApp} from "firebase/app";
+import "firebase/auth";
+import { FirebaseAuthProvider } from '@react-firebase/auth';
 
 function MyApp({ Component, pageProps }) {
 
@@ -23,7 +26,9 @@ function MyApp({ Component, pageProps }) {
       setAcctype(!acctype)
     }
     useEffect (()=>{
+      const app = initializeApp(firebaseConfig);
       if (!loaded){
+        
         console.log("servicework");
         if ("serviceWorker" in navigator) {
           window.addEventListener("load", function () {
@@ -45,10 +50,25 @@ function MyApp({ Component, pageProps }) {
       }
    });
 
+   const firebaseConfig = {
+    apiKey: "AIzaSyARcLufTeUZbGue0-k9iZJVxmKlp0l0HQU",
+    authDomain: "freebees-24743.firebaseapp.com",
+    projectId: "freebees-24743",
+    storageBucket: "freebees-24743.appspot.com",
+    messagingSenderId: "1084271040061",
+    appId: "1:1084271040061:web:91df1dc11b58f5a4807c54",
+    measurementId: "G-6Z61GFCN05"
+  };
+
+  const app = initializeApp(firebaseConfig);
+ 
   return (
-    <AuthContext.Provider value={{isLoggedIn:loggedIn , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
+  
+      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
        <Component {...pageProps} />
     </AuthContext.Provider>
+
+
   
   )
 }

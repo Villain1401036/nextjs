@@ -75,7 +75,7 @@ export default function Infoput(props){
 
 
     var selectedtags = new Set()
-    var selectedcategory = new Set()
+    
 
 
     
@@ -89,7 +89,7 @@ export default function Infoput(props){
       console.log(selectedtags);
       
   }
-
+  var selectedcategory = new Set()
   const onselectcategory =( item ) =>{
 
     if (selectedcategory.has(item)){
@@ -1078,7 +1078,7 @@ export default function Infoput(props){
 
 
              </div  >
-             <div style={{margin:1+"vh" , marginBottom:1+"vh"}} > <Select    options={countryops} /></div>
+             <div style={{margin:1+"vh" , marginBottom:1+"vh"}} > <Select    options={countryops} onChange={(val)=>{console.log(value);}} /></div>
              <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getstate()} onChange={(value)=>{ setState(value["value"]);console.log(state);}} /></div>
               <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getdistrict(state)} /></div>
 

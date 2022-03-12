@@ -129,6 +129,41 @@ export const getTokens = async(url , user , pass ) =>{
      return k
 }
 
+export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
+
+
+
+  var k = await axios( {method: 'post' , 
+  url: url,
+  data:formdata,
+  headers: {
+      'Content-Type': `multipart/form-data`
+  },}
+  )
+  .then(response  => {
+     console.log(response);
+   try {
+   //when request is successful check if data can be serialized
+   
+
+   return response
+   }
+   catch (e) {
+    //when request is successful but not good
+      console.log(e);
+  }
+}
+   ).catch(error => {
+    //failed result
+         console.log(error.response.status);
+         console.log(error);
+
+         return error.response
+     });
+     console.log(k);
+     return k
+}
+
 
 export const postsignup = async(url , formdata ) =>{
 

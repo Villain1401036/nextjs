@@ -72,7 +72,7 @@ export default function Bookingcontainer(props){
 
    const refreshongoing =  () =>{ 
     //call the function to update with the latest tasks
-    var urlForm = geturlFormdata("booking" , "get" , {"lender":63 , "gettype":"lender"} , {}) //localStorage.getItem("customerid") }  )
+    var urlForm = geturlFormdata("booking" , "get" , {"lender":22 , "gettype":"lender"} , {}) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 
     callwithcache(getdata, url, "bookings").then((value) =>{
@@ -90,36 +90,46 @@ const Verifypickup = async (bookid,bookingtrgt) => {
   try{
     setOpen(true)
     setBookingtrgt(bookingtrgt)
-    
   }
   catch{
   
   }
- 
+
+}
+
+const Verifyreturn = async (bookid,bookingtrgt) => {
+
+  try{
+    setOpen(true)
+    setBookingtrgt(bookingtrgt)
+  }
+  catch{
   
+  }
+
 }
 
 
 
 const tolocaltime = (epoch) =>{
   var date = new Date(0);
-  date.setUTCSeconds(epoch)
-  
+  date.setUTCMilliseconds(epoch)
+   console.log();
   return date
-} 
+}
 
 
-
+  const filllatest =  bookinglist.map( (item) =>  <Bookingreqcard key={item.bookingId}  booking_id={item.bookingId} 
+  Verifypickup={(bookid, bookingobj)=> {  console.log(bookingobj); Verifypickup(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "pickup" ,bookid)})} }
+   Verifyreturn={(bookid, bookingobj)=> {  console.log(bookingobj); Verifyreturn(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "return" ,bookid)})} } name={item.bookingId}  
+   status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingreqcard>  )
    
 
-      const filllatest =  bookinglist.map( (item) =>  <Bookingreqcard key={item.bookingId}  booking_id={item.bookingId} Verifypickup={(bookid, bookingobj)=> {  console.log(bookingobj); Verifypickup(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "pickup" ,63634)})} } name={item.bookingId}  status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingreqcard>  )
-   
+  const classes = useStyles();
 
-    const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
+  const handleClickOpen = () => {
       setOpen(true);
     };
     

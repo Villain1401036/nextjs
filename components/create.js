@@ -1,4 +1,4 @@
-import { Button, Chip, TextareaAutosize, TextField } from "@material-ui/core";
+import { Button, Chip, Input, Switch, TextareaAutosize, TextField } from "@material-ui/core";
 
 import React, { useState } from "react";
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
@@ -19,7 +19,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { geturlFormdata } from "../constants";
-import { handleEnterKeyPress } from "../utils";
+import { getallCategories, handleEnterKeyPress } from "../utils";
+import { Dropdown } from "react-bootstrap";
+import { getlocal, storelocal } from "../localstore";
 
 
 
@@ -330,7 +332,7 @@ export function Itemform(props){
   const[tags, setTags] = React.useState("");
   const[category, setCategory] = React.useState();
 
-  const[negotiable, setNegotiable] = React.useState();
+  const[negotiable, setNegotiable] = React.useState(false);
   
 
   const[tag, setTag] = React.useState();
@@ -379,65 +381,139 @@ const makearr =() =>{
   return s.slice(0,-1)
 }
 
-const  readyform = () => {
+const  readyform = async() => {
+
+  try{
   var formdatas = new FormData();
  
-  
-  formdatas.append("customer_key", 63)
+  storelocal("user_key",22)
+  formdatas.append("customer_key", getlocal("user_key"))
   if (description){ formdatas.append("description", description)}
 
   if (price){ formdatas.append("price", price)}
-  if (deno){ formdatas.append("deno", deno)}
+   formdatas.append("deno", "INR")
+   formdatas.append("place", getlocal("place"))
 
-  if (tags){ formdatas.append("tags", tags)}
+  if (tag){ formdatas.append("tags", tags)}
   if (category){ formdatas.append("category", category)}
 
-  if (negotiable){ formdatas.append("negotiable", negotiable)}
+  formdatas.append("negotiable", negotiable)
 
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
  
-  postdata(geturlFormdata("item","create",{}).url , "item" , formdatas )
-  
+  await postdata(geturlFormdata("item","create",{}).url , "item" , formdatas ).then((val)=>{
+    console.log("sccessfully posted"); 
+  })
+  //router.reload();
  console.log(formdatas.getAll("description")); 
+  }
+  catch(e){
+    console.log(e);
+  }
 
 }
 
 const fillpics = Array.from(files).map(file => 
-  <img style={{width:80+"vw"}} src={URL.createObjectURL(file)}></img>
+  <img style={{width:80+"vw" , max}} src={URL.createObjectURL(file)}></img>
 )
 
+
+
+
+
 const handlesubmit = async () =>{
-  await handleupload(files);
-  readyform()
+   var files = []
+   
+  if (file1 != undefined){
+    files.push(file1)
+  } 
+  if (file2 != undefined){
+    files.push(file2)
+  } 
+  if (file3 != undefined){
+    files.push(file3)
+  } 
+  handleupload(files);
+
+  await readyform()
 
 }
+  const cats = getallCategories();
+  const dropcats = cats.map( (item) => <Dropdown.Item href="#/action-3" onClick={()=>setCategory(item)} >{item}</Dropdown.Item> )
 
+
+   const [file1,setFile1] = useState();
+   const [file2,setFile2] = useState();
+   const [file3,setFile3] = useState();
 
   return (
+
       <div style={{textAlign:"center"}}>
        
-        <h1 >NEW ITEM</h1>
+        <h1 style={{margin:5+"vw"}}>Enter Item Details</h1>
           <FormGroup>
           
+          <h5 >Choose Category*</h5>
+          <Dropdown >
+          <Dropdown.Toggle split={true}  bsPrefix='dropdown-toggle' style={{backgroundColor:"white",color:"black",width:80+"vw"}} >
+    {(category != undefined)?category:"select category"}
+  </Dropdown.Toggle>
 
-<TextField  id="description" label="description" variant="outlined"  onChange={(e) => setDescription(e.target.value) } ></TextField>
-<TextField  id="price" label="price" variant="outlined"  onChange={(e) => setPrice(e.target.value) } ></TextField>
-<TextField  id="deno" label="deno" variant="outlined"  onChange={(e) => setDeno(e.target.value) } ></TextField>
-<TextField  id="negotiable" label="negotiable" variant="outlined" onChange={(e) => setNegotiable(e.target.value) } ></TextField>
+  <Dropdown.Menu style={{width:80+"vw",maxHeight:60+"vh", overflow:"scroll"}}>
+  {dropcats}
+  </Dropdown.Menu>
+          </Dropdown>
 
+<div style={{margin:5+"vw"}}>
+  <h5>Additional Information</h5>
+<textarea  id="description" label="description" style={{ width:100+"%" }} onChange={(e) => {setDescription(e.target.value);console.log(e.target.value);} } ></textarea>
+</div>
+
+<div style={{margin:5+"vw"}}>
+
+<span><span style={{fontSize:5+"vw"}} >Price Per day*</span><input  id="price" label="price"   onChange={(e) => setPrice(e.target.value) } ></input></span>
+</div>
+{/* <h5>Currency*</h5>
+<input  id="deno" label="deno"  onChange={(e) => setDeno(e.target.value) } ></input> */}
+
+<h5>negotiable price<Switch checked={negotiable} onChange={()=>{setNegotiable(!negotiable)}} /></h5>
+
+<div style={{marginBottom:5+"vw"}}>
 <h5>tags</h5> <div>{alltags.size>0?filtertags:<></>}</div>
-<TextField  id="tags" label="add new tag"    style={{margin:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></TextField>
 
+<input  id="tags" label="add new tag"    style={{marginTop:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></input>
+<div style={{fontSize:3+"vw"}}>^^ Press enter to add more tags</div>
+
+</div>
+{/* 
 <h5>categories</h5> <div>{allcat.size >0?filtercategory:<></>}</div>
-<TextField  id="category" label="add new category"   style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setCategorys,allcat,category,"category")}}></TextField>
+<TextField  id="category" label="add new category"   style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setCategorys,allcat,category,"category")}}></TextField> */}
 </FormGroup>
 
-<div><Button onClick={()=>{ readyform()}}>Submit</Button></div>
-<input type="file" name="file" accept="image/png, image/gif, image/jpeg" multiple  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFiles(file) }} />
+{/* <div><Button onClick={()=>{ readyform()}}>Submit</Button></div> */}
+
+
+<h5>Add Images</h5>
+<div>^^add some images relevant to the item to make it more appealing</div>
+<input type="file" name="file" id={"img1"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile1(file[0]) }} />
+<input type="file" name="file" id={"img2"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile2(file[0]) }} />
+<input type="file" name="file" id={"img3"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile3(file[0]) }} />
+
+
+{!file1 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img1").click();}}  ></div>:<img style={{width:80+"vw" , maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file1)}></img>}
+
+
+{!file2 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img2").click();}}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file2)}></img>}
+
+{!file3 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img3").click();}}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file3)}></img>}
+
+
 { files!= [] ?<>{fillpics}</>:<></> }
             <>
             <div><Button onClick={()=>{ handlesubmit() }}>Submit</Button></div>
             </>
+
+
       </div>
   );
 }

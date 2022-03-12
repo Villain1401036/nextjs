@@ -33,10 +33,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
 	},
-	contentArea:{
-		
-		height:100+'%',
-	},
+
 		cover: {
 			marginTop: 0,
 			height:70,
@@ -52,6 +49,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 	},
+    contentArea:{ 
+        
+        marginTop:10+"vw",
+        
+    
+        '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+          marginTop: 5+"vw"
+        },
+        '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+            marginTop: 15+"vw"
+        }
+        },
 	appbar:{
 		
 		backgroundColor:"white",
@@ -70,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function HomePage(props){
+export default function ItemswindowPage(props){
 
 	//////
 
@@ -119,32 +128,13 @@ if(typeof window === 'undefined'){
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
+
+            <div style={{ minHeight:60+"vh" }} >
+            <Latestitem />
+            </div>
 		
-			{/* <FilterTabbar /> */}
-			<BannerComponent />
 			
-           {/* <div className={classes.container}>
 
-		   <Latestitem />
-				 <Tabs
-      id="controlled-tab-example"
-      activeKey={key}
-      onSelect={(k) => setKey(k)}>
-	 
-      <Tab eventKey="item" title="Item" >
-	  <Latestitem />
-
-      </Tab>
-
-       <Tab eventKey="Services" title="Services">
-      <ServicesContainer />
-      </Tab>
-      <Tab eventKey="Tasks" title="Tasks" >
-	  <Latestwork />
-      </Tab> 
-
-    </Tabs>
-	</div> */}
 
 				<Footer />
                  

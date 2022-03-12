@@ -3,13 +3,19 @@ import React, { useEffect, useState } from 'react'
 
 
 import { getdata } from '../../networking/getdata';
-import { Button } from '@material-ui/core';
+import { Button, DialogTitle } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Taskcard from '../taskcard';
-import { callwithcache, geturlFormdata, setValuesfrommap } from '../../constants';
+import { callwithcache, convertToJson, geturlFormdata, setValuesfrommap } from '../../constants';
 import Bidcard from '../bidcard';
 import Bookingcard from '../bookingcard';
 
+import  Confirm  from './confirmation';
+import { Dialog } from '@mui/material';
+import { checkQrCode } from '../../utils';
+import { postdata } from '../../networking/postdata';
+import { CLR_HEAD, CLR_HEAD1, CLR_RCARD1 } from '../../themes';
+import { getlocal, storelocal } from '../../localstore';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -55,7 +61,13 @@ export default function Bookingorders(props){
   const [loaded,setLoaded] = React.useState(false); 
 
     const [bookinglist,setBookinglist] = React.useState([]);
+
+    const [bookobj,setBookobj] = React.useState();
     
+    const [open, setOpen] = React.useState(false);
+
+    const [code, setCode] = React.useState();
+
 
   
 
@@ -68,7 +80,8 @@ export default function Bookingorders(props){
 
    const refreshongoing =  () =>{ 
     //call the function to update with the latest tasks
-    var urlForm = geturlFormdata("booking" , "get" , {"customer_key":63 , "gettype":"customer"} , {}) //localStorage.getItem("customerid") }  )
+    storelocal("user_key" , 63)
+    var urlForm = geturlFormdata("booking" , "get" , {"customer_key":getlocal("user_key") , "gettype":"customer"} , {}) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 
     callwithcache(getdata, url, "bookings").then((value) =>{
@@ -91,20 +104,113 @@ export default function Bookingorders(props){
         return date
     }
 
-      const filllatest =  bookinglist.map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
+    const Verifypickup = async(gettype,bookingobj) =>{
+      try{
+        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{ console.log("data :" + data);setCode(data);setBookobj(bookingobj)})
+       
+        
+      }catch{
+
+      }
+    }
+
+     
+ const onPickup = async (updatetype , status , booking_id ) =>{
+
+  console.log("on picking up the item");
+
+  var formdatas = new FormData();
+
+   formdatas.append("status", status)
+
+  var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
+ await  postdata( urlform.url , "booking" , formdatas ).then(()=>{console.log("done");}).then(()=>{
+     if(props.status == 2){
+      setStatus(3)
+     }
+   
+ })
+}
+
+const onReturn = async (updatetype , status , booking_id ) =>{
+
+  console.log("on picking up the item");
+
+  var formdatas = new FormData();
+
+   formdatas.append("status", status)
+
+  var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
+ await  postdata( urlform.url , "booking" , formdatas ).then(()=>{console.log("done");}).then(()=>{
+     if(props.status == 3){
+      setStatus(4)
+     }
+   
+ })
+}
+
+      const filllatest =  bookinglist.map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
+       Verifypickup={( gettype , bookingobj)=> {  console.log(bookingobj); Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
+       status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
    
 
     const classes = useStyles();
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
+
+
+  const handleClose = () => {
+   
+  };
+  
+
+  const processQR = (scandata , code) =>{
+    console.log(scandata);
+    console.log(code);
+      if (code === scandata){
+          console.log("its right");
+          if(bookobj.status == "2" ){
+            onPickup("status",3,bookobj.bookingId)
+          }else if(bookobj.status == "3"){
+            onReturn("status",4,bookobj.bookingId)
+          }
+          
+          setOpen(false);
+          return
+      }
+      console.log("its wrong");
+  }
+
+  
+
 	return(
-		<div style={{ backgroundColor:'red'}}>
-                
+		<div style={{ backgroundColor:CLR_RCARD1}}>
+                 <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        
+        PaperProps={{style:{minWidth:95+"vw", minHeight:85+"vh" , alignContent:"center", textAlign:"center", justifyContent:"center"}}}
+      >
+        
+        <DialogTitle id="alert-dialog-title">
+          
+        </DialogTitle>
+        
+        <Confirm passcode={(data)=>processQR(data, code )} />
+        
+        <Button onClick={()=>{ }} autoFocus>
+          
+          </Button>
+      </Dialog>
+      
              <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button> 
              <div style={{minWidth: 100+"%" , display: "grid"}}>
              {filllatest}
              </div>
+             
              </div>
 	);
 

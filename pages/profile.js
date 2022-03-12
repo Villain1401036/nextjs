@@ -85,13 +85,11 @@ onRefresh(authContext);
 	</Head>
 
 	<ButtonAppBar itemName={Shopname}/>
-	
+	<div className={classes.cover}></div>
 	<Profilesummary />
 	
 	
-     <BigButton name={"Address"} onClick={()=>{console.log("Address")}} />
-	 <BigButton name={"All Orders"} onClick={()=>{console.log("all order");}} />
-	 
+     
 
   
 	</div>
