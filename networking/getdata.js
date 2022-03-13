@@ -26,31 +26,31 @@ export const getdata = async(url, obj, options) => {
    //when request is successful check if data can be serialized
    switch ( obj){
       case "tasks":
-        var data = proto.user.Tasks.toObject(false,proto.user.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
+        var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
       case "services":
-        var data = proto.user.Services.toObject(false,proto.user.Services.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mservicesList }) ; return data.mservicesList
+        var data = proto.Services.toObject(false,proto.Services.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mservicesList }) ; return data.mservicesList
       case "delays":
-        var data = proto.user.Delays.toObject(false,proto.user.Delays.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mdelaysList }) ;return data.mdelaysList
+        var data = proto.Delays.toObject(false,proto.Delays.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mdelaysList }) ;return data.mdelaysList
       case "works":
-        var data = proto.user.Works.toObject(false,proto.user.Works.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworksList }) ; return data.mworksList
+        var data = proto.Works.toObject(false,proto.Works.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworksList }) ; return data.mworksList
       case "customers":
-        var data = proto.user.Customers.toObject(false,proto.user.Customers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mcustomersList }) ;return data.mcustomersList
+        var data = proto.Customers.toObject(false,proto.Customers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mcustomersList }) ;return data.mcustomersList
       case "workers":
-        var data = proto.user.Workers.toObject(false,proto.user.Workers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworkersList }) ; return data.mworkersList
+        var data = proto.Workers.toObject(false,proto.Workers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworkersList }) ; return data.mworkersList
       case "biditems":
-          var data = proto.user.Biditems.toObject(false,proto.user.Biditems.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbiditemsList }) ; return data.mbiditemsList
+          var data = proto.Biditems.toObject(false,proto.Biditems.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbiditemsList }) ; return data.mbiditemsList
       case "bids":
-          var data = proto.user.Bids.toObject(false,proto.user.Bids.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbidsList }) ; return data.mbidsList
+          var data = proto.Bids.toObject(false,proto.Bids.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbidsList }) ; return data.mbidsList
       case "bookings":
-          var data = proto.user.Bookings.toObject(false,proto.user.Bookings.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbookingsList }) ; return data.mbookingsList
+          var data = proto.Bookings.toObject(false,proto.Bookings.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbookingsList }) ; return data.mbookingsList
       case "confirmcodes":
-          var data = proto.user.Confirmcodes.toObject(false,proto.user.Confirmcodes.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mconfirmcodesList }) ; return data.mconfirmcodesList  
+          var data = proto.Confirmcodes.toObject(false,proto.Confirmcodes.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mconfirmcodesList }) ; return data.mconfirmcodesList  
       case "address":
-          var data = proto.user.Addresses.toObject(false,proto.user.Addresses.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
+          var data = proto.Addresses.toObject(false,proto.Addresses.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
       case "items":
-            var data = proto.user.Items.toObject(false,proto.user.Items.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
+            var data = proto.Items.toObject(false,proto.Items.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
       default:
-        var data = proto.user.Tasks.toObject(false,proto.user.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
+        var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
    }
    }
    catch (e) {
