@@ -5,7 +5,7 @@ import { cache } from '../cache';
 import { geturlFormdata } from '../constants';
 import { AuthContext } from '../context';
 
-//var messages = require('user_pb.js');
+var  proto = require('user_pb.js');
 
 // getdata(url) >> 
 
