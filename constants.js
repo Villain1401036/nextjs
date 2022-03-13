@@ -187,7 +187,7 @@ export var latestworkobj = {"place":"bokaro" , "lat": "12" , "lon":"143" , "dist
 //getting the type of endpoint at one point
 export const geturlFormdata = (data , reqtype , queryoptions , formdataoptions ) =>{
 
-    var rooturl = "http://localhost:9082/"
+    var rooturl = "http://api.smorentel.com/"
     var allurl =  rooturl + `${data}/${reqtype}?`
 
     var queryparam = new String();
