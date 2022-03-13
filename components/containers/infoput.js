@@ -65,8 +65,7 @@ export default function Infoput(props){
 
     const [edit , setEdit] = React.useState(true);
     
-    var url = "http://localhost:9082/task/get?taskid=t6~t8~t7"  //address links
- 
+    
     useEffect (()=>{
        if (!loaded){
 

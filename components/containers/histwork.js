@@ -6,6 +6,7 @@ import { getdata } from '../../networking/getdata';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Taskcard from '../taskcard';
+import { geturlFormdata } from '../../constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,7 @@ export default function Histwork(props){
 
     const [tasklist,setTasklist] = React.useState([]);
     
-    var url = "http://localhost:9082/work/get?workids=521";
+  
 
   
 
@@ -69,7 +70,10 @@ export default function Histwork(props){
        //call the function to update with the latest tasks
        count = count + 1;
        console.log(count);
-      getdata(url,"works").then((value) =>{ 
+       var urlForm = geturlFormdata("work", "get",{"workids":521} ,{})
+
+    
+      getdata(urlForm.url,"works").then((value) =>{ 
         console.log( value );  
         setLoaded(true) ;
         setVal(value);}).catch((err) =>{

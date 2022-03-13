@@ -1,6 +1,6 @@
 import { Exception } from '@zxing/library';
 import router from 'next/router';
-import { geturlFormdata } from './constants';
+import { geturlFormdata, siterooturl } from './constants';
 import { storelocal, storeobjlocal } from './localstore';
 import { getdata } from './networking/getdata';
 
@@ -59,11 +59,11 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
        //checks if userdata exist or not if exist then  to homepage else to infofill 
       await getuserdata(idtype , email).then((value)=>{
           
-           router.push("http://localhost:3000/home")
+           router.push(`${siterooturl}home`)
 
          }).catch((err) =>{
             console.log(err);
-            router.push("http://localhost:3000/info")
+            router.push(`${siterooturl}info`)
              console.log("user not available in database , NEW USER");
              //console.log(err);
          })

@@ -6,6 +6,7 @@ import { getdata } from '../../networking/getdata';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Taskcard from '../taskcard';
+import { geturlFormdata } from '../../constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,7 @@ export default function Notifications(props){
 
     const [tasklist,setTasklist] = React.useState([]);
     
-    var url = "http://localhost:9082/task/get?customerid=63";
+   
 
   
 
@@ -69,7 +70,9 @@ export default function Notifications(props){
        //call the function to update with the latest tasks
        count = count + 1;
        console.log(count);
-      getdata(url).then((value) =>{ 
+       
+    var urlForm = geturlFormdata("task","get",{"customerid":63})
+      getdata(urlForm.url).then((value) =>{ 
         console.log( value );  
         setLoaded(true) ;
         setVal(value);}).catch((err) =>{

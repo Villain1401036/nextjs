@@ -1,8 +1,8 @@
 import axios from 'axios';
 import  { useRouter } from 'next/router';
 import React from 'react';
-import {Tasks} from '../build/gen/user_pb';
 import { cache } from '../cache';
+import { geturlFormdata } from '../constants';
 import { AuthContext } from '../context';
 
 //var messages = require('user_pb.js');
@@ -62,8 +62,8 @@ export const getdata = async(url, obj, options) => {
    ).catch(error => {
     //failed result
         if (error.response.status == 401){
-
-           refreshTokens("http://localhost:9082/user/refreshtoken")
+          var urlForm = geturlFormdata("user","refreshtoken",{},{})
+           refreshTokens(urlForm.url)
            
 
         }

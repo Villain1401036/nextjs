@@ -3,7 +3,7 @@ import { Button, Card, CardMedia, divField } from '@material-ui/core';
 import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { pushtask } from '../constants';
+import { geturlFormdata, pushtask, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 
 
@@ -35,7 +35,8 @@ const catchtask = () =>{
    formdatas.append("description", props.description)
   formdatas.append("place", props.place)
   
-  postdata( 'http://localhost:9082/work/create' , "task" , formdatas )
+  var urlForm = geturlFormdata("work","create")
+  postdata( urlForm.url , "task" , formdatas )
 
   console.log(formdatas.getAll('place'));
   
@@ -52,7 +53,8 @@ const bidtask = () =>{
   formdatas.append("bidprice", 3443)
   formdatas.append("available_at", 344567673)
   
-  postdata( 'http://localhost:9082/bid/create' , "task" , formdatas )
+  var urlForm = geturlFormdata("bid","create",{},{})
+  postdata( urlForm.url , "task" , formdatas )
   console.log(formdatas.getAll('place'));
 
   
@@ -60,7 +62,7 @@ const bidtask = () =>{
   console.log(props.location);
   const router = useRouter();
 
-  var rooturl = "http://localhost:9000"
+  var rooturl = s3rooturl
 
 	return(
 		

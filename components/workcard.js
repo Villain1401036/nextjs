@@ -3,7 +3,7 @@ import { Button, Card, CardMedia, divField } from '@material-ui/core';
 import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { pushwork } from '../constants';
+import { pushwork, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 
 
@@ -19,7 +19,7 @@ export default function Workcard(props){
   console.log(props.location);
   const router = useRouter();
 
-  var rooturl = "http://localhost:9000"
+  var rooturl = s3rooturl
 
 	return(
 		

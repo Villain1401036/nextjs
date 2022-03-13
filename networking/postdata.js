@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { geturlFormdata } from '../constants';
 import { refreshTokens } from './getdata';
 
 export const postdata = async(url , object , formdata , options ) => {
@@ -27,8 +28,8 @@ export const postdata = async(url , object , formdata , options ) => {
       //failed result
       //failed result
       if (error.response.status == 401){
-
-       refreshTokens("http://localhost:9082/user/refreshtoken")
+        var urlForm = geturlFormdata("user","refreshtoken")
+       refreshTokens(urlForm.url)
         throw Error(401)
         
         

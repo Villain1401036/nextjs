@@ -96,8 +96,8 @@ const  readyform = async() => {
   if (customer_key){ formdatas.append("customer_key", customer_key)}
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
 
- 
- await postdata('http://localhost:9082/task/create' , "task" , formdatas ).then(()=>{ 
+ var urlform = geturlFormdata("task","create" , {},{})
+ await postdata(urlform.url , "task" , formdatas ).then(()=>{ 
     router.push("/home");
  }).catch((error)=> {handleClickOpen()} )
   
@@ -270,8 +270,8 @@ React.useEffect (()=>{
     if (location){ formdatas.append("location", location)}
     if (worker_key){ formdatas.append("worker_key", worker_key)}
 
-   
-    postdata('http://localhost:9082/service/create' , "services" , formdatas )
+    var urlForm = geturlFormdata("service", "create")
+    postdata(urlform.url , "services" , formdatas )
     
    console.log(formdatas.getAll("description")); 
 
@@ -283,7 +283,9 @@ React.useEffect (()=>{
      formdatas.append("task_status",101 )
      formdatas.append("tags", 'asdasd~dog~rewr' )
      formdatas.append("taskid","688bokaro" )
-     postdata('http://localhost:9082/task/update?updatetype=tags' , "task" , formdatas )
+
+     var urlForm = geturlFormdata("task", "update")
+     postdata( urlForm.url , "task" , formdatas )
 
   }
 

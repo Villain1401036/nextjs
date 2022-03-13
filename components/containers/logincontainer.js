@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { getTokens } from "../../networking/getdata";
 import { AuthContext } from "../../context";
 import { useRouter } from "next/router";
+import { geturlFormdata, siterooturl } from "../../constants";
 
 
 export default function Logincontainer() {
@@ -19,10 +20,11 @@ export default function Logincontainer() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await getTokens("http://localhost:9082/user/login", email , password ).then((value)=>{
+    var urlForm = geturlFormdata("user","login")
+    await getTokens( urlForm.url, email , password ).then((value)=>{
       
       
-      router.push("http://localhost:3000/home")
+      router.push(`${siterooturl}home`)
     })
   }
 
@@ -54,7 +56,7 @@ export default function Logincontainer() {
 
       <div style={ {textAlign:"center", padding:30 }}>
           <div> Not a user </div>
-          <button onClick={()=> router.push("http://localhost:3000/signup")} >Sign up</button>
+          <button onClick={()=> router.push(`${siterooturl}signup`)} >Sign up</button>
 
       </div>
     </div>

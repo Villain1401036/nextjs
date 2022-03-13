@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { Component, useState } from "react";
-import { geturlFormdata } from "../../constants";
+import { geturlFormdata, siterooturl } from "../../constants";
 import { postsignup } from "../../networking/getdata";
 import Alert from 'react-bootstrap/Alert'
 
@@ -94,7 +94,7 @@ const [show, setShow] = useState(true);
 
                 <button type="submit" className="btn btn-dark btn-lg btn-block"  disabled={!validateForm()}  >Register</button>
                 <p className="forgot-password text-right">
-                    Already registered <a href="http://localhost:3000/login">log in?</a>
+                    Already registered <a href={`${siterooturl}login`}>log in?</a>
                 </p>
                 
                 

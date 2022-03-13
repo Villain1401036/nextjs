@@ -65,7 +65,6 @@ const [isloaded,setIsLoaded] = React.useState(false);
 
 const router = new useRouter();
 
-var url = "http://localhost:9082/customer/get?user_id=63"  
 
 useEffect (()=>{
 	if (!isloaded){

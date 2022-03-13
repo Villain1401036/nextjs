@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useState , useContext, Component } from "react";
-import { geturlFormdata } from "../../constants";
+import { geturlFormdata, siterooturl } from "../../constants";
 import { AuthContext } from "../../context";
 import { storelocal, storeobjlocal } from "../../localstore";
 import { getdata, getTokens } from "../../networking/getdata";
@@ -33,7 +33,8 @@ export default function Logincomponent(props){
     async function handleSubmit(event) {
       event.preventDefault();
     
-      await getTokens("http://localhost:9082/user/login", email , password ).then((value)=>{
+      var urlForm = geturlFormdata("user","login")
+      await getTokens(urlForm.url, email , password ).then((value)=>{
       var idtype = null
       if  (email.includes("@")){
             idtype = "email"
@@ -43,7 +44,7 @@ export default function Logincomponent(props){
 
     
       getuserdata(idtype , email).then((value)=>{
-        router.push("http://localhost:3000/home")
+        router.push(`${siterooturl}home`)
       })
         
        

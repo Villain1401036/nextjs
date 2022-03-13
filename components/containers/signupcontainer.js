@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useRouter } from "next/router";
 import { TextField } from "@material-ui/core";
-import { geturlFormdata, postwitherror } from "../../constants";
+import { geturlFormdata, postwitherror, siterooturl } from "../../constants";
 import { postdata } from "../../networking/postdata";
 import { postsignup } from "../../networking/getdata";
 
@@ -101,7 +101,7 @@ const router = useRouter();
 
       <div style={ {textAlign:"center", padding:30 }}>
           <div> Already a user </div>
-          <button onClick={()=> router.push("http://localhost:3000/login")} >Login</button>
+          <button onClick={()=> router.push(`${siterooturl}login`)} >Login</button>
 
       </div>
     </div>

@@ -4,7 +4,7 @@ import { divFormat } from '@material-ui/icons';
 import { useRouter } from 'next/dist/client/router';
 import router from 'next/router';
 import React from 'react';
-import { convertToJson, postwitherror, pushitem, s3rooturl } from '../constants';
+import { convertToJson, geturlFormdata, postwitherror, pushitem, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 
 
@@ -35,8 +35,10 @@ const creatework = () =>{
      formdatas.append("description", props.taskobj.description)
     formdatas.append("place", props.taskobj.place)
     
-    // postdata( 'http://localhost:9082/work/create' , "task" , formdatas )
-    postwitherror(postdata,'http://localhost:9082/work/create', "work", formdatas  )
+    
+
+    var urlform = geturlFormdata("work", "create",{},{})
+    postwitherror(postdata,urlform.url, "work", formdatas  )
   
     console.log(formdatas.getAll('place'));
     

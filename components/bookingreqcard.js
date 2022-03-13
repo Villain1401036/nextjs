@@ -3,7 +3,7 @@ import { Button, Card, CardMedia, divField, makeStyles } from '@material-ui/core
 import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { convertToJson, geturlFormdata, pushtask } from '../constants';
+import { convertToJson, geturlFormdata, pushtask, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 import { getQrCode } from '../utils';
 
@@ -41,7 +41,7 @@ const bidhandler = () =>{
   const router = useRouter();
 
 
-  var rooturl = "http://localhost:9000"
+  var rooturl = s3rooturl
 
    useEffect(()=>{
        if(!isloaded){

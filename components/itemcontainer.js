@@ -178,8 +178,8 @@ const biditem = (item_key,customer_key,bidprice,bid_message) =>{
 
   formdatas.append("bidprice", bidprice)
   formdatas.append("bid_message", bid_message)
-  
-  postdata( 'http://localhost:9082/biditem/create' , "item" , formdatas )
+  var urlForm = geturlFormdata("biditem", "create")
+  postdata( urlForm.url , "item" , formdatas )
   console.log(formdatas.getAll('place'));
 
   
@@ -201,8 +201,8 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
   formdatas.append("metadata" , JSON.stringify(convertToJson(itemdata.metadata)) )
    setFetching(true);
   
-  
-  await postdata( 'http://localhost:9082/booking/create' , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested") }).catch((e)=>{  console.log(e); document.getElementById("booking_title").replaceChildren("some error occered") });
+  var urlForm = geturlFormdata("booking","create",{},{})
+  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested") }).catch((e)=>{  console.log(e); document.getElementById("booking_title").replaceChildren("some error occered") });
   console.log(formdatas.getAll('place'));
 
   

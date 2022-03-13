@@ -3,7 +3,7 @@ import { Button, Card, CardMedia, divField } from '@material-ui/core';
 import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { convertToJson, pushtask } from '../constants';
+import { convertToJson, pushtask, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 import { CLR_HEAD, CLR_RCARD2 } from '../themes';
 
@@ -43,7 +43,8 @@ export default function Bookingcard(props){
   console.log(props.location);
   const router = useRouter();
 
-  var rooturl = "http://localhost:9000"
+  var rooturl = s3rooturl
+
 
 
   console.log(props.bookingobj);
