@@ -1,4 +1,4 @@
-import { Exception } from '@zxing/library';
+
 import router from 'next/router';
 import { geturlFormdata, siterooturl } from './constants';
 import { storelocal, storeobjlocal } from './localstore';

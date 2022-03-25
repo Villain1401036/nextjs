@@ -17,6 +17,7 @@ export const getdata = async(url, obj, options) => {
   
    var k = await axios.get(url
     ,{responseType:"arraybuffer",
+      
       headers: { 'Authorization' : localStorage.getItem("access_token")}
     }
     ).then(response  => {
@@ -24,7 +25,7 @@ export const getdata = async(url, obj, options) => {
    console.log(response.data);
    try {
    //when request is successful check if data can be serialized
-   switch ( obj){
+   switch ( obj ){
       case "tasks":
         var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
       case "services":
