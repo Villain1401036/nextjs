@@ -60,11 +60,11 @@ export default function Logincomponent(props){
  
   
   const confirmCode = (code) =>{
-    console.log("code");
+     
     confirmationResult.confirm(code).then((result) => {
       // User signed in successfully.
       const user = result.user;
-      console.log(result);
+       
       // ...
     }).catch((error) => {
       // User couldn't sign in (bad verification code?)
@@ -73,7 +73,7 @@ export default function Logincomponent(props){
   }
   
     const signInWithPhone = async () =>{
-        console.log("otp req");
+         
             window.recaptchaVerifier = new RecaptchaVerifier('sign-in-button', {
               'size': 'invisible',
               'callback': (response) => {
@@ -89,7 +89,7 @@ export default function Logincomponent(props){
               // SMS sent. Prompt user to type the code from the message, then sign the
               // user in with confirmationResult.confirm(code).
               window.confirmationResult = confirmationResult;
-              console.log("otpsent");
+               
               setOtpsent(true);
               // ...
             }).catch((error) => {
@@ -152,7 +152,7 @@ export default function Logincomponent(props){
                 </p>
 
                
-               { otpsent && <><TextField  type='number' onChange={(e) => {console.log(e.target.value);setVcode(e.target.value)}} />
+               { otpsent && <><TextField  type='number' onChange={(e) => { setVcode(e.target.value)}} />
                <button className="btn" onClick={()=>{confirmCode(vcode)}}>confirm otp</button></>    }
             
                {!otpsent && <><input type="number" className="form-control" placeholder="Enter phone" value={phone}

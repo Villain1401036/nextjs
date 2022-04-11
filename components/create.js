@@ -59,9 +59,9 @@ if(typeof window != 'undefined'){
   
   
     put(file)
-    console.log(medias);
+     
  }
- console.log(medias);
+  
 
 }
 
@@ -71,7 +71,7 @@ const makearr =() =>{
   mediaarr.forEach(element => {
     s += `"/testbucket/${element}",`
   });
-  console.log(s);
+   
   return s.slice(0,-1)
 }
 
@@ -101,7 +101,7 @@ const  readyform = async() => {
     router.push("/home");
  }).catch((error)=> {handleClickOpen()} )
   
- console.log(formdatas.getAll("description")); 
+   
   }
   catch (error) {
     
@@ -119,7 +119,7 @@ const fillpics = Array.from(files).map(file =>
   <img style={{width:80+"vw"}} src={URL.createObjectURL(file)}></img>
 )
 
-console.log(fillpics);
+ 
 
 
 
@@ -192,7 +192,7 @@ const handleClose = () => {
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
-            console.log(value);
+             
           }}
           renderInput={(params) => <TextField {...params} />}
         />
@@ -201,7 +201,7 @@ const handleClose = () => {
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
-          console.log(value);
+           
         }}
         renderInput={(params) => <TextField {...params} />}
       />
@@ -273,7 +273,7 @@ React.useEffect (()=>{
     var urlForm = geturlFormdata("service", "create")
     postdata(urlform.url , "services" , formdatas )
     
-   console.log(formdatas.getAll("description")); 
+     
 
   }
 
@@ -356,9 +356,9 @@ React.useEffect (()=>{
 });
 
 
-const filtertags =  tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+const filtertags =  tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
 
-const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
 
 const [files, setFiles] = React.useState([]); 
 
@@ -379,7 +379,7 @@ const makearr =() =>{
   mediaarr.forEach(element => {
     s += `"/${element}",`
   });
-  console.log(s);
+   
   return s.slice(0,-1)
 }
 
@@ -404,13 +404,13 @@ const  readyform = async() => {
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
  
   await postdata(geturlFormdata("item","create",{}).url , "item" , formdatas ).then((val)=>{
-    console.log("sccessfully posted"); 
+      
   })
   //router.reload();
- console.log(formdatas.getAll("description")); 
+   
   }
   catch(e){
-    console.log(e);
+     
   }
 
 }
@@ -468,7 +468,7 @@ const handlesubmit = async () =>{
 
 <div style={{margin:5+"vw"}}>
   <h5>Additional Information</h5>
-<textarea  id="description" label="description" style={{ width:100+"%" }} onChange={(e) => {setDescription(e.target.value);console.log(e.target.value);} } ></textarea>
+<textarea  id="description" label="description" style={{ width:100+"%" }} onChange={(e) => {setDescription(e.target.value); } } ></textarea>
 </div>
 
 <div style={{margin:5+"vw"}}>
@@ -502,12 +502,12 @@ const handlesubmit = async () =>{
 <input type="file" name="file" id={"img3"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile3(file[0]) }} />
 
 
-{!file1 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img1").click();}}  ></div>:<img style={{width:80+"vw" , maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file1)}></img>}
+{!file1 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey"}} onClick={()=>{ }}  ></div>:<img style={{width:80+"vw" , maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file1)}></img>}
 
 
-{!file2 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img2").click();}}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file2)}></img>}
+{!file2 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{ }}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file2)}></img>}
 
-{!file3 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{console.log("clicked");document.getElementById("img3").click();}}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file3)}></img>}
+{!file3 ? <div style={{width:80+"vw", height:60+"vw",margin:"auto" ,  marginBottom:6+"vw",backgroundColor:"lightgrey"}} onClick={()=>{ }}  ></div>:<img style={{width:80+"vw" ,  maxHeight:60+"vw",margin:"auto" , marginBottom:6+"vw", backgroundColor:"lightgrey", objectFit:"contain"}} src={URL.createObjectURL(file3)}></img>}
 
 
 { files!= [] ?<>{fillpics}</>:<></> }

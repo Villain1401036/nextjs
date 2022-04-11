@@ -11,14 +11,14 @@ const credentials =  { accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6', secretAc
 
 // var  res =   authsign()
 
-//console.log(res,crypto.SHA256("").toString() );
+// 
 
 // var aws4 = require('aws4');
 // var opts = { host: 'sin1.contabostorage.com', path: '/images', service: 's3', region: 'us-east-1' }
 
 // aws4.sign(opts, { accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6', secretAccessKey: 'c3602378d1f030e0088f0864497246c5' })
 
-// console.log(opts);
+//  
 
 // var s3  = new S3({
 //     accessKeyId: 'HASV99S405QAUUT9I0RG' ,
@@ -56,7 +56,7 @@ var s3  = new S3({
 //   // Fetch data from external API
 //   const fs = require('fs')
 //   const crypto = require('crypto')
-//   console.log(crypto);
+//    
 //   // Pass data to the page via props
 //   return { props: { data } }
 // }
@@ -80,8 +80,8 @@ export const uploadFile = async (remoteFilename, fileName) => {
    
    
   }, function(error, response) {
-   console.log('uploaded file[' + fileName + '] to [' + remoteFilename + '] as [' + metaData + ']');
-   console.log(response);
+    
+    
   });
  }
 
@@ -116,8 +116,8 @@ export const uploadFile = async (remoteFilename, fileName) => {
 
 
  s3.putBucketCors(paramscors, function(err, data) {
-   if (err) console.log(err, err.stack); // an error occurred
-   else     console.log(data);           // successful response
+   if (err) console.log(err)  // an error occurred
+   else  console.log(data);               // successful response
  });
 
 
@@ -134,13 +134,13 @@ export function put(files){
     
   }
   Promise.all(promises).then(function(data){
-    console.log('Uploadedd');
-    console.log(data);
+     
+     
     return mediaarr
 }).catch(function(err){
-  console.log(err.stack);
+   
 })
-    console.log("--------------------------------put-------------------------------");
+     
 
 }
 
@@ -152,12 +152,12 @@ export function putverify(files){
       promises.push(uploadLoadToS3(file,'verificationdata'));
   }
   Promise.all(promises).then(function(data){
-    console.log('Uploadedd');
+     
     return mediaarr
 }).catch(function(err){
-  console.log(err.stack);
+   
 })
-    console.log("--------------------------------put-------------------------------");
+     
 
 }
 
@@ -169,14 +169,14 @@ function uploadLoadToS3(file,bucket){
   
   s3.upload(params,(err,data)=>{
     if (err) throw err;
-    console.log("data----" , data);
+     
   }).on('httpUploadProgress', function(evt) {
     var uploaded = Math.round(evt.loaded / evt.total * 100);
-    console.log(`File uploaded: ${uploaded}%`);
+     
 }).send(function(err, data) {
     if (err){
         // an error occurred, handle the error
-        console.log(err, err.stack);
+         
         return;
     }
 }

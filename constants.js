@@ -51,7 +51,7 @@ export const getworkonpage = (data) =>{
 export const cachexpire = (key) =>{
 
   var value = cache.get(key)
-  console.log(value);
+   
   if  (value != undefined){
         if  ( value.expire > Date.now()){
            return value.data
@@ -69,16 +69,16 @@ export const callwithcache = async (func, url ,obj) =>{
 
   try {
     var data = cachexpire(url)
-    console.log(data);
+     
     if (data != undefined ){
       return data
     }
-    console.log("http------------------------------------------------------------");
+     
     data = func(url, obj )
     return data
   }
   catch (e) {
-      console.log(e);
+       
   }
 }
 
@@ -102,12 +102,12 @@ export const getfromLS = ( key) =>{
 
 //    }
     
-//     console.log("http------------------------------------------------------------");
+//      
     
 //   }
 //   catch (e) {
       
-//       console.log(e);
+//        
 //   }
 // }
 
@@ -122,12 +122,12 @@ export const postwitherror = async (func, url ,obj, formdata) =>{
     //  }
    })
 
-    console.log("http------------------------------------------------------------");
+     
     
   }
   catch (e) {
       
-      console.log(e);
+       
   }
 }
 
@@ -138,14 +138,14 @@ export const setValuesfrommap = (val,func, updatefunc , taskmap , mapkey ) =>{
      var plist =  maping(val , taskmap , mapkey ); updatefunc(plist);
   }
   catch(e){
-    console.log(e);
+     
     func()
      }
    } 
 
 
 export const setValue = (val,func, updatefunc  ) =>{
-    console.log(val);
+     
     try{
         if (val == undefined) {
           throw Error("nothing fetched")
@@ -153,7 +153,7 @@ export const setValue = (val,func, updatefunc  ) =>{
         updatefunc(val);
     }
     catch(e){
-      console.log(e);
+       
       func()
        }
      }
@@ -161,7 +161,7 @@ export const setValue = (val,func, updatefunc  ) =>{
 
 const maping =(list ,  taskmap , key ) =>{
 
-console.log(key);
+ 
     list.forEach(element => { taskmap.set( element[key] , element)});
 
     var plist = []
@@ -254,7 +254,7 @@ export const workstatus_dict = {1 : "progress" , 2:"created" , 3:"done"}
 
 export const onRefresh = (authContext) =>{
     if ( typeof window !== "undefined" ){ 
-        console.log(localStorage.getItem("refresh_token"))
+         
       }
   
       if ( typeof window !== "undefined" ){ 

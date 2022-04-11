@@ -16,7 +16,7 @@ export default function Workcard(props){
 
 
 
-  console.log(props.location);
+   
   const router = useRouter();
 
   var rooturl = s3rooturl

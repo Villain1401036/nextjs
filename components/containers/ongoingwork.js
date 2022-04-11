@@ -63,7 +63,7 @@ export default function Ongoingwork(props){
       }
    });
 
-   console.log("ongoing is updated");
+    
 
    const refreshongoing =  () =>{ 
        //call the function to update with the latest tasks
@@ -73,7 +73,7 @@ export default function Ongoingwork(props){
        callwithcache(getdata, url, "works").then((value) =>{
          setLoaded(true);
          setValuesfrommap(value,refreshongoing ,setWorklist , taskmap ,"workId" )}).catch((err) =>{
-           console.log(err);
+            
          }
          )
    }

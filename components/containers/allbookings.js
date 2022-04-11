@@ -88,7 +88,7 @@ export default function Bookingorders(props){
       taskmap.clear();
       setLoaded(true);
       setValuesfrommap(value, refreshongoing ,setBookinglist , taskmap ,"bookingId" )}).catch((err) =>{
-        console.log(err);
+       
       }
       )
 }
@@ -100,13 +100,13 @@ export default function Bookingorders(props){
     const tolocaltime = (epoch) =>{
         var date = new Date(0);
         date.setUTCMilliseconds(epoch)
-         console.log();
+         
         return date
     }
 
     const Verifypickup = async(gettype,bookingobj) =>{
       try{
-        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{ console.log("data :" + data);setCode(data);setBookobj(bookingobj)})
+        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{setCode(data);setBookobj(bookingobj)})
        
         
       }catch{
@@ -117,14 +117,14 @@ export default function Bookingorders(props){
      
  const onPickup = async (updatetype , status , booking_id ) =>{
 
-  console.log("on picking up the item");
+
 
   var formdatas = new FormData();
 
    formdatas.append("status", status)
 
   var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
- await  postdata( urlform.url , "booking" , formdatas ).then(()=>{console.log("done");}).then(()=>{
+ await  postdata( urlform.url , "booking" , formdatas ).then(()=>{}).then(()=>{
      if(props.status == 2){
       setStatus(3)
      }
@@ -134,14 +134,14 @@ export default function Bookingorders(props){
 
 const onReturn = async (updatetype , status , booking_id ) =>{
 
-  console.log("on picking up the item");
+
 
   var formdatas = new FormData();
 
    formdatas.append("status", status)
 
   var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
- await  postdata( urlform.url , "booking" , formdatas ).then(()=>{console.log("done");}).then(()=>{
+ await  postdata( urlform.url , "booking" , formdatas ).then(()=>{}).then(()=>{
      if(props.status == 3){
       setStatus(4)
      }
@@ -150,7 +150,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
 }
 
       const filllatest =  bookinglist.map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
-       Verifypickup={( gettype , bookingobj)=> {  console.log(bookingobj); Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
+       Verifypickup={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
        status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
    
 
@@ -166,10 +166,10 @@ const onReturn = async (updatetype , status , booking_id ) =>{
   
 
   const processQR = (scandata , code) =>{
-    console.log(scandata);
-    console.log(code);
+    
+    
       if (code === scandata){
-          console.log("its right");
+          
           if(bookobj.status == "2" ){
             onPickup("status",3,bookobj.bookingId)
           }else if(bookobj.status == "3"){
@@ -179,7 +179,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
           setOpen(false);
           return
       }
-      console.log("its wrong");
+     
   }
 
   

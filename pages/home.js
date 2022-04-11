@@ -68,21 +68,21 @@ export default function HomePage(props){
 
 	//////
 
-console.log(props.msg);
+ 
 
 const classes = useStyles();
 const router = useRouter();
 
 const authContext = useContext(AuthContext);
 
-console.log(typeof window);
+ 
 
 // if (typeof window !== "undefined") {
 
 	
 // 	localStorage.setItem("isLoggedIn",false)
 
-// 	console.log(localStorage.getItem("isLoggedIn"));
+// 	 
 
 // 	}
 
@@ -94,7 +94,7 @@ if(typeof window === 'undefined'){
 
   const [isloaded,setIsLoaded] = React.useState(true);
   //const [isloaded,setIsLoaded] = React.useState(true);
-  console.log("refresh");
+   
 
 
   onRefresh(authContext)
@@ -174,7 +174,7 @@ if(typeof window === 'undefined'){
 // 	  const fs = require('fs')
 // 	  // Pass data to the page via props
 
-// 	console.log("=======================)==========================");
+// 	 
 // 	  put()
 // 	  return { props}
 //   }

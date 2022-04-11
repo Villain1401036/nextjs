@@ -67,11 +67,11 @@ const router = useRouter();
 }
   });
    
-  console.log(workdata);
+   
    
    const handleChangestatus = (status) =>{
 		//confirm to change the status to done  with a popup
-		console.log(workdata.workStatus);
+		 
 
 	}
 

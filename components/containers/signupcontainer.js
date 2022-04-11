@@ -27,7 +27,7 @@ const router = useRouter();
   function handleSubmit(event) {
     if (phone.length > 0 &&  phone.length < 10 ){
       //popup 
-      console.log("enter phone number correctly");
+       
       
     }
     event.preventDefault();

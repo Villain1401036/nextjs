@@ -55,19 +55,19 @@ const classes = useStyles();
  const router = useRouter();
 const bidhandler = () =>{
 
-  console.log("post request for opening a bid");
+   
   open(props.maplink)
 
 }
 
 const addtofav = () =>{
   //code to save the itemid somewhere in the cloud and in the app
-console.log("ADDED TO FAV");
+ 
 }
 
 const removefromfav = () =>{
   //code to save the itemid somewhere in the cloud and in the app
-  console.log("REMOVED FROM FAV");
+   
 }
 	return(
 		
@@ -78,7 +78,7 @@ const removefromfav = () =>{
         className={classes.imgcard}
         image={s3rooturl + convertToJson(props.itemobj.metadata).images[0]}
         alt="green iguana"
-        onClick={() => {console.log(props.itemobj); pushitem(props.itemobj); router.push("/itempage") }}
+        onClick={() => {  router.push("/itempage") }}
       />
         <div style={{ margin:1+"vw"}}>
 

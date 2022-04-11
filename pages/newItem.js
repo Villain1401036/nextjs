@@ -88,7 +88,7 @@ const router = useRouter();
 // 	const fs = require('fs')
 	
 // 	const crypto = require('crypto')
-// 	console.log(crypto);
+// 	 
 // 	// Pass data to the page via props
 	
 //   }

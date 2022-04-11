@@ -69,14 +69,14 @@ export default function Notifications(props){
    const refreshongoing =  () =>{ 
        //call the function to update with the latest tasks
        count = count + 1;
-       console.log(count);
+        
        
     var urlForm = geturlFormdata("task","get",{"customerid":63})
       getdata(urlForm.url).then((value) =>{ 
-        console.log( value );  
+           
         setLoaded(true) ;
         setVal(value);}).catch((err) =>{
-          console.log(err);
+           
         }
         )
       
@@ -90,7 +90,7 @@ export default function Notifications(props){
     //converting the map into a list 
     taskmap.forEach( (value) => { tlist.push(value) } )
     // ftest();
-    console.log(tlist);
+     
   }
 
   //const ftest = () => taskmap.forEach( (value) => { tlist.push(value) } )
@@ -98,10 +98,10 @@ export default function Notifications(props){
 
    const setVal = (val) =>{ 
      try{
-       opentasklist = opentasklist.concat(...val) ; maping(opentasklist); setTasklist(tlist); console.log(tasklist);
+       opentasklist = opentasklist.concat(...val) ; maping(opentasklist); setTasklist(tlist);  
      }
      catch(e){
-       console.log(e);
+        
      }
       } 
   

@@ -85,7 +85,7 @@ export default function Infoput(props){
       else{
         selectedtags.add(item)
       }
-      console.log(selectedtags);
+       
       
   }
   var selectedcategory = new Set()
@@ -97,7 +97,7 @@ export default function Infoput(props){
     else{
       selectedcategory.add(item)
     }
-    console.log(selectedcategory);
+     
     
 }
 
@@ -1077,8 +1077,8 @@ export default function Infoput(props){
 
 
              </div  >
-             <div style={{margin:1+"vh" , marginBottom:1+"vh"}} > <Select    options={countryops} onChange={(val)=>{console.log(value);}} /></div>
-             <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getstate()} onChange={(value)=>{ setState(value["value"]);console.log(state);}} /></div>
+             <div style={{margin:1+"vh" , marginBottom:1+"vh"}} > <Select    options={countryops} onChange={(val)=>{ }} /></div>
+             <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getstate()} onChange={(value)=>{ setState(value["value"]); }} /></div>
               <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getdistrict(state)} /></div>
 
               <button onClick={()=>{router.push("/home")}}>Next</button>

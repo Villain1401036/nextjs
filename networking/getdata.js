@@ -22,7 +22,7 @@ export const getdata = async(url, obj, options) => {
     }
     ).then(response  => {
   
-   console.log(response.data);
+    
    try {
    //when request is successful check if data can be serialized
    switch ( obj ){
@@ -47,16 +47,16 @@ export const getdata = async(url, obj, options) => {
       case "confirmcodes":
           var data = proto.Confirmcodes.toObject(false,proto.Confirmcodes.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mconfirmcodesList }) ; return data.mconfirmcodesList  
       case "address":
-          var data = proto.Addresses.toObject(false,proto.Addresses.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
+          var data = proto.Addresses.toObject(false,proto.Addresses.deserializeBinary(response.data));  cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
       case "items":
-            var data = proto.Items.toObject(false,proto.Items.deserializeBinary(response.data)); console.log(data);cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
+            var data = proto.Items.toObject(false,proto.Items.deserializeBinary(response.data));  cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
       default:
         var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
    }
    }
    catch (e) {
     //when request is successful but not good
-      console.log(e);
+       
 
    }
    }
@@ -70,16 +70,16 @@ export const getdata = async(url, obj, options) => {
         }
 
         else if (error.response.status == 500){
-            console.log("bad error");
+             
             throw Error("url not ok")
         }
         else {
-          console.log("dont know error");
+           
             throw Error("other than unauthorized and internal server")
         }
 
-       // console.log(error.response.config.url);
-        // console.log("error in axios");
+       //  
+        //  
 
 
      });
@@ -102,7 +102,7 @@ export const getTokens = async(url , user , pass ) =>{
   },}
   )
   .then(response  => {
-     console.log(response);
+      
    try {
    //when request is successful check if data can be serialized
    console.log(response.data.access_token)
@@ -116,17 +116,17 @@ export const getTokens = async(url , user , pass ) =>{
    }
    catch (e) {
     //when request is successful but not good
-      console.log(e);
+       
   }
 }
    ).catch(error => {
     //failed result
-         console.log(error.response.status);
-         console.log(error);
+          
+          
 
          return error.response
      });
-     console.log(k);
+      
      return k
 }
 
@@ -142,7 +142,7 @@ export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
   },}
   )
   .then(response  => {
-     console.log(response);
+      
    try {
    //when request is successful check if data can be serialized
    
@@ -151,17 +151,17 @@ export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
    }
    catch (e) {
     //when request is successful but not good
-      console.log(e);
+       
   }
 }
    ).catch(error => {
     //failed result
-         console.log(error.response.status);
-         console.log(error);
+          
+          
 
          return error.response
      });
-     console.log(k);
+      
      return k
 }
 
@@ -177,7 +177,7 @@ export const postsignup = async(url , formdata ) =>{
   },}
   )
   .then(response  => {
-     console.log(response);
+      
    try {
    //when request is successful check if data can be serialized
    console.log(response.data.access_token)
@@ -188,17 +188,17 @@ export const postsignup = async(url , formdata ) =>{
    }
    catch (e) {
     //when request is successful but not good
-      console.log(e);
+       
   }
 }
    ).catch(error => {
     //failed result
-         console.log(error.response.status);
-         console.log(error);
+          
+          
 
          return error.response
      });
-     console.log(k);
+      
      return k
 }
 
@@ -218,7 +218,7 @@ export const refreshTokens = async(url ) =>{
   },}
   )
   .then(response  => {
-     console.log(response);
+      
    try {
    //when request is successful check if data can be serialized
    //console.log(response.data.access_token)
@@ -229,12 +229,12 @@ export const refreshTokens = async(url ) =>{
    }
    catch (e) {
     //when request is successful but not good
-      console.log(e);
+       
   }
 }
    ).catch(error => {
     //failed result
-         console.log("error in axios");
+          
          return error
      });
      

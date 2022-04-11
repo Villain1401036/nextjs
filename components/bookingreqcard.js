@@ -1,11 +1,10 @@
 //task card for a new task that has been posted
 import { Button, Card, CardMedia, divField, makeStyles } from '@material-ui/core';
-import { divFormat, PinDrop, PinDropOutlined, PinDropRounded, PinDropSharp, PinDropTwoTone } from '@material-ui/icons';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { convertToJson, geturlFormdata, pushtask, s3rooturl } from '../constants';
-import { bidtask, postdata } from '../networking/postdata';
-import { getQrCode } from '../utils';
+import {  postdata } from '../networking/postdata';
+
 
 
 const useStyles = makeStyles((theme) => ({    
@@ -32,12 +31,12 @@ const classes = useStyles();
 
 const bidhandler = () =>{
 
-  console.log("post request for opening a bid");
+   
   open(props.maplink)
 
 }
 
-  console.log(props.location);
+   
   const router = useRouter();
 
 
@@ -52,14 +51,14 @@ const bidhandler = () =>{
 
   const catchbooking = async (updatetype , status , booking_id ) =>{
 
-    console.log("create a work with the data of a task");
+     
   
     var formdatas = new FormData();
 
      formdatas.append("status", status)
 
     var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
-   await  postdata( urlform.url , "booking" , formdatas ).then(()=>{console.log("done");}).then(()=>{
+   await  postdata( urlform.url , "booking" , formdatas ).then(()=>{ }).then(()=>{
        if(props.status == 1){
         setStatus(2)
        }

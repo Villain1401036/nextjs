@@ -60,7 +60,7 @@ const router = useRouter();
 
   });
    
-  console.log(taskdata);
+   
    
 	return(
 <>

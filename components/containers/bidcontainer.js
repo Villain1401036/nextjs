@@ -74,7 +74,7 @@ export default function Bidcontainer(props){
       taskmap.clear();
       setLoaded(true);
       setValuesfrommap(value, refreshongoing ,setBidlist , taskmap ,"bidId" )}).catch((err) =>{
-        console.log(err);
+         
       }
       )
 }

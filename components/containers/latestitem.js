@@ -4,10 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { getdata } from '../../networking/getdata';
 import { Button, Chip, Slider, TextField } from '@material-ui/core';
-import Taskcard from '../taskcard';
-import { ArrowDropDown, ArrowDropUp, DockRounded, Filter, Fireplace, MapSharp, Refresh } from '@material-ui/icons';
+
 import { callwithcache, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
-import { CLR_RCARD, CLR_RCARD1 } from '../../themes';
 import { Form, FormGroup } from 'react-bootstrap';
 import Itemcard from '../itemcard';
 
@@ -77,6 +75,8 @@ export default function Latestitem(props){
 
     const [loaded,setLoaded] = React.useState(false); 
     
+    
+
     const [tasklist,setTasklist] = React.useState([]);
     const classes = useStyles();
     const [hidden, setHidden] = React.useState();
@@ -100,7 +100,7 @@ export default function Latestitem(props){
        useEffect (()=>{
 
        if (!loaded){
-       console.log(filter);
+        
        refreshlatest(filter);
        //setLoaded(true)
 
@@ -125,21 +125,20 @@ export default function Latestitem(props){
     const refreshlatest =  (f) =>{
         //call the function to update with the latest tasks
 
-        console.log(f);
+         
 
-         //storelocal("place","bokaro")
-        // storelocal("category","Furniture")
+
         var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") } , {} )
         var url = urlForm.url
-        console.log(url);
+         
 
         callwithcache(getdata, url, "items").then((value) =>{
           setLoaded(true);
-          console.log(value);
+           
           taskmap.clear() //for clearing every thing
 
           setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
-            console.log(err);
+             
           }
           )
           
@@ -247,7 +246,7 @@ function EditFilter(props){
   
 
   const passdata = () =>{
-      console.log("passdata");
+       
      return ({"place": place , "lat":latestworkobj.lat , "lon": latestworkobj.lon ,  "distance":distance , "tags":tags , "category" :category , "price":price })
   }
 
@@ -267,13 +266,13 @@ function EditFilter(props){
      if (key==13){
        
        alltags.add(tag)
-       console.log(alltags);
+        
        
        var s = ""
        alltags.forEach( (item) =>  {s = s + "~" + item})
        setTags(s.slice(1))
 
-        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
         ;document.getElementById("tags").value = ""
      }
    }
@@ -284,19 +283,19 @@ function EditFilter(props){
      if (key==13){
        
        allcat.add(category)
-       console.log(allcat);
+        
        
        var s = ""
        allcat.forEach( (item) =>  {s = s + "~" + item})
        setCategorys(s.slice(1))
 
-        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
         ;document.getElementById("category").value = ""
      }
    }
-   const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+   const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
 
-   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
    
    var options = {
     enableHighAccuracy: true,
@@ -307,12 +306,12 @@ function EditFilter(props){
      const getloc = () => { navigator.geolocation.getCurrentPosition( (pos) => {
     var crd = pos.coords;
   
-    // console.log('Your current position is:');
-    // console.log(`Latitude : ${crd.latitude}`);
-    // console.log(`Longitude: ${crd.longitude}`);
-    // console.log(`More or less ${crd.accuracy} meters.`);
+    //  
+    //  
+    //  
+    //  
     setLocation([crd.latitude,crd.longitude])
-    console.log(location);
+     
   } , (e) =>{console.log(e)} , options ) }
    
  
@@ -324,7 +323,7 @@ function EditFilter(props){
 <TextField  id="place" label="place"   onChange={(e)  => setPlace(e.target.value) }  ></TextField>
 </div>
       <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
-<Slider style={{width:80+"vw"}} onChange={(e,value) => {console.log(value);setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
+<Slider style={{width:80+"vw"}} onChange={(e,value) => { setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
 
 <div style={{ fontWeight:"bold" }}>Under price range INR <span style={{ fontSize:8+"vw" , color:"blue" }}>{pricerange[0]}</span> to <span style={{fontSize:8+"vw" , color:"blue" }}>{pricerange[1]}</span></div>
 

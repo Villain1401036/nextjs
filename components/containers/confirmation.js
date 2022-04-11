@@ -58,7 +58,7 @@ const QrReader = dynamic(() => import('react-qr-reader'), { ssr: false })
       if (data) {
         var k = document.getElementById('qrreader')
         k.style.display = "none"
-        console.log(data);
+         
         props.passcode(data);
        //router.push("/");
       }

@@ -1,6 +1,6 @@
 //task card for a new task that has been posted
 import { Button, Card, divField } from '@material-ui/core';
-import { divFormat } from '@material-ui/icons';
+
 import React from 'react'
 
 
@@ -12,7 +12,7 @@ export default function Addresscard(props){
 
 	return(
 		<div>
-            <Card  onClick={() => console.log("")}>
+            <Card  onClick={() =>{}  }>
                 <div name="address">{props.address}</div>
                 <div name="city">{props.city}</div>
                 <div name="locality">{props.locality}</div>
@@ -23,7 +23,7 @@ export default function Addresscard(props){
                 <div name="phone">{props.phone}</div>
                 <button name="maplink" onClick={() => open(props.maplink)}></button>
                 
-                <button name="editaddress" onClick={() => {console.log("edit me!");}}>Edit address</button>
+                <button name="editaddress" onClick={() => { ;}}>Edit address</button>
             </Card>
 
             

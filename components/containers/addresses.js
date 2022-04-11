@@ -73,7 +73,7 @@ export default function Addresses(props){
 
           
           setValuesfrommap(value,refreshlatest ,setAddresslist , taskmap ,"addressId")}).catch((err) =>{
-            console.log(err);
+             
           }
           )
     }

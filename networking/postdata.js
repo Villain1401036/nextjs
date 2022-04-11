@@ -14,14 +14,14 @@ export const postdata = async(url , object , formdata , options ) => {
     },}
     )
     .then(response  => {
-       console.log(response);
+        
      try {
      //when request is successful check if data can be serialized
      
      }
      catch (e) {
       //when request is successful but not good
-        console.log(e);
+         
     }
 }
      ).catch(error => {
@@ -37,11 +37,11 @@ export const postdata = async(url , object , formdata , options ) => {
      }
 
      else if (error.response.status == 500){
-         console.log("bad error");
+          
          throw Error("url not ok")
      }
      else {
-       console.log("dont know error");
+        
          throw Error("other than unauthorized and internal server")
      }
 

@@ -86,7 +86,7 @@ export default function Allordercontainer(props){
 
         setLoaded(true);
         setValuesfrommap(value,refreshongoing ,setTasklist , taskmap ,"taskId")}).catch((err) =>{
-          console.log(err);
+           
         }
         )
       

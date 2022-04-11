@@ -10,13 +10,13 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
      if (key==13){
        
       values.add(value)
-       console.log(values);
+        
        
        var s = ""
        values.forEach( (item) =>  {s = s + "~" + item})
        setValues(s.slice(1))
 
-        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
         document.getElementById(emptyelement).value = ""
      }
    }
@@ -32,7 +32,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
       storeobjlocal("userdata" , value)
       return value
      }).catch((err)=>{
-      console.log(err);
+       
          throw err;
         
          
@@ -42,7 +42,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
       return k
       }
       catch (e) {
-         console.log(k)
+          
          throw e;
          
       }
@@ -62,13 +62,13 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
            router.push(`${siterooturl}home`)
 
          }).catch((err) =>{
-            console.log(err);
+             
             router.push(`${siterooturl}info`)
-             console.log("user not available in database , NEW USER");
-             //console.log(err);
+              
+             // 
          })
       }catch(e){
-         console.log(e);
+          
       }
     }
   
@@ -77,7 +77,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
      
     var QRCode = require('qrcode')
     var data = null
-    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ;console.log(val[0].confirmCode)})
+    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ; 
     
     QRCode.toCanvas(data, { errorCorrectionLevel: 'H' }, function (err, canvas) {
       if (err) throw err
@@ -88,19 +88,21 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
     
     })
   }
-
+    
+)
+   }
   
   export  const checkQrCode = async (gettype , booking_id) =>{
      
     var data = null
-    console.log(booking_id);
+     
     
-    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ;console.log(val[0].confirmCode)})
+    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ; 
     
  return data
   }
-
-
+    )
+  }
  export const placedataobj = {  
     "states":[  
        {  

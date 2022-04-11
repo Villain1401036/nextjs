@@ -20,14 +20,14 @@ function MyApp({ Component, pageProps }) {
 
     
     const changeaccount = ()=>{
-      console.log("changeacc");
+       
       setAcctype(!acctype)
     }
     useEffect (()=>{
       const app = initializeApp(firebaseConfig);
       if (!loaded){
         
-        console.log("servicework");
+         
         if ("serviceWorker" in navigator) {
           window.addEventListener("load", function () {
             navigator.serviceWorker.register("/sw.js").then(
@@ -38,13 +38,13 @@ function MyApp({ Component, pageProps }) {
                 );
               },
               function (err) {
-                console.log("Service Worker registration failed: ", err);
+                 
               }
             );
           });
         }
         setLoaded(true)
-        console.log("sw");
+         
       }
    });
 

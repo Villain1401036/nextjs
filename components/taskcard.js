@@ -17,7 +17,7 @@ export default function Taskcard(props){
 
 const bidhandler = () =>{
 
-  console.log("post request for opening a bid");
+   
   open(props.maplink)
 
 }
@@ -27,7 +27,7 @@ const bidhandler = () =>{
 
 const catchtask = () =>{
 
-  console.log("create a work with the data of a task");
+   
 
   var formdatas = new FormData();
   formdatas.append("task_key", props.taskobj.taskKey)
@@ -38,13 +38,13 @@ const catchtask = () =>{
   var urlForm = geturlFormdata("work","create")
   postdata( urlForm.url , "task" , formdatas )
 
-  console.log(formdatas.getAll('place'));
+   
   
 }
 
 const bidtask = () =>{
 
-  console.log("create a work with the data of a task");
+   
 
   var formdatas = new FormData();
   formdatas.append("task_key", props.taskobj.taskKey)
@@ -55,11 +55,11 @@ const bidtask = () =>{
   
   var urlForm = geturlFormdata("bid","create",{},{})
   postdata( urlForm.url , "task" , formdatas )
-  console.log(formdatas.getAll('place'));
+   
 
   
 }
-  console.log(props.location);
+   
   const router = useRouter();
 
   var rooturl = s3rooturl

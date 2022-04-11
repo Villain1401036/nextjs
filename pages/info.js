@@ -52,7 +52,7 @@ export default function HomePage(props){
 
 
   const onselect = (data) => {
-	console.log(data);
+	 
   }
 	
 	return(

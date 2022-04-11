@@ -74,19 +74,19 @@ export default function Latestwork(props){
     // before call the request check if there is some filters or not in the 
        useEffect (()=>{
        if (!loaded){
-         console.log(filter);
+          
        refreshlatest(filter);
        setLoaded(true)
        //setVal(opentasklist);
-       console.log("latestwork is updated 1st time");
+        
        }
     });
     
-    console.log("latestwork is updated");
+     
     
-    console.log(filterops);
+     
       
-    console.log(filter);
+     
 
 
 
@@ -111,13 +111,13 @@ export default function Latestwork(props){
         }
        
         var url = urlForm.url
-        console.log(url);
+         
         callwithcache(getdata, url, "tasks").then((value) =>{
           taskmap.clear()
           setLoaded(true);
-          console.log(value);
+           
           setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "taskId" )}).catch((err) =>{
-            console.log(err);
+             
           }
           )
   
@@ -128,7 +128,7 @@ export default function Latestwork(props){
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
-      const filtertags =   filter.tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+      const filtertags =   filter.tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
       const filtercategory = <Filterbox name={filter.category}/> 
       const filterprice = <Filterbox name={filter.price}/>
       
@@ -231,7 +231,7 @@ function EditFilter(props){
   
 
   const passdata = () =>{
-      console.log("passdata");
+       
      return ({"place": place , "lat":latestworkobj.lat , "lon": latestworkobj.lon ,  "distance":distance , "tags":tags , "category" :category , "price":price })
   }
 
@@ -243,9 +243,9 @@ function EditFilter(props){
 
 
 
-   const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+   const filtertags =   tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
 
-   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{console.log(item);}}  size="small"/> )
+   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
    
    var options = {
     enableHighAccuracy: true,
@@ -257,7 +257,7 @@ function EditFilter(props){
     var crd = pos.coords;
   
     setLocation([crd.latitude,crd.longitude])
-    console.log(location);
+     
   } , (e) =>{console.log(e)} , options ) }
    
  
@@ -269,7 +269,7 @@ function EditFilter(props){
 <TextField  id="place" label="place"   onChange={(e)  => setPlace(e.target.value) }  ></TextField>
 </div>
       <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
-<Slider style={{width:80+"vw"}} onChange={(e,value) => {console.log(value);setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
+<Slider style={{width:80+"vw"}} onChange={(e,value) => { setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
 
 <div style={{ fontWeight:"bold" }}>Under price range INR <span style={{ fontSize:8+"vw" , color:"blue" }}>{pricerange[0]}</span> to <span style={{fontSize:8+"vw" , color:"blue" }}>{pricerange[1]}</span></div>
 

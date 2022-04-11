@@ -79,7 +79,7 @@ export default function Bookingcontainer(props){
       taskmap.clear();
       setLoaded(true);
       setValuesfrommap(value, refreshongoing ,setBookinglist , taskmap ,"bookingId" )}).catch((err) =>{
-        console.log(err);
+         
       }
       )
 }
@@ -114,14 +114,14 @@ const Verifyreturn = async (bookid,bookingtrgt) => {
 const tolocaltime = (epoch) =>{
   var date = new Date(0);
   date.setUTCMilliseconds(epoch)
-   console.log();
+    
   return date
 }
 
 
   const filllatest =  bookinglist.map( (item) =>  <Bookingreqcard key={item.bookingId}  booking_id={item.bookingId} 
-  Verifypickup={(bookid, bookingobj)=> {  console.log(bookingobj); Verifypickup(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "pickup" ,bookid)})} }
-   Verifyreturn={(bookid, bookingobj)=> {  console.log(bookingobj); Verifyreturn(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "return" ,bookid)})} } name={item.bookingId}  
+  Verifypickup={(bookid, bookingobj)=> {    Verifypickup(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "pickup" ,bookid)})} }
+   Verifyreturn={(bookid, bookingobj)=> {    Verifyreturn(bookid, bookingobj).then(()=>{  getQrCode("canvas" , "return" ,bookid)})} } name={item.bookingId}  
    status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingreqcard>  )
    
 

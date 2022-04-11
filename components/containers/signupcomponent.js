@@ -26,7 +26,7 @@ const [show, setShow] = useState(true);
   const handleSubmit = (event) => {
     if (phone.length > 0 &&  phone.length < 10 ){
       //popup 
-      console.log("enter phone number correctly");
+       
       
     }
     event.preventDefault();
@@ -43,7 +43,7 @@ const [show, setShow] = useState(true);
     }
     
     if (password !== confirm_password){
-      console.log("passwords not match");
+       
       setShow(true)
       return
     }

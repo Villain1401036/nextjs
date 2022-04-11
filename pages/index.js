@@ -59,24 +59,24 @@ const router = useRouter();
 
 const authContext = useContext(AuthContext);
 
-console.log(typeof window);
+ 
 
 // if (typeof window !== "undefined") {
 
 	
 // 	localStorage.setItem("isLoggedIn",false)
 
-// 	console.log(localStorage.getItem("isLoggedIn"));
+// 	 
 
 // 	}
 
 
 
-if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") == "false") { console.log("login"); ;authContext.login() }}
+if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") == "false") {   ;authContext.login() }}
 
   const [isloaded,setIsLoaded] = React.useState(false);
   //const [isloaded,setIsLoaded] = React.useState(true);
-  console.log("refresh");
+   
 
   if ( typeof window !== "undefined" ){ 
 	  console.log(localStorage.getItem("refresh_token"))
@@ -104,7 +104,7 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 	  
 	  })
 
-   console.log();
+    
   
 	return(
    <>

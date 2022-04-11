@@ -89,17 +89,17 @@ export default function SignupPage(props){
         <div style={{marginTop:8+"vw",padding:2+"vw"}}>
 
         <h1 style={{color:CLR_RCARD2, margin:5+"vw" ,}}>Settings</h1>
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{console.log("profile");}}/>
+      <NavButton onClick={()=>{ }}/>
       </div>
 		</div>
 	);

@@ -113,7 +113,7 @@ const router = useRouter();
 
     var val = await getbooking(63)
     var boooo = checkbooking(val,itemdata.itemKey)
-    console.log(boooo);
+     
 
   }
    
@@ -122,7 +122,7 @@ const router = useRouter();
     var urlForm =geturlFormdata("booking","get",{"gettype":"customer",customer_key})
     var data 
    await getdata(urlForm.url , "bookings" , {}).then((val)=> {
-      console.log(val);
+       
       setBookings(val);
      data = val
     })
@@ -170,7 +170,7 @@ alt="slide" ></img></Carousel.Item>
 
 const biditem = (item_key,customer_key,bidprice,bid_message) =>{
 
-  console.log("create a work with the data of a task");
+   
 
   var formdatas = new FormData();
   formdatas.append("item_key",item_key)
@@ -180,14 +180,14 @@ const biditem = (item_key,customer_key,bidprice,bid_message) =>{
   formdatas.append("bid_message", bid_message)
   var urlForm = geturlFormdata("biditem", "create")
   postdata( urlForm.url , "item" , formdatas )
-  console.log(formdatas.getAll('place'));
+   
 
   
 }
 
 const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,bookto) =>{
 
-  console.log("create a work with the data of a task");
+   
 
   var formdatas = new FormData();
   formdatas.append("item_key",item_key)
@@ -197,17 +197,17 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
   formdatas.append("place", place)
   formdatas.append("book_to", value[1].getTime())
   formdatas.append("book_from", value[0].getTime())
-  console.log( JSON.stringify(convertToJson(itemdata.metadata)));
+   
   formdatas.append("metadata" , JSON.stringify(convertToJson(itemdata.metadata)) )
    setFetching(true);
   
   var urlForm = geturlFormdata("booking","create",{},{})
-  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested") }).catch((e)=>{  console.log(e); document.getElementById("booking_title").replaceChildren("some error occered") });
-  console.log(formdatas.getAll('place'));
+  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested") }).catch((e)=>{   
+   
 
   
 }
-
+  )
   const ddate =(date) =>{
     
     const dateInterditesRaw = [
@@ -225,12 +225,12 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
     
     var i = 0;
     for ( i = 0 ; i < dateInterditesRaw.length ; i++  ) {
-      // console.log("=========================");
-      // console.log(mind > dateInterditesRaw[i]);
-      // console.log("=========================");
+      //  
+      //  
+      //  
         if (mind < dateInterditesRaw[i]){
-            // console.log("break------------------------------------------------");
-            // console.log(dateInterditesRaw[i]);
+            //  
+            //  
             break
         }
     }
@@ -241,8 +241,8 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
       /*exclude all sunday and use the includes array method to check if the 
       date.getTime() value is 
       in the array dateInterdites */
-      //console.log( dateInterdites.includes(date.getTime()));
-      //console.log(date.getDate());
+      // 
+      // 
       if (value[1] != null){
         return  dateInterdites.includes(date.getTime())  ;
       }
@@ -283,12 +283,12 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
             
           </DialogContentText>
 		<input inputMode='text' placeholder='anything to say ...'   onInput={(val)=>{setBidMessage(val.target.value)}}></input>
-		<input  type='number' placeholder='your price' onChange={(val)=>{console.log(val.target.value); setBidPrice(val.target.value)}}></input>
+		<input  type='number' placeholder='your price' onChange={(val)=>{  setBidPrice(val.target.value)}}></input>
         </DialogContent>
         <DialogActions>
           
           <Button  onClick={()=>{
-            console.log(bid_price );
+             
             biditem(itemdata.itemKey,63, bid_price,bid_message)
           }} autoFocus>Place BID</Button>
         </DialogActions>
@@ -299,7 +299,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
           {"Something went wrong"}
         </DialogTitle>
         <DialogContent style={{textAlign:"center"}}>Task not Created</DialogContent>
-        <Button onClick={()=>{console.log("pressed");}} autoFocus>
+        <Button onClick={()=>{ }} autoFocus>
            press
           </Button>
 		  </>
@@ -330,7 +330,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
 
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
-      {/* <Button onClick={()=>{ console.log( Date.parse(enddate));console.log( Date.parse(enddate)) ;bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button> */}
+      {/* <Button onClick={()=>{  console.log( Date.parse(enddate)) ;bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button> */}
 		  
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        
@@ -344,8 +344,8 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
         value={value}
         onChange={(newValue) => {
           //setValue(newValue);
-          console.log("++++++++++++++++++++++++++++++++++++++");
-          console.log(value);
+           
+           
           
             setValue(newValue)
           
@@ -391,7 +391,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
           {"Something went wrong"}
         </DialogTitle>
         <DialogContent style={{textAlign:"center"}}>Task not Created</DialogContent>
-        <Button onClick={()=>{console.log("pressed");}} autoFocus>
+        <Button onClick={()=>{ }} autoFocus>
            press
           </Button>
 		  </>
@@ -416,8 +416,8 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
         {
 
         }
-				 <Button className={classes.butt} onClick={()=>{console.log("place bid");setOpenbook(true)}}  >Request to book </Button>
-				 <div>{itemdata.negotiable?<Button onClick={()=>{console.log("place bid");setOpenbid(true)}} >place bid</Button>:<></>}</div>
+				 <Button className={classes.butt} onClick={()=>{ setOpenbook(true)}}  >Request to book </Button>
+				 <div>{itemdata.negotiable?<Button onClick={()=>{ setOpenbid(true)}} >place bid</Button>:<></>}</div>
 
 				{/* <div><button onClick={()=>{ open(convertToJson(itemdata.metadata).buylink) }}  >buy here</button></div> */}
         </div>
@@ -434,5 +434,5 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
 
 
 
-
+}
 

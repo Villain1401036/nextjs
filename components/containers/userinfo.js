@@ -63,7 +63,7 @@ var count = 0;
 
 export default function Userinfo(props){
     
-    console.log( getfromLS("access_token"));
+     
 
     
     
@@ -107,7 +107,7 @@ const handleSubmit = async () =>{
     
     if (aadhar){ formdatas.set("aadhar_id", aadhar)}
       var temp = getlocal("temp_id")
-      console.log(temp);
+       
     if(temp.startsWith("+")){
        formdatas.set("phone_number", getlocal("temp_id"))
     }else{
@@ -115,13 +115,13 @@ const handleSubmit = async () =>{
     }
     formdatas.set("iden", getlocal("temp_id"))
     formdatas.set("metadata",`{"country":"${country}","state":"${state}" ,"district":"${district}"}`)
-    console.log(`{"country":"${country}","state":"${state}" ,"district":"${district}"}`);
-    console.log(formdatas.getAll("first_name"));
-    console.log(fname);
+     
+     
+     
     await postdata(urlform.url , "customer" ,formdatas )
     
     var temp = getlocal("temp_id")
-    console.log(temp);
+     
     var urlform = null;
   if(temp.startsWith("+")){
      urlform = geturlFormdata("customer","get",{"user_id":temp, "idtype":"phone"})
@@ -130,14 +130,14 @@ const handleSubmit = async () =>{
   }
     
     await getdata(urlform.url , "customers").then((value)=> {
-        console.log(value);
+         
         router.push("/home")
     }).catch((e)=>{
-      console.log(e);
+       
     })
     }
     catch(e){
-        console.log(e);
+         
     }
     
 
@@ -164,7 +164,7 @@ const canvasRef = React.useRef(null)
     else{
       selectedcategory.add(item)
     }
-    console.log(selectedcategory);
+     
     
 }
 
@@ -259,7 +259,7 @@ const canvasRef = React.useRef(null)
 </div>
 
 
-<button onClick={()=>{ console.log("ID verify");setVerify(true) }}>GO TO ID VERIFICATION</button>
+<button onClick={()=>{  setVerify(true) }}>GO TO ID VERIFICATION</button>
   </>
 }
 
@@ -377,29 +377,29 @@ const [sign, setSign] = React.useState([]);
           <h1>{getotp()}</h1>
 
                  <div>
-				 <input type="file" name="file" id="file1" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ; console.log(file);setOtp(file)  }} />
+				 <input type="file" name="file" id="file1" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ;  setOtp(file)  }} />
                  <label style={{backgroundColor:"lightblue", padding:1+"vw", borderStyle:"solid", borderRadius:1+"vh"}} for="file1">upload pic with otp</label>
                  { otp!= [] ?<>{fillotp}</>:<></> }
 				 </div>
                 
                  <div>
-				 <input type="file" name="file" id="file2" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ; console.log(file);setPhoto(file)  }} />
+				 <input type="file" name="file" id="file2" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ;  setPhoto(file)  }} />
                  <label style={{backgroundColor:"lightblue", padding:1+"vw", borderStyle:"solid", borderRadius:1+"vh"}} for="file2">upload a signature</label>
                  { photo!= [] ?<>{fillphoto}</>:<></> }
 				 </div>
 
                  <div>
-				 <input type="file" name="file" id="file3" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ; console.log(file);setSign(file)  }} />
+				 <input type="file" name="file" id="file3" accept="image/png, image/gif, image/jpeg" hidden  aria-label='asdg' onChange={()=>{var file  = event.target.files ;  setSign(file)  }} />
                  <label style={{backgroundColor:"lightblue", padding:1+"vw", borderStyle:"solid", borderRadius:1+"vh"}} for="file3">upload passport size photo</label>
                  { sign!= [] ?<>{fillsign}</>:<></> }
 				 </div>
 
-                 <button onClick={()=>{console.log("kdaskfd");uploadforverification()}}>Submit for Verification</button>
+                 <button onClick={()=>{ uploadforverification()}}>Submit for Verification</button>
 
         </div>:
         <>
             <h4>Verification in progress</h4> 
-            {/* <button onClick={()=>{console.log("go back");}>Back</button> */}
+            {/* <button onClick={()=>{ }>Back</button> */}
 
         </>
 }

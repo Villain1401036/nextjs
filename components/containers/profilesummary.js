@@ -115,11 +115,11 @@ const refreshprofile = async () =>{
 	callwithcache(getdata, url, "customers" ).then((value) =>{
 
         
-		console.log(value);
+		 
         setValue(value[0],refreshprofile , setProfile )}).then((val)=>{
 			setLoaded(true);
 		}).catch((err) =>{
-          console.log(err);
+           
         }
         )
 
@@ -138,7 +138,7 @@ const refreshprofile = async () =>{
 
 			
                 <img src = {picurl} className={classes.profilepic}></img>
-				<div onClick={()=>{ console.log("edit profile picture"); }}><a>Change picture</a></div>
+				<div onClick={()=>{   }}><a>Change picture</a></div>
 
 
                 <div style={{margin:10+"vw"}} >

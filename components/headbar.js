@@ -8,28 +8,19 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
 import { fade, makeStyles  } from '@material-ui/core/styles';
-import {Chip, Input, OutlinedInput, Popover, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
+import {Chip, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 
 
 
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
 
-import {CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3} from '../themes.js'
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, } from '../themes.js'
 
-import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { AuthContext } from '../context';
-import { Dropdown, FormGroup, ModalDialog ,Modal } from 'react-bootstrap';
-import { collapseClasses, Dialog } from '@mui/material';
-import { LocationCitySharp, MapSharp, PinDrop } from '@material-ui/icons';
+import {  FormGroup ,Modal } from 'react-bootstrap';
+
 
 import {FiMapPin , FiFilter} from 'react-icons/fi';
 import { FaFilter} from 'react-icons/fa';
@@ -217,9 +208,9 @@ export default function ButtonAppBar(props) {
 
   
 
-  console.log(user);
-  console.log(ongoingwork);
-  //console.log(latestworkobj);
+   
+   
+  // 
 
   
  
@@ -272,10 +263,10 @@ return (
               style={{color: CLR_HEAD , backgroundColor: CLR_RCARD1 , borderRadius:3+"px" , paddingRight:5+"%" ,paddingLeft:5+"%" , textAlign:"center"  }}
               
               autoFocus
-              onChange={(e)=>{if(e.target.value){setLocation(e.target.value)};console.log(location);}}
+              onChange={(e)=>{if(e.target.value){setLocation(e.target.value)}; }}
 
               onKeyPress={(event)=>{ if(event.key === 'Enter'){
-                console.log('enter press here! ');
+                 
                 storelocal("place",location);
                 router.reload()
                 setLocfocus(false)
@@ -283,7 +274,7 @@ return (
               }}}
             ></InputBase></div>:
             <div style={{ maxWidth: 200+"px" ,  display: "flex",flex:1, flexDirection:"row-reverse",borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} >
-             <div style={{ borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} ><FiMapPin fontSize={"large"}  style={{height:100+"%", marginLeft:5+"px" , marginRight: 5+"px" }} onClick={()=>{console.log("get location");}} /></div>
+             <div style={{ borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} ><FiMapPin fontSize={"large"}  style={{height:100+"%", marginLeft:5+"px" , marginRight: 5+"px" }} onClick={()=>{ }} /></div>
            
             <div
               style={{color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
@@ -303,7 +294,7 @@ return (
       </AppBar>
       <>
       
-        <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{console.log(data);setFilteropen(false);setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
+        <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{ setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
        {/* <EditFilter filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />
          */}
          </Modal>
@@ -414,7 +405,7 @@ function EditFilter(props){
   
 
   const passdata = () =>{
-      console.log("passdata");
+       
      return ({"place": place , "lat":latestworkobj.lat , "lon": latestworkobj.lon ,  "distance":distance , "tags":tags , "category" :category , "price":price })
   }
 
@@ -434,13 +425,13 @@ function EditFilter(props){
      if (key==13){
        
        alltags.add(tag)
-       console.log(alltags);
+        
        
        var s = ""
        alltags.forEach( (item) =>  {s = s + "~" + item})
        setTags(s.slice(1))
 
-        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
         ;document.getElementById("tags").value = ""
      }
    }
@@ -451,19 +442,19 @@ function EditFilter(props){
      if (key==13){
        
        allcat.add(category)
-       console.log(allcat);
+        
        
        var s = ""
        allcat.forEach( (item) =>  {s = s + "~" + item})
        setCategorys(s.slice(1))
 
-        console.log("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+         
         ;document.getElementById("category").value = ""
      }
    }
-   const filtertags =   tags.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }} onClick={()=>{console.log(item);}}  size="medium"/> )
+   const filtertags =   tags.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }} onClick={()=>{ }}  size="medium"/> )
 
-   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }}  onClick={()=>{console.log(item);}}  size="medium"/> )
+   const filtercategory =   categorys.split("~").map( (item) => <Chip label={item} style={{color:CLR_RCARD2 ,backgroundColor:CLR_HEAD }}  onClick={()=>{ }}  size="medium"/> )
    
    var options = {
     enableHighAccuracy: true,
@@ -474,12 +465,12 @@ function EditFilter(props){
      const getloc = () => { navigator.geolocation.getCurrentPosition( (pos) => {
     var crd = pos.coords;
   
-    // console.log('Your current position is:');
-    // console.log(`Latitude : ${crd.latitude}`);
-    // console.log(`Longitude: ${crd.longitude}`);
-    // console.log(`More or less ${crd.accuracy} meters.`);
+    //  
+    //  
+    //  
+    //  
     setLocation([crd.latitude,crd.longitude])
-    console.log(location);
+     
   } , (e) =>{console.log(e)} , options ) }
    
  
@@ -491,7 +482,7 @@ function EditFilter(props){
 <TextField  id="place" label="place"   onChange={(e)  => {setPlace(e.target.value);storelocal("place",e.target.value) }}  ></TextField>
 </div>
       <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
-<Slider style={{width:80+"vw"}} onChange={(e,value) => {console.log(value);setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
+<Slider style={{width:80+"vw"}} onChange={(e,value) => { setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
 
 <div style={{ fontWeight:"bold" }}>Under price range INR <span style={{ fontSize:8+"vw" , color:"blue" }}>{pricerange[0]}</span> to <span style={{fontSize:8+"vw" , color:"blue" }}>{pricerange[1]}</span></div>
 
