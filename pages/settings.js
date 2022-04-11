@@ -1,9 +1,6 @@
 
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react'
-import Infoput from '../components/containers/infoput';
-import Signupcomponent from '../components/containers/signupcomponent';
-import Signupcontainer from '../components/containers/signupcontainer'
 import ButtonAppBar from '../components/headbar';
 import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes';
 

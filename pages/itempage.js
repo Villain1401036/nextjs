@@ -4,9 +4,6 @@ import ButtonAppBar from '../components/headbar'
 
 import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Profilesummary from '../components/containers/profilesummary'
-import Allordercontainer from '../components/containers/allordercontainer'
-import Workdashboard from '../components/containers/workdashboard'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'

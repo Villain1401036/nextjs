@@ -1,9 +1,7 @@
 
 import React from 'react'
 import Logincomponent from '../components/containers/logincomponent';
-import Logincontainer from '../components/containers/logincontainer'
 import Login from '../components/googlelogin';
-import Logout from '../components/googlelogout';
 import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3 } from '../themes';
 
 

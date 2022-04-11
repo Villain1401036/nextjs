@@ -1,11 +1,9 @@
 import '../styles/globals.css'
-import { Routes, Route, Link } from "react-router-dom";
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../context';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {initializeApp} from "firebase/app";
 import "firebase/auth";
-import { FirebaseAuthProvider } from '@react-firebase/auth';
 
 function MyApp({ Component, pageProps }) {
 

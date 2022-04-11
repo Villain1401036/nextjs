@@ -377,7 +377,7 @@ const makearr =() =>{
   
   var s = ""
   mediaarr.forEach(element => {
-    s += `"/testbucket/${element}",`
+    s += `"/${element}",`
   });
   console.log(s);
   return s.slice(0,-1)
@@ -497,7 +497,7 @@ const handlesubmit = async () =>{
 
 <h5>Add Images</h5>
 <div>^^add some images relevant to the item to make it more appealing</div>
-<input type="file" name="file" id={"img1"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile1(file[0]) }} />
+<input type="file" name="file" id={"img1"}  accept="*/*" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile1(file[0]) }} />
 <input type="file" name="file" id={"img2"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile2(file[0]) }} />
 <input type="file" name="file" id={"img3"}  accept="image/png, image/gif, image/jpeg" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile3(file[0]) }} />
 

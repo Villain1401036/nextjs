@@ -1,23 +1,65 @@
 import S3 from 'aws-sdk/clients/s3';
-import { readFile } from 'fs';
 
 
+
+const credentials =  { accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6', secretAccessKey: 'c3602378d1f030e0088f0864497246c5' }
+
+
+
+
+// import crypto from 'crypto'; 
+
+// var  res =   authsign()
+
+//console.log(res,crypto.SHA256("").toString() );
+
+// var aws4 = require('aws4');
+// var opts = { host: 'sin1.contabostorage.com', path: '/images', service: 's3', region: 'us-east-1' }
+
+// aws4.sign(opts, { accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6', secretAccessKey: 'c3602378d1f030e0088f0864497246c5' })
+
+// console.log(opts);
+
+// var s3  = new S3({
+//     accessKeyId: 'HASV99S405QAUUT9I0RG' ,
+//     secretAccessKey: 'KLNjeHUSvSOvL2jh4C0CmGM7J1k6aNDMXAaRxqVf' ,
+//     endpoint: 'https://ap-south-1.linodeobjects.com' ,
+//    // s3ForcePathStyle: true, // needed with minio?
+//      signatureVersion: 'v4'
+// });
+
+// var s3  = new S3({
+//     accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6' ,
+//     secretAccessKey: 'c3602378d1f030e0088f0864497246c5' ,
+//     endpoint: 'https://sin1.contabostorage.com' ,
+  
+//    s3ForcePathStyle: true, // needed with minio?
+//      signatureVersion: 'v4',
+     
+// });
 
 var s3  = new S3({
-    accessKeyId: '4UHOY8T981J4LB0AL016' ,
-    secretAccessKey: '3SzuSKGtkgDD8gRlGjB0u3yttKPy0YE3yVxq6XHI' ,
-    endpoint: 'http://127.0.0.1:9000' ,
-    s3ForcePathStyle: true, // needed with minio?
-    signatureVersion: 'v4'
+  accessKeyId: '004eb60c4d22ef70000000006' ,
+  secretAccessKey: 'K004mlzvJiKQKFD+RRtc8ftYSBXCT+c' ,
+  endpoint: 'https://s3.us-west-004.backblazeb2.com' ,
+ // s3ForcePathStyle: true, // needed with minio?
+  signatureVersion: 'v4',
+  
 });
 
+
+
+
+
 // putObject operation.
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const fs = require('fs')
-  // Pass data to the page via props
-  return { props: { data } }
-}
+// export async function getServerSideProps() {
+//   // Fetch data from external API
+//   const fs = require('fs')
+//   const crypto = require('crypto')
+//   console.log(crypto);
+//   // Pass data to the page via props
+//   return { props: { data } }
+// }
 
 
 export const uploadFile = async (remoteFilename, fileName) => {
@@ -26,42 +68,74 @@ export const uploadFile = async (remoteFilename, fileName) => {
  
   var metaData = getContentTypeByFile(fileName);
  
+
+ 
+
    s3.putObject({
-   ACL: 'public-read',
-   Bucket: "spuk",
+   ACL: 'public-read-write',
+   //Bucket: "images",
    Key: remoteFilename,
    Body: fileBuffer,
-   ContentType: metaData
+   ContentType: metaData,
+   
+   
   }, function(error, response) {
    console.log('uploaded file[' + fileName + '] to [' + remoteFilename + '] as [' + metaData + ']');
    console.log(response);
   });
  }
 
+ 
+
+ var paramscors = {
+  Bucket: "images-prod-a", 
+  CORSConfiguration: {
+   CORSRules: [
+      {
+     AllowedHeaders: [
+        "*"
+     ], 
+     AllowedMethods: [
+      "PUT","GET","POST","DELETE"
+        
+     ], 
+     AllowedOrigins: [
+        "*"
+     ], 
+     ExposeHeaders: [
+        "x-amz-server-side-encryption",
+        "ETag"
+
+     ], 
+     MaxAgeSeconds: 3000
+    }
+   ]
+  }, 
+  ContentMD5: ""
+ };
 
 
-//  app.post('/uploadMultipleFiles',upload.array('file', 10),function(req,res){
-//   var promises=[];
-//   for(var i=0;i<req.files.length;i++){
-//       var file = req.files[i];
-//       promises.push(uploadLoadToS3(file));
-//   }
-//   Promise.all(promises).then(function(data){
-//       res.send('Uploadedd');
-//   }).catch(function(err){
-//       res.send(err.stack);
-//   }) 
-// })
+ s3.putBucketCors(paramscors, function(err, data) {
+   if (err) console.log(err, err.stack); // an error occurred
+   else     console.log(data);           // successful response
+ });
 
+
+
+
+// import aws4 from 'aws4';
 export function put(files){
+
   mediaarr = []
   var promises=[];
   for(var i=0;i<files.length;i++){
       var file = files[i];
-      promises.push(uploadLoadToS3(file,'testbucket'));
+     promises.push(uploadLoadToS3(file,"images-prod-a"));
+    
   }
   Promise.all(promises).then(function(data){
     console.log('Uploadedd');
+    console.log(data);
     return mediaarr
 }).catch(function(err){
   console.log(err.stack);
@@ -91,12 +165,22 @@ export function putverify(files){
 function uploadLoadToS3(file,bucket){
 
   var filename = createrandomfilename(file.name)
-  var params = { Bucket: bucket, Key: filename ,ContentType: file.type , Body:file};
+  var params = { Bucket: bucket, Key: filename ,ContentType: file.type , Body:file , headers:{"Access-Control-Allow-Origin":"http://localhost:3000","Access-Control-Allow-Methods":["OPTIONS","GET","PUT" ]}};
   
   s3.upload(params,(err,data)=>{
     if (err) throw err;
-    console.log(data);
-  }).promise()
+    console.log("data----" , data);
+  }).on('httpUploadProgress', function(evt) {
+    var uploaded = Math.round(evt.loaded / evt.total * 100);
+    console.log(`File uploaded: ${uploaded}%`);
+}).send(function(err, data) {
+    if (err){
+        // an error occurred, handle the error
+        console.log(err, err.stack);
+        return;
+    }
+}
+)
 }
 
 export const mediaarr = []

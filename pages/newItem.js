@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
 import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
 
 import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { Itemform, Serviceform, Taskform } from '../components/create'
+import { Itemform } from '../components/create'
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
@@ -83,3 +82,13 @@ const router = useRouter();
 
 
 }
+
+// NewService.getServerSideProps = () => {
+// 	// Fetch data from external API
+// 	const fs = require('fs')
+	
+// 	const crypto = require('crypto')
+// 	console.log(crypto);
+// 	// Pass data to the page via props
+	
+//   }

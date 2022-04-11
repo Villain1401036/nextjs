@@ -6,14 +6,8 @@ import ButtonAppBar from '../components/headbar'
 
 import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Ongoingwork from '../components/containers/ongoingwork';
-import Histwork from '../components/containers/histwork'
-import Notifications from '../components/containers/notifications'
 import { AuthContext } from '../context'
-import Logincontainer from '../components/containers/logincontainer'
-import Infoput from '../components/containers/infoput';
 import Userinfo from '../components/containers/userinfo';
-import  Confirm  from '../components/containers/confirmation';
 import { Button } from 'react-bootstrap';
 
 

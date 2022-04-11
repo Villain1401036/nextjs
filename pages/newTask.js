@@ -6,7 +6,6 @@ import Footer from '../components/footer'
 import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import { Taskform } from '../components/create'
-import { put } from '../networking/getmedia'
 
 
 const useStyles = makeStyles((theme) => ({

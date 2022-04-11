@@ -1,8 +1,6 @@
 
 import React from 'react'
-import Infoput from '../components/containers/infoput';
 import Signupcomponent from '../components/containers/signupcomponent';
-import Signupcontainer from '../components/containers/signupcontainer'
 
 
 

@@ -2,21 +2,15 @@ import Head from 'next/head'
 import React, { useContext, useState } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
-import FilterTabbar from '../components/filtertabbar'
 
 import { useRouter } from 'next/router'
 
 import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
-import Latestwork from '../components/containers/lastestwork'
-import Ongoingwork from '../components/containers/ongoingwork'
 
 import { AuthContext } from '../context'
 import LoginPage from './login'
-import Latestitem from '../components/containers/latestitem'
-import { Button, Navbar, Tab, Tabs } from 'react-bootstrap'
-import ServicesContainer from '../components/containers/servicescontainer'
 import BannerComponent from '../components/containers/banner'
 
 

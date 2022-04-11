@@ -8,10 +8,8 @@ import Footer from '../components/footer'
 
 import { Shopname ,onRefresh} from '../constants'
 
-import Allordercontainer from '../components/containers/allordercontainer'
 import { AuthContext } from '../context'
 import Logincontainer from '../components/containers/logincontainer'
-import Latestwork from '../components/containers/lastestwork'
 import Bookingorders from '../components/containers/allbookings'
 
 

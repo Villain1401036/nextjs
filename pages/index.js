@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import React, { useContext, useEffect } from 'react'
 import ButtonAppBar from '../components/headbar'
 import Footer from '../components/footer'
@@ -9,16 +8,11 @@ import { useRouter } from 'next/router'
 
 import { Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Latestwork from '../components/containers/lastestwork'
-import Ongoingwork from '../components/containers/ongoingwork'
 import { AuthContext } from '../context'
 import LoginPage from './login'
-import Bidcontainer from '../components/containers/bidcontainer'
 import Bookingcontainer from '../components/containers/bookingreq'
-import Bookingorders from '../components/containers/allbookings'
-import { Itemform } from '../components/create'
+// import { Itemform } from '../components/create'
 import SimpleBottomNavigation from '../components/bottomnav'
-import { getQrCode } from '../utils'
 
 
 
