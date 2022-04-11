@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "analyze": "cross-env ANALYZE=true next build"
+    "start": "next start"
   },
   "dependencies": {
     "@date-io/date-fns": "^2.11.0",
@@ -59,7 +58,6 @@
     "redux-typescript": "^1.2.1"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^12.1.4",
     "babel-plugin-styled-components": "^2.0.2",
     "cross-env": "^7.0.3"
   },
