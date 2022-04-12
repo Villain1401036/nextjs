@@ -78,7 +78,8 @@ const removefromfav = () =>{
         className={classes.imgcard}
         image={s3rooturl + convertToJson(props.itemobj.metadata).images[0]}
         alt="green iguana"
-        onClick={() => {  router.push("/itempage") }}
+        onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
+           ;router.push("/itempage") }}
       />
         <div style={{ margin:1+"vw"}}>
 

@@ -100,6 +100,7 @@ const router = useRouter();
     // Update the document title using the browser API
     if ( !isloaded){
       var itemdata = getitemonpage()
+      console.log(itemdata);
       setItemdata(itemdata);
       setIsloaded(true);
       getreqd()
@@ -208,7 +209,10 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
   
 }
   )
-  const ddate =(date) =>{
+
+}
+
+const ddate =(date) =>{
     
     const dateInterditesRaw = [
       new Date(date.getFullYear(),2,8),
@@ -219,7 +223,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
       new Date(date.getFullYear(),2,18)
   
     ];
-    
+  
     //get the minimum date from the dates
     const mind = value[0];
     
@@ -233,10 +237,11 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
             //  
             break
         }
-    }
+      }
     
-    const dateInterdites = dateInterditesRaw.map((arrVal) => {
-      return arrVal.getTime()});
+    
+  const dateInterdites = dateInterditesRaw.map((arrVal) => {
+      return arrVal.getTime();});
   
       /*exclude all sunday and use the includes array method to check if the 
       date.getTime() value is 
@@ -252,14 +257,13 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
       if (value[0] != null){
         return  dateInterdites.includes(date.getTime()) || date.getTime() > dateInterditesRaw[i]  ;
       }
+
+    }
       
      
   
-  
-  }
 
-
-	return(
+return(
     <>
 		{isloaded?
  
@@ -330,7 +334,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
 
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
-      {/* <Button onClick={()=>{  console.log( Date.parse(enddate)) ;bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button> */}
+      {/* <Button onClick={()=>{  bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button> */}
 		  
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        
@@ -434,5 +438,5 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
 
 
 
-}
+
 

@@ -1,5 +1,6 @@
 //task card for a new task that has been posted
 import {  Card } from '@material-ui/core';
+import { CardMedia } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import {  s3rooturl } from '../constants';
