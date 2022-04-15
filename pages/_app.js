@@ -1,9 +1,10 @@
 import '../styles/globals.css'
 import React, { useContext, useEffect } from 'react';
-import { AuthContext } from '../context';
+import { AuthContext  } from '../context';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {initializeApp} from "firebase/app";
 import "firebase/auth";
+import router from 'next/router'
 
 function MyApp({ Component, pageProps }) {
 
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [acctype, setAcctype] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
+  
     const login = () => {
         setLoggedIn(true);
     }
@@ -19,10 +21,16 @@ function MyApp({ Component, pageProps }) {
     }
 
     
+
+
     const changeaccount = ()=>{
        
       setAcctype(!acctype)
+      console.log(acctype);
+
     }
+
+
     useEffect (()=>{
       const app = initializeApp(firebaseConfig);
       if (!loaded){
@@ -63,7 +71,9 @@ function MyApp({ Component, pageProps }) {
   return (
   
       <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
-       <Component {...pageProps} />
+      
+        <Component {...pageProps} />
+     
     </AuthContext.Provider>
 
 

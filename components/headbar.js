@@ -323,6 +323,10 @@ function Drawercomponent(props){
 
 const authContext = React.useContext(AuthContext);
 
+
+if (authContext.accounttype == true){
+
+
   return (
     <div className={classes.drawerroot}>
    <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}>
@@ -330,14 +334,13 @@ const authContext = React.useContext(AuthContext);
       <span style={{ marginTop:8+"vw"}}>MOR</span>
    </div>
       
-     {/* <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
        
-      {!authContext.accounttype?
-      <div className={classes.type} >   work    </div>:<div className={classes.type} >   user   </div>}
+     <div className={classes.type} >   user   </div>
       
-      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
-       <div className={classes.title} style={ { fontSize:8+"vw",paddingBottom:10}}>Freebees</div> 
-      </div> */}
+      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/p/home")}}></Switch>
+       
+      </div>
 
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
@@ -360,17 +363,70 @@ const authContext = React.useContext(AuthContext);
     </div>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/address")}}>{"address"}</div>
     </div>
 
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/settings")}}>{"settings"}</div>
     </div >
     <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/searchpage")}}>{"searchpage"}</div>
+    </div>
+    </div>
+  );
+}
+else{
+  return (
+    <div className={classes.drawerroot}>
+   <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}>
+   <img style={{width:100+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
+      <span style={{ marginTop:8+"vw"}}>MOR</span>
+   </div>
+      
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
+       
+     
+      <div className={classes.type} >   work    </div>
+      
+      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/c/home")}}></Switch>
+      
+      </div>
+
+<div className={classes.drawButt}>
+      {authContext.isLoggedIn ?
+      <>
+      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/p/profile")}}>{user.name}</span> 
+      
+      </>:
+<>
+<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"login"}</span>
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/p/profile")}}></span> 
+</>
+}
+
+    </div>
+
+
+    {/* <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
+    </div> */}
+
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
+    </div>
+
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/settings")}}>{"settings"}</div>
+    </div >
+    <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/p/newItem")}}>{"Post Item"}</div>
     </div>
     </div>
   );
+}
+
+
 
 }
 

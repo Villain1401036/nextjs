@@ -9,7 +9,7 @@ import { onRefresh, Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { AuthContext } from '../../context'
+import { AccountContext, AuthContext } from '../../context'
 import LoginPage from '../login'
 import Latestitem from '../../components/containers/latestitem'
 
@@ -80,10 +80,9 @@ export default function ItemswindowPage(props){
  
 
 const classes = useStyles();
-const router = useRouter();
+
 
 const authContext = useContext(AuthContext);
-
  
 
 // if (typeof window !== "undefined") {
@@ -104,8 +103,8 @@ if(typeof window === 'undefined'){
   const [isloaded,setIsLoaded] = React.useState(true);
   //const [isloaded,setIsLoaded] = React.useState(true);
    
-
-
+  
+  authContext.changeaccount(false)
   onRefresh(authContext)
   
   const [key,setKey] = useState();
@@ -125,6 +124,7 @@ if(typeof window === 'undefined'){
             
 
             <div style={{ minHeight:60+"vh" }} >
+
             <Latestitem />
             </div>
 		    
