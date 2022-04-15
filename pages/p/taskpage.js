@@ -1,28 +1,28 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import ButtonAppBar from '../components/headbar'
+import ButtonAppBar from '../../components/headbar'
 
-import { Shopname } from '../constants'
+
+import { convertToJson, gettaskonpage, s3rooturl, Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { Itemform } from '../components/create'
 import { useRouter } from 'next/router'
+import Bidcontainer from '../../components/containers/bidcontainer';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
 		margin:"auto",
 		
-    display: 'grid',
-		gridTemplateColumns:"auto auto auto",
 
     '& > *': {
       margin: theme.spacing(1),
     },
 	},
 	contentArea:{
-		display:'flex',
-		flexDirection:'row',
+		
+	
 	},
 		cover: {
 			marginTop: 0,
@@ -42,23 +42,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-var tasksdata = []
 
-export default function NewService(props){
 
+export default function Taskpage(props){
+
+const [taskdata , setTaskdata] = useState({});
 const classes = useStyles();
 const router = useRouter();
-  const [isloaded,setIsLoaded] = React.useState(true);
+  const [isloaded,setIsLoaded] = React.useState(false);
   React.useEffect(() => {
     // Update the document title using the browser API
+	if (!isloaded){
+		setTaskdata(gettaskonpage());
+		setIsLoaded(true);
+	}
+    
 
   });
    
- 	
-
-	
-  
+   
+   
 	return(
+<>
+		{isloaded?
 		<div>
 		<Head>
 			<title>Spook</title>
@@ -69,26 +75,22 @@ const router = useRouter();
 
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >
-				 <Itemform />
+				<div style={{ minHeight:40+"vh" }}>
+					<img style={{width:90+"vw"}} src={s3rooturl + convertToJson(taskdata.metadata).images[0]}></img>
+					<div>{taskdata.description}</div>
+				</div>
 				 
+				 
+				{ isloaded && <Bidcontainer taskKey={taskdata.taskKey} taskobj={taskdata}/> }
 			 </div>
 
 			 </div>
 
-       
+        
 		</div>
+		:<></>}</>
 	);
 
 
 
 }
-
-// NewService.getServerSideProps = () => {
-// 	// Fetch data from external API
-// 	const fs = require('fs')
-	
-// 	const crypto = require('crypto')
-// 	 
-// 	// Pass data to the page via props
-	
-//   }

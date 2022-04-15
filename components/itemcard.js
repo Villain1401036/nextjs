@@ -76,10 +76,10 @@ const removefromfav = () =>{
                 <CardMedia
         component="img"
         className={classes.imgcard}
-        image={s3rooturl + convertToJson(props.itemobj.metadata).images[0]}
+        image={s3rooturl + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp"}
         alt="green iguana"
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
-           ;router.push("/itempage") }}
+           ;router.push("/c/itempage") }}
       />
         <div style={{ margin:1+"vw"}}>
 

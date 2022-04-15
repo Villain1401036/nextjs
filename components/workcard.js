@@ -23,7 +23,7 @@ export default function Workcard(props){
 
 	return(
 		
-            <Card variant='outlined'  style={{ margin:2+"vw"}} onClick={() =>{ console.log(props.workobj) ;pushwork(props.workobj) ; router.push("/workpage") }}>
+            <Card variant='outlined'  style={{ margin:2+"vw"}} onClick={() =>{ console.log(props.workobj) ;pushwork(props.workobj) ; router.push("/c/workpage") }}>
                 {/*<div name="name">{props.name}</div>*/}
                 
                 <CardMedia

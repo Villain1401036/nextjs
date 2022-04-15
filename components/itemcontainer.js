@@ -162,7 +162,7 @@ const handleClickOpen = () => {
 
 const images = (list) =>  { 
 	return list.map((item)=> <Carousel.Item style={{height:60+"vw"}}><img style={{ backgroundColor:"lightgray" ,height: 100+"%" ,objectFit:"cover"}}  className="d-block w-100"
-src={s3rooturl+item}
+src={s3rooturl+item.split(".")[0]+"x800.webp"}
 alt="slide" ></img></Carousel.Item>
 
 )

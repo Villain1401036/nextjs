@@ -55,7 +55,8 @@
     "react-webcam": "^6.0.1",
     "react-webcam-barcode-scanner": "^0.0.2-rc2",
     "redux": "^4.1.2",
-    "redux-typescript": "^1.2.1"
+    "redux-typescript": "^1.2.1",
+    "sharp": "^0.30.3"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^2.0.2",
@@ -63,5 +64,6 @@
   },
   "browser": {
     "crypto": false
+     
   }
 }

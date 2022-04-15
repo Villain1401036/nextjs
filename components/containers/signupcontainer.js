@@ -45,7 +45,7 @@ const router = useRouter();
     
     try {
       postsignup( urlForm.url , urlForm.formdata ).then(()=>{
-        router.push("/")
+        router.push("/c/home")
       })
     }
     catch(e){
@@ -101,7 +101,7 @@ const router = useRouter();
 
       <div style={ {textAlign:"center", padding:30 }}>
           <div> Already a user </div>
-          <button onClick={()=> router.push(`${siterooturl}login`)} >Login</button>
+          <button onClick={()=> router.push(`${siterooturl}c/login`)} >Login</button>
 
       </div>
     </div>

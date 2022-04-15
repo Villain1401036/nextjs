@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import React , {useContext, useEffect} from 'react'
-import ButtonAppBar from '../components/headbar'
+import ButtonAppBar from '../../components/headbar'
 
-import { onRefresh, Shopname, user } from '../constants'
+import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
+import Profilesummary from '../../components/containers/profilesummary'
 import { useRouter } from 'next/router'
-import { AuthContext } from '../context'
-import Logincontainer from '../components/containers/logincontainer'
-import Itemcontainer from '../components/itemcontainer';
+import { AuthContext } from '../../context'
+import Logincontainer from '../../components/containers/logincontainer'
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,18 +20,10 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
 	},
-	contentArea:{ 
-        
-        marginTop:10+"vw",
-        
-    
-        '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-          marginTop: 5+"vw"
-        },
-        '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
-            marginTop: 15+"vw"
-        }
-        },
+	contentArea:{
+		display:'flex',
+		flexDirection:'row',
+	},
 		cover: {
 			marginTop: 0,
 			height:70,
@@ -53,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ItemPage(props){
+export default function ProfilePage(props){
 
 const classes = useStyles();
 const [profile , setProfile] = React.useState();
@@ -89,12 +82,11 @@ onRefresh(authContext);
 	</Head>
 
 	<ButtonAppBar itemName={Shopname}/>
-	<div >
-	<Itemcontainer />
-
-	</div>
-   
-
+	<div className={classes.cover}></div>
+	<Profilesummary />
+	
+	
+     
 
   
 	</div>
@@ -108,5 +100,11 @@ onRefresh(authContext);
 	);
 
 }
+
+function BigButton(props){
+	return(
+<Button style={{width:100+"vw",fontSize:5+"vw" , borderTop:".1vw solid black"   }} onClick={props.onClick} >{props.name}</Button>
+	);
+} 
 
 

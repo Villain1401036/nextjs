@@ -202,7 +202,7 @@ function SeeCat(props){
 
 
      const listcats = getallCategories()
-     const categories = listcats.map((item) => <Chip key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, padding:2+"vw", margin:.5+"vw" , borderColor:CLR_RCARD2}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} /> )
+     const categories = listcats.map((item) => <Chip key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, padding:2+"vw", margin:.5+"vw" , borderColor:CLR_RCARD2}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/c/itemswindow?items="+item) }} /> )
       return (
           <div className={classes.prevsearchroot}  >
 

@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import React, { useContext, useState } from 'react'
-import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
+import ButtonAppBar from '../../components/headbar'
+import Footer from '../../components/footer'
 
 import { useRouter } from 'next/router'
 
-import { onRefresh, Shopname } from '../constants'
+import { onRefresh, Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { AuthContext } from '../context'
-import LoginPage from './login'
-import Latestitem from '../components/containers/latestitem'
+import { AuthContext } from '../../context'
+import LoginPage from '../login'
+import Latestitem from '../../components/containers/latestitem'
 
 
 
@@ -121,12 +121,14 @@ if(typeof window === 'undefined'){
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<ButtonAppBar itemName={Shopname}/>
+
+            
 
             <div style={{ minHeight:60+"vh" }} >
             <Latestitem />
             </div>
-		
+		    
+
 			
 
 

@@ -210,7 +210,13 @@ export default function Latestitem(props){
 
                   
              </div> */}
-              <div style={{margin:2+"vw"}}>Showing Top results for <span style={{fontWeight:"bold"}}>{getlocal("category")}</span> </div>
+              <div style={{margin:2+"vw" , height:10+"vw" , display:"flex" ,flexDirection:"row" }}><span>Showing Top results for </span> 
+              <span style={{fontWeight:"bold"}}>{getlocal("category")}</span>
+              <div style={{ height:10+"vw" , display:"flex" ,flexDirection:"row-reverse" ,flex:1 }}>
+                <div style={{ width: 32 , height:100+"%",backgroundColor:"red",margin:5}}></div> 
+                <div style={{ width: 32 , height:100+"%",backgroundColor:"red",margin:5}}></div> 
+                </div>
+               </div>
              { !hidden ?<div className={classes.itemsbucket} >{filllatest}</div>:<></>}
              
              </div>

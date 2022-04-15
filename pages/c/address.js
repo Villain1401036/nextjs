@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import React, { useContext } from 'react'
-import ButtonAppBar from '../components/headbar'
+import ButtonAppBar from '../../components/headbar'
 
 
 
-import { onRefresh, Shopname } from '../constants'
+import { onRefresh, Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Addresses from '../components/containers/addresses'
-import { AuthContext } from '../context'
-import Logincontainer from '../components/containers/logincontainer'
+import Addresses from '../../components/containers/addresses'
+import { AuthContext } from '../../context'
+import Logincontainer from '../../components/containers/logincontainer'
 
 
 const useStyles = makeStyles((theme) => ({

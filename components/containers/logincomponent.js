@@ -44,7 +44,7 @@ export default function Logincomponent(props){
 
     
       getuserdata(idtype , email).then((value)=>{
-        router.push(`${siterooturl}home`)
+        router.push(`${siterooturl}c/home`)
       })
         
        

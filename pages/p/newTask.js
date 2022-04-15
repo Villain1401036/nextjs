@@ -1,20 +1,18 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
-import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
+import React from 'react'
+import ButtonAppBar from '../../components/headbar'
+import Footer from '../../components/footer'
 
-import { Shopname } from '../constants'
+import { Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
+import { Taskform } from '../../components/create'
 
-
-import { Serviceform } from '../components/create'
-import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
 		margin:"auto",
-		
-    display: 'grid',
+		textAlign:"center",
+    
 		gridTemplateColumns:"auto auto auto",
 
     '& > *': {
@@ -22,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 	},
 	contentArea:{
-		display:'flex',
-		flexDirection:'row',
+		
 	},
 		cover: {
 			marginTop: 0,
@@ -45,20 +42,18 @@ const useStyles = makeStyles((theme) => ({
 
 var tasksdata = []
 
-export default function NewService(props){
+export default function NewTask(props){
 
 const classes = useStyles();
-const router = useRouter();
+//const router = useRouter();
   const [isloaded,setIsLoaded] = React.useState(true);
+ 
   React.useEffect(() => {
     // Update the document title using the browser API
-
+		
   });
-   
- 	
 
-	
-  
+
 	return(
 		<div>
 		<Head>
@@ -66,13 +61,16 @@ const router = useRouter();
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 
-		<ButtonAppBar itemName={Shopname}/>
+		<ButtonAppBar itemName={Shopname}/> 
 
 			 <div className={classes.contentArea}>
+			
 			 <div className={classes.root} >
-				 <Serviceform />
+				 <Taskform />
+				
+				 
 			 </div>
-
+		
 			 </div>
 
        <Footer />

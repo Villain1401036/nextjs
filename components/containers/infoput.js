@@ -1081,7 +1081,7 @@ export default function Infoput(props){
              <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getstate()} onChange={(value)=>{ setState(value["value"]); }} /></div>
               <div style={{margin:1+"vh", marginBottom:1+"vh"}} > <Select   options={getdistrict(state)} /></div>
 
-              <button onClick={()=>{router.push("/home")}}>Next</button>
+              <button onClick={()=>{router.push("/c/home")}}>Next</button>
              </div>
 
              

@@ -1,17 +1,17 @@
 import Head from 'next/head'
 import React, { useContext, useState } from 'react'
-import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
+import ButtonAppBar from '../../components/headbar'
+import Footer from '../../components/footer'
 
 import { useRouter } from 'next/router'
 
-import { onRefresh, Shopname, user } from '../constants'
+import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { AuthContext } from '../context'
-import LoginPage from './login'
-import BannerComponent from '../components/containers/banner'
+import { AuthContext } from '../../context'
+import LoginPage from '../login'
+import BannerComponent from '../../components/containers/banner'
 
 
 

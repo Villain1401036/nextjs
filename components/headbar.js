@@ -226,7 +226,7 @@ return (
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
-          <Button onClick={()=>router.push("/home")}>
+          <Button onClick={()=>router.push("/c/home")}>
 					{/*<img src={headerimg} className={classes.logo} />*/}
 
           <Typography variant="h6" className={classes.title}>
@@ -343,12 +343,12 @@ const authContext = React.useContext(AuthContext);
       {authContext.isLoggedIn ?
       <>
       <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/c/profile")}}>{user.name}</span> 
       
       </>:
 <>
 <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"login"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}></span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/c/profile")}}></span> 
 </>
 }
 
@@ -356,18 +356,18 @@ const authContext = React.useContext(AuthContext);
 
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
     </div>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
     </div>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/settings")}}>{"settings"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/settings")}}>{"settings"}</div>
     </div >
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/newItem")}}>{"Post Item"}</div>
     </div>
     </div>
   );

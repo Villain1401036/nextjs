@@ -1,18 +1,19 @@
 import Head from 'next/head'
-import React from 'react'
-import ButtonAppBar from '../components/headbar'
-import Footer from '../components/footer'
+import React, { useState } from 'react'
+import ButtonAppBar from '../../components/headbar'
 
-import { Shopname } from '../constants'
+import { Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import { Taskform } from '../components/create'
 
+
+import { Itemform } from '../../components/create'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
 		margin:"auto",
-		textAlign:"center",
-    
+		
+    display: 'grid',
 		gridTemplateColumns:"auto auto auto",
 
     '& > *': {
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
 	},
 	contentArea:{
-		
+		display:'flex',
+		flexDirection:'row',
 	},
 		cover: {
 			marginTop: 0,
@@ -42,18 +44,20 @@ const useStyles = makeStyles((theme) => ({
 
 var tasksdata = []
 
-export default function NewTask(props){
+export default function NewService(props){
 
 const classes = useStyles();
-//const router = useRouter();
+const router = useRouter();
   const [isloaded,setIsLoaded] = React.useState(true);
- 
   React.useEffect(() => {
     // Update the document title using the browser API
-		
+
   });
+   
+ 	
 
-
+	
+  
 	return(
 		<div>
 		<Head>
@@ -61,22 +65,30 @@ const classes = useStyles();
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 
-		<ButtonAppBar itemName={Shopname}/> 
+		<ButtonAppBar itemName={Shopname}/>
 
 			 <div className={classes.contentArea}>
-			
 			 <div className={classes.root} >
-				 <Taskform />
-				
+				 <Itemform />
 				 
 			 </div>
-		
+
 			 </div>
 
-       <Footer />
+       
 		</div>
 	);
 
 
 
 }
+
+// NewService.getServerSideProps = () => {
+// 	// Fetch data from external API
+// 	const fs = require('fs')
+	
+// 	const crypto = require('crypto')
+// 	 
+// 	// Pass data to the page via props
+	
+//   }

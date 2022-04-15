@@ -1,5 +1,8 @@
 import S3 from 'aws-sdk/clients/s3';
 
+import axios from 'axios';
+
+
 
 
 const credentials =  { accessKeyId: 'fd751f6a7a834ab0be2fe1cd96542ed6', secretAccessKey: 'c3602378d1f030e0088f0864497246c5' }
@@ -130,8 +133,9 @@ export function put(files){
   var promises=[];
   for(var i=0;i<files.length;i++){
       var file = files[i];
-     promises.push(uploadLoadToS3(file,"images-prod-a"));
-    
+     //promises.push(uploadLoadToS3(file,"images-prod-a"));
+     console.log("fileput");
+     promises.push(uploadfile2server(file,"images-prod-a"));
   }
   Promise.all(promises).then(function(data){
      
@@ -183,6 +187,31 @@ function uploadLoadToS3(file,bucket){
 )
 }
 
+
+export async function uploadfile2server(file,bucket) {
+  var filen = createrandomfilename(file.name)
+  
+    try{
+      
+    // new file = new File().stream()
+     
+
+    const formdata = new FormData();
+    formdata.append("file", file)
+    await axios.post("http://www.smorentel.com:8081", formdata ,{
+      headers:{
+        'bucket' : bucket,
+        'filename' : filen,
+        'Content-Type':file.type,
+        'Access-Control-Allow-Origin':"*"
+      }
+    })
+  }
+  catch (e){
+    console.log(e);
+  }
+}
+
 export const mediaarr = []
 function createrandomfilename(filename){
   var name = Date.now().toString() + filename
@@ -197,6 +226,7 @@ function createrandomfilename(filename){
 export function createimageurl(){
 
 }
+
 
 
 
