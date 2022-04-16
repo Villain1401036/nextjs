@@ -98,7 +98,7 @@ const  readyform = async() => {
 
  var urlform = geturlFormdata("task","create" , {},{})
  await postdata(urlform.url , "task" , formdatas ).then(()=>{ 
-    router.push("/home");
+    router.push("/c/home");
  }).catch((error)=> {handleClickOpen()} )
   
    
