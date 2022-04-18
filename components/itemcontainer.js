@@ -103,7 +103,7 @@ const router = useRouter();
       console.log(itemdata);
       setItemdata(itemdata);
       setIsloaded(true);
-      getreqd()
+      //getreqd()
       
     }
      
@@ -135,6 +135,7 @@ const router = useRouter();
       values.forEach(item => {
         if (item.itemKey == item_key ){
           present = true
+
         }
       });
       return present
@@ -334,7 +335,7 @@ return(
 
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
-      {/* <Button onClick={()=>{  bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button> */}
+      <Button onClick={()=>{  bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
 		  
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        
@@ -358,10 +359,11 @@ return(
         shouldDisableDate={ddate}
         renderInput={(startProps, endProps) => (
           <React.Fragment>
-            <div>{startProps.inputProps.value}</div>
-            <div>{endProps.inputProps.value}</div>
+            <div >
+            <div>from : {startProps.inputProps.value}</div>
+            <div>to : {endProps.inputProps.value}</div>
             <Button onClick={()=>{ startProps.inputProps.onClick() }}>Check Availablity</Button>
-            
+            </div>
             {/* <Box sx={{ mx: 2 }}> to </Box>
             <TextField {...endProps} /> */}
           </React.Fragment>

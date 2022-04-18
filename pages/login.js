@@ -16,15 +16,16 @@ export default function LoginPage(props){
   //if ( typeof window !== "undefined" ){ localStorage.clear() }
 
 	return(
-		<div style={{ display:"flex", flex:1 , flexDirection:"column", backgroundColor:CLR_HEAD   } }>
+		<div style={{ display:"flex", flex:1 , height:100+"vh", flexDirection:"column", justifyContent:"center", alignItems:"center", backgroundColor:CLR_HEAD   } }>
 		
-<img style={{margin:"25vw auto 12px auto" , width:20+"vw" , height:20+"vw"}} src={"/SMOR-192.png"} />
+
 
 <div style={{width :100+"vw" , textAlign:"center" } } className="outer">
-        <div  className="inner">
+<img style={{margin:"25vw auto 12px auto" , width:20+"vw" , height:20+"vw"}} src={"/SMOR-192.png"} />
+        <div  className="inner" style={{marginTop:0 }}>
          
 		<Logincomponent />
-         <Login />
+         
 		 
 			 {/* <Infoput /> */}
 

@@ -23,7 +23,7 @@ import {  FormGroup ,Modal } from 'react-bootstrap';
 
 
 import {FiMapPin , FiFilter} from 'react-icons/fi';
-import { FaFilter} from 'react-icons/fa';
+import { FaSearch} from 'react-icons/fa';
 import { getlocal, localkeys, storelocal } from '../localstore';
 
 
@@ -254,8 +254,8 @@ return (
 						 inputProps={{ 'aria-label': 'search' }}
 					 />
            </div> */}
-           <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row-reverse"}} >
-           <div style={{height:100+"%",marginLeft:20+"px",marginTop:2+"px"}} ><FaFilter fontSize={150+"%"} onClick={()=>{setFilteropen(!filteropen)}} /></div>
+           <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
+           <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div>
         
             <>{
               locfocus? <div><InputBase
@@ -413,9 +413,11 @@ else{
     </div> */}
 
     <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/dashboard")}}>{"Dashboard"}</div>
+    </div>
+    <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
     </div>
-
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/p/settings")}}>{"settings"}</div>
     </div >

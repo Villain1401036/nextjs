@@ -70,6 +70,7 @@ export default function HomePage(props){
 
  
 
+
 const classes = useStyles();
 const router = useRouter();
 
@@ -101,71 +102,36 @@ if(typeof window === 'undefined'){
   
   const [key,setKey] = useState();
   
-	return(
-   <>
-		{ authContext.isLoggedIn && (
+   if (authContext.isLoggedIn ){
 
-  
+	return(
+
      <>
-			
 			<Head>
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
-		
-			{/* <FilterTabbar /> */}
-			<BannerComponent />
-			
-           {/* <div className={classes.container}>
-
-		   <Latestitem />
-				 <Tabs
-      id="controlled-tab-example"
-      activeKey={key}
-      onSelect={(k) => setKey(k)}>
-	 
-      <Tab eventKey="item" title="Item" >
-	  <Latestitem />
-
-      </Tab>
-
-       <Tab eventKey="Services" title="Services">
-      <ServicesContainer />
-      </Tab>
-      <Tab eventKey="Tasks" title="Tasks" >
-	  <Latestwork />
-      </Tab> 
-
-    </Tabs>
-	</div> */}
-
+             { !authContext.premium && <Upgradetopremium /> }
 				<Footer />
                  
 			</>
 				 
-				
+				 
 			
 		)
-
 		}
-		{ !authContext.isLoggedIn && (
- 
-				 <>
-				 <h1>You are not Signed in</h1>
-				 <div style={{textAlign:"center"}}>
-				   <LoginPage />
-				 </div>
-				 </>
-		
-		)
 
-		}
-		</>
-	);
- 
-	
-
+	else{
+      return(
+		  <>
+		  <div style={{display:"flex",flex:1,justifyContent:"center" , alignItems:"center" ,height:100+"vh" }}>
+		  <text >Please <span style={{color:"blue"}} onClick={()=>{router.push('/login')}}>sign in</span> to continue</text>
+		 
+		  </div>
+		  </>
+	  );
+	}
 }
 
 // HomePage.getInitialProps = () => {
@@ -179,23 +145,18 @@ if(typeof window === 'undefined'){
 // 	  return { props}
 //   }
 
-  export function getStaticProps() {
-	
-	return { props: { msg: 'hello world' } }
+  function Upgradetopremium(props){
+
+	return (
+		<>
+		<div style={{height:12+"vw" , backgroundColor:"orange" , display:"flex",flex:1,justifyContent:"center",alignItems:"center",flexDirection:"column"}} onClick={()=>{console.log("asduaskhdl");}}>
+			<div style={{fontSize:5+"vw"}} >UPGRADE TO PREMIUM</div>
+			<div style={{fontSize:4+"vw"}}>Know More</div>
+		</div>
+		</>
+	);
+
 
   }
-
-
-  function Sections(props){
-
-	  const children = props.sections.map((item) => <div style={{display:"flex",flexDirection:"row" , flex:1 }} onClick={()=>{
-
-	  }}>{item}</div>)
-
-	  return (
-		  <>
-			<div id="sec-container" style={{display:"flex",flexDirection:"row" , flex:1 }} >{children}</div>
-			
-		  </>
-	  );
-  }
+  
+   

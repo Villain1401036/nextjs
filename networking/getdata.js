@@ -115,13 +115,15 @@ export const getTokens = async(url , user , pass ) =>{
 
    }
    catch (e) {
+
+  //  / console.log("wrong username or password");
     //when request is successful but not good
        
   }
 }
    ).catch(error => {
     //failed result
-          
+    console.log("wrong username or password");
           
 
          return error.response

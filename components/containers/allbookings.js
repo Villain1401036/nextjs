@@ -106,9 +106,9 @@ export default function Bookingorders(props){
 
     const Verifypickup = async(gettype,bookingobj) =>{
       try{
-        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{setCode(data);setBookobj(bookingobj)})
+        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{setCode(data);console.log(data, "fromveri"); ;setBookobj(bookingobj)})
        
-        
+          
       }catch{
 
       }
@@ -167,7 +167,8 @@ const onReturn = async (updatetype , status , booking_id ) =>{
 
   const processQR = (scandata , code) =>{
     
-    
+      console.log(code);
+      console.log(scandata);
       if (code === scandata){
           
           if(bookobj.status == "2" ){
@@ -199,7 +200,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
           
         </DialogTitle>
         
-        <Confirm passcode={(data)=>processQR(data, code )} />
+        <Confirm passcode={(data)=> { processQR(data, code ); console.log(data,code) }} />
         
         <Button onClick={()=>{ }} autoFocus>
           

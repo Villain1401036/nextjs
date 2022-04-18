@@ -5,6 +5,7 @@ export const AuthContext = createContext({
     isLoggedIn: true,
     accounttype: true ,
     firebase: null,
+    premium : false,
     changeaccount: () => {
         accounttype = !accounttype ;
  

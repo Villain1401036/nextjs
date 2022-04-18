@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [acctype, setAcctype] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
+  const [premium, setPremium] = React.useState(false);
   
     const login = () => {
         setLoggedIn(true);
@@ -70,7 +71,7 @@ function MyApp({ Component, pageProps }) {
  
   return (
   
-      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
+      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
       
         <Component {...pageProps} />
      

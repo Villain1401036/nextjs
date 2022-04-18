@@ -97,11 +97,14 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
     var data = null
      
     
-    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ; 
-    
- return data
+    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes")
+    .then((val)=>{ data = val[0].confirmCode ; 
+    console.log(data);
+     
+
   }
     )
+    return data
   }
  export const placedataobj = {  
     "states":[  
@@ -1003,7 +1006,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
           ]
        }
     ]
- } 
+ }
 
 
  export const getallCategories = () =>{
