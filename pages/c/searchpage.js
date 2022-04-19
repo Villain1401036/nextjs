@@ -98,8 +98,8 @@ const SearchContainer = (props) => {
   const [place , setPlace] = useState([]);
   const [item , setItem] = useState([]);
   
-  const [wsplace,setWsplace] = useState(new Wsocket("ws://127.0.0.1:8000/", (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket("ws://127.0.0.1:8000/", (e)=>{setItem(e.split("*"))}));
+  const [wsplace,setWsplace] = useState(new Wsocket("ws://localhost:8082/search", (e)=>{setPlace(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket("ws://localhost:8082/search", (e)=>{setItem(e.split("*"))}));
 
 
   const [loaded , setLoaded] = useState(false); 

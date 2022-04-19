@@ -43,10 +43,11 @@ function Login() {
 
 
   const verifyonServer = async(idToken,idtype , id) =>{
-
+    console.log("tokens found");
     var urlForm = geturlFormdata("user","verify",{},{"token":idToken})
     try {
      await getTokenswithIdToken(urlForm.url , idToken , urlForm.formdata).then((response)=>{
+       
        setup_after_LoginSuccess(response.data,idtype , id).then((val)=>{
           
          storelocal("temp_id",id)
