@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React , {useContext, useEffect, useState} from 'react'
 import ButtonAppBar from '../../components/headbar'
 
-import { onRefresh, Shopname, user } from '../../constants'
+import { onRefresh, Shopname, siterooturl, user } from '../../constants'
 import { fade, makeStyles  } from '@material-ui/core/styles';
 import Profilesummary from '../../components/containers/profilesummary'
 import { useRouter } from 'next/router'
@@ -98,8 +98,8 @@ const SearchContainer = (props) => {
   const [place , setPlace] = useState([]);
   const [item , setItem] = useState([]);
   
-  const [wsplace,setWsplace] = useState(new Wsocket("ws://localhost:8082/search", (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket("ws://localhost:8082/search", (e)=>{setItem(e.split("*"))}));
+  const [wsplace,setWsplace] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setItem(e.split("*"))}));
 
 
   const [loaded , setLoaded] = useState(false); 
