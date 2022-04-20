@@ -13,7 +13,8 @@ import { InputBase } from '@mui/material';
 import { display } from '@mui/system';
 import { CLR_HEAD, CLR_RCARD1 } from '../../themes';
 import Wsocket from '../../Wsocket';
-import { FaArrowLeft }  from 'react-icons/fa'
+import { FaArrowLeft, FaFilter }  from 'react-icons/fa'
+import { getlocal, storelocal } from '../../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,14 +93,15 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchContainer = (props) => {
 
-
+  const [placefill , setPlacefill] = useState();
 
    
   const [place , setPlace] = useState([]);
   const [item , setItem] = useState([]);
+
   
   const [wsplace,setWsplace] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setItem(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
 
 
   const [loaded , setLoaded] = useState(false); 
@@ -127,6 +129,7 @@ const SearchContainer = (props) => {
     // searchitems.connect()
     
     if (!loaded ) {
+      setPlacefill(getlocal("place"))
     // var  ws = new WebSocket("ws://127.0.0.1:8000")
       //setWs( new Wsocket("ws://127.0.01:8000/") )
    //ws.binaryType = 'arraybuffer';
@@ -145,15 +148,17 @@ const SearchContainer = (props) => {
   //  }
     }
     setLoaded(true)
+    storelocal("place","bokaro")
+    
 
   })
 
  
   return (
    
-    <div style={{backgroundColor: CLR_HEAD,padding:10,}}>
+    <div style={{backgroundColor: CLR_HEAD,marginTop:10}}>
 
-      <div style={{backgroundColor:CLR_HEAD , flex:1 ,display:"flex", flexDirection:"row" }}>
+      <div style={{backgroundColor:CLR_HEAD , flex:1 ,display:"flex", flexDirection:"row",padding:10 }}>
 
           <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.back()}}>
             <FaArrowLeft color='white'  size={8+"vw"}/>
@@ -162,7 +167,7 @@ const SearchContainer = (props) => {
           <div style={{  alignItems:"center", backgroundColor:"white",width:70+"vw",borderRadius:15+"vw" }}>
             {
               !placesearch ?
-               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:10+"vw" , justifyContent:"center", alignItems:"center", alignContent:"center"}}><><span style={{ fontSize:25, color:"black"}}>{place}</span></></div> 
+               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:10+"vw" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center"}}><span style={{ fontSize:25, color:"black" }}>{placefill}</span></div> 
               :<div style={{ justifyContent:"flex-start", alignItems:"center"}}>
                 <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20,height:10+"vw" , color:'black' , paddingLeft:10+"vw"}}
                   autoFocus
@@ -185,13 +190,15 @@ const SearchContainer = (props) => {
             
           </div>
          
-         { !placesearch && <div size={25} name='filter' style={{ height:40,color:CLR_RCARD1}} onClick={()=>{setFilteropen(true); Keyboard.dismiss() ;}}></div> }
+         { !placesearch && <div size={25} name='filter' style={{height:8+"vw" ,width:8+"vw" ,marginLeft:4+"vw" ,color:CLR_RCARD1}} onClick={()=>{setFilteropen(true);}}>
+         <FaFilter color='white'  size={8+"vw"}/>
+         </div> }
 
       </div>
 
        {
          placesearch?
-<div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column"}}>{place.map((v)=> <SearchResbut value={v} ></SearchResbut>)}</div>
+<div style={{flex:1 ,borderTopColor:"white", borderTopWidth:10 , display:"flex", flexDirection:"column",marginTop:10+"px"}}>{place.map((v)=> <SearchResbut value={v} onClick={(e)=>{setPlacefill(e);setPlacesearch(false)}} ></SearchResbut>)}</div>
          :
          <>
          <div style={{backgroundColor:CLR_HEAD,height:2+"vw" }}>
@@ -206,7 +213,7 @@ const SearchContainer = (props) => {
            
          </div>
          
-         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} ></SearchResbut>)}</div>
+         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)   ;router.push(`/c/itemswindow`)}}></SearchResbut>)}</div>
        
        </div>
        
@@ -224,7 +231,7 @@ function SearchResbut(props){
 
     return(
         
-        <div  onClick={()=>{ console.log(props.value) }} style={{  height: 20+"vw", width:100+"%", backgroundColor:"white", borderBottomWidth:.5 , borderBottomColor:CLR_RCARD1  , marginTop:10}}>{props.value}</div> 
+        <div  onClick={()=>{ console.log(props.value); props.onClick(props.value); }} style={{  height: 10+"vw", width:100+"%", backgroundColor:"white", borderBottomWidth:0 , borderBottomColor:CLR_RCARD1  , padding:20}}>{props.value}</div> 
             
         
     );
