@@ -9,8 +9,10 @@ import { callwithcache, geturlFormdata, latestworkobj, setValuesfrommap } from '
 import { Form, FormGroup } from 'react-bootstrap';
 import Itemcard from '../itemcard';
 
-import { FaFilter } from 'react-icons/fa';
+import { FaArrowLeft, FaFilter, FaSearch } from 'react-icons/fa';
 import { getlocal, storelocal } from '../../localstore';
+import { CLR_HEAD } from '../../themes';
+import router from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     width:98+"vw",
     overflowY : "scroll" ,
     display:"grid" , 
-    gridTemplateColumns: "48vw 48vw" ,
+    gridTemplateColumns: "96vw" ,
     gridColumnGap:1+"vw" ,
     gridRowGap: 1+"vw",
     marginBottom:1+"vw",
@@ -210,11 +212,15 @@ export default function Latestitem(props){
 
                   
              </div> */}
-              <div style={{margin:2+"vw" , height:10+"vw" , display:"flex" ,flexDirection:"row" }}><span>Showing Top results for </span> 
-              <span style={{fontWeight:"bold"}}>{getlocal("category")}</span>
+             
+              <div style={{margin:2+"vw" , display:"flex" ,flexDirection:"row" }}>
+              <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.back()}}><FaArrowLeft color={CLR_HEAD}  size={8+"vw"}/></div> 
+                <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
+              
               <div style={{ height:10+"vw" , display:"flex" ,flexDirection:"row-reverse" ,flex:1 }}>
-                <div style={{ width: 32 , height:100+"%",backgroundColor:"red",margin:5}}></div> 
-                <div style={{ width: 32 , height:100+"%",backgroundColor:"red",margin:5}}></div> 
+              <div style={{ width: 32 , height:100+"%",margin:5}} ><FaFilter color={CLR_HEAD}  size={8+"vw"}/></div> 
+                <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.push('/c/searchpage')}}><FaSearch color={CLR_HEAD}  size={8+"vw"}/></div> 
+                
                 </div>
                </div>
              { !hidden ?<div className={classes.itemsbucket} >{filllatest}</div>:<></>}

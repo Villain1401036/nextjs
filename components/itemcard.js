@@ -32,15 +32,14 @@ const useStyles = makeStyles((theme) => ({
 
   ,
   imgcard:{ 
-    minHeight:30+"vw",
-   maxHeight:50+"vw" , 
+    height:30+"vw",
+    width:30+"vw",
+    padding:2+"vw",
     objectFit:"cover" ,
-     backgroundColor: "lightgrey",
+     backgroundColor: "white",
      '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       minHeight:10+"vw",
    maxHeight:20+"vw" , 
-     
-      
      
     },
    }
@@ -71,7 +70,7 @@ const removefromfav = () =>{
 }
 	return(
 		
-            <Card variant='outlined'  style={{ width:48+"vw"}} >
+            <Card variant='outlined'  style={{ width:98+"vw",display:"flex"}} >
                 {/*<div name="name">{props.name}</div>*/}
                 <CardMedia
         component="img"
