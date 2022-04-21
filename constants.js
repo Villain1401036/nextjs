@@ -11,8 +11,8 @@
 
 
 import { cache } from "./cache";
-// export const siterooturl = 'http://www.smorentel.com/';
-export const siterooturl = 'http://localhost:3000/'; //debug
+ export const siterooturl = 'http://www.smorentel.com/';
+// export const siterooturl = 'http://localhost:3000/'; //debug
 export const s3rooturl = 'https://cdn.smorentel.com'
 export const convertToJson = (jsondata) => {
   var data =  JSON.parse(Buffer.from(jsondata ,'base64').toString('utf8') )
