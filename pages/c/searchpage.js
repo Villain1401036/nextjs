@@ -100,8 +100,8 @@ const SearchContainer = (props) => {
   const [item , setItem] = useState([]);
 
   
-  const [wsplace,setWsplace] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket(`ws://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
+  const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
 
 
   const [loaded , setLoaded] = useState(false); 
@@ -125,13 +125,13 @@ const SearchContainer = (props) => {
    
   
   useEffect(() => {
-    // var searchitems = new Wsocket("ws://127.0.0.1:8000" )
+    // var searchitems = new Wsocket("wss://127.0.0.1:8000" )
     // searchitems.connect()
     
     if (!loaded ) {
       setPlacefill(getlocal("place"))
-    // var  ws = new WebSocket("ws://127.0.0.1:8000")
-      //setWs( new Wsocket("ws://127.0.01:8000/") )
+    // var  ws = new WebSocket("wss://127.0.0.1:8000")
+      //setWs( new Wsocket("wss://127.0.01:8000/") )
    //ws.binaryType = 'arraybuffer';
    // ws.onopen = () =>{
    //   ws.send('2 clot');
