@@ -198,7 +198,7 @@ export async function uploadfile2server(file,bucket) {
 
     const formdata = new FormData();
     formdata.append("file", file)
-    await axios.post("http://www.smorentel.com:8081", formdata ,{
+    await axios.post("https://www.smorentel.com:8081", formdata ,{
       headers:{
         'bucket' : bucket,
         'filename' : filen,
