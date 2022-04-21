@@ -4,6 +4,8 @@ import React from 'react';
 import { cache } from '../cache';
 import { geturlFormdata } from '../constants';
 import { AuthContext } from '../context';
+import { getlocal } from '../localstore';
+import { checktokensexpiry } from '../utils';
 
 var  proto = require('../build/gen/user_pb.js');
 
@@ -15,6 +17,8 @@ var  proto = require('../build/gen/user_pb.js');
 
 export const getdata = async(url, obj, options) => {
   
+   var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
+
    var k = await axios.get(url
     ,{responseType:"arraybuffer",
       
@@ -108,8 +112,9 @@ export const getTokens = async(url , user , pass ) =>{
    console.log(response.data.access_token)
 
    localStorage.setItem("access_token",response.data.access_token )
+   localStorage.setItem("at_expiresin",response.data.at_expiresin )
    localStorage.setItem("refresh_token",response.data.refresh_token )
-
+   localStorage.setItem("rt_expiresin",response.data.rt_expiresin )
   
    
 
@@ -185,7 +190,10 @@ export const postsignup = async(url , formdata ) =>{
    console.log(response.data.access_token)
 
    localStorage.setItem("access_token",response.data.access_token )
+   localStorage.setItem("at_expiresin",response.data.at_expiresin )
    localStorage.setItem("refresh_token",response.data.refresh_token )
+   localStorage.setItem("rt_expiresin",response.data.rt_expiresin )
+  
 
    }
    catch (e) {
@@ -226,7 +234,7 @@ export const refreshTokens = async(url ) =>{
    //console.log(response.data.access_token)
 
    localStorage.setItem("access_token",response.data.access_token )
-   localStorage.setItem("refresh_token",response.data.refresh_token )
+   localStorage.setItem("at_expiresin",response.data.at_expiresin )
    
    }
    catch (e) {

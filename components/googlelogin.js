@@ -47,7 +47,7 @@ function Login() {
     var urlForm = geturlFormdata("user","verify",{},{"token":idToken})
     try {
      await getTokenswithIdToken(urlForm.url , idToken , urlForm.formdata).then((response)=>{
-       
+       console.log(response.data,"resp");
        setup_after_LoginSuccess(response.data,idtype , id).then((val)=>{
           
          storelocal("temp_id",id)

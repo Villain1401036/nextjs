@@ -1,8 +1,35 @@
 
 import router from 'next/router';
 import { geturlFormdata, siterooturl } from './constants';
-import { storelocal, storeobjlocal } from './localstore';
-import { getdata } from './networking/getdata';
+import { getlocal, storelocal, storeobjlocal } from './localstore';
+import { getdata, getTokens, refreshTokens } from './networking/getdata';
+
+
+export const checktokensexpiry = async (atoken,aexpiry,rexpiry) =>{
+    var now = new Date().getTime()
+    var now = ((now - now%1000)/1000 ) + 60
+    console.log(now,aexpiry);
+
+   if(aexpiry > now){
+      console.log("isthere");
+      return atoken
+   }
+
+   if (rexpiry < now ){
+            //refreshtoken expired logout automatically
+         console.log("logout");
+
+   }else{
+       //request for accesstoken
+       var urlForm = geturlFormdata("user","refreshtoken")
+       await refreshTokens(urlForm.url)
+       atoken = getlocal("access_token")
+       return atoken
+   }
+   
+   return atoken
+
+}
 
 export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement) => {
 
@@ -52,6 +79,8 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
       
       storelocal("access_token",data["AccessToken"])
        storelocal("refresh_token",data["RefreshToken"])
+       storelocal("at_expiresin",data["AtExpires"])
+       storelocal("rt_expiresin",data["RtExpires"])
        
        try{
 
@@ -62,7 +91,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
            router.push(`${siterooturl}c/home`)
 
          }).catch((err) =>{
-             
+             console.log(err);
             router.push(`${siterooturl}info`)
               
              // 
