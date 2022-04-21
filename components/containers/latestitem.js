@@ -213,7 +213,7 @@ export default function Latestitem(props){
                   
              </div> */}
              
-              <div style={{margin:2+"vw" , display:"flex" ,flexDirection:"row" }}>
+              <div style={{padding:2+"vw" , display:"flex" ,flexDirection:"row", position:"sticky",top:0 , backgroundColor:"white"}}>
               <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.back()}}><FaArrowLeft color={CLR_HEAD}  size={8+"vw"}/></div> 
                 <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
               

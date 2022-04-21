@@ -13,7 +13,8 @@ import { InputBase } from '@mui/material';
 import { display } from '@mui/system';
 import { CLR_HEAD, CLR_RCARD1 } from '../../themes';
 import Wsocket from '../../Wsocket';
-import { FaArrowLeft, FaFilter }  from 'react-icons/fa'
+import { FaArrowLeft, FaCross, FaCut, FaFilter, FaRemoveFormat, FaSearch }  from 'react-icons/fa'
+import { MdClear }  from 'react-icons/md'
 import { getlocal, storelocal } from '../../localstore';
 
 
@@ -94,14 +95,19 @@ const useStyles = makeStyles((theme) => ({
 const SearchContainer = (props) => {
 
   const [placefill , setPlacefill] = useState();
+  const [itemfill , setItemfill] = useState();
+
 
    
   const [place , setPlace] = useState([]);
   const [item , setItem] = useState([]);
 
   
-  const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
+  // const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
+  // const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
+
+   const [wsplace,setWsplace] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setPlace(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setItem(e.split("*")) }));
 
 
   const [loaded , setLoaded] = useState(false); 
@@ -202,14 +208,24 @@ const SearchContainer = (props) => {
          :
          <>
          <div style={{backgroundColor:CLR_HEAD,height:2+"vw" }}>
-         <div style={{flex:1 ,paddingLeft:30,paddingRight:30 ,flexDirection:"row", justifyContent:"flex-start", alignItems:"center", backgroundColor:"white", marginTop:15 ,paddingTop:10,borderTopRightRadius:7+"vw",borderTopLeftRadius:7+"vw"}}
-       
-         >
-             <div size={20} name='search' style={{marginRight:23 ,color:CLR_RCARD1}} onClick={()=>{navigation.pop()}}></div>
-
-           <InputBase placeholder='Looking for ...'   style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 ,fontSize:25 , fontWeight:"300"}}  autoFocus onFocus={()=>{wsitem.connect() }} onChange={(e)=>{if (e.target.value.length > 2) {wsitem.send(e.target.value);   console.log(e.target.value);
-           }}}></InputBase>
-           <div size={20} name='cross' style={{color:CLR_RCARD1}} ></div>
+         <div style={{flex:1 ,paddingLeft:2+"vw",paddingRight:2+"vw" ,flexDirection:"row",display:"flex", justifyContent:"flex-start", alignItems:"center", backgroundColor:"white", marginTop:15 ,paddingTop:10,borderTopRightRadius:7+"vw",borderTopLeftRadius:7+"vw"}}>
+             {/* <div size={20} name='search' style={{marginRight:23 ,color:CLR_RCARD1}} onClick={()=>{navigation.pop()}}></div> */}
+             <div  name='cross' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}} ><FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"}/></div>
+           <InputBase placeholder='Looking for ...' id='iteminput' style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 ,fontSize:5+"vw" , fontWeight:"300"}}  autoFocus onFocus={()=>{wsitem.connect() }} 
+           onChange={(e)=>{if (e.target.value.length >= 0) {wsitem.send(e.target.value);setItemfill(e.target.value) ; console.log(e.target.value);}}}
+           onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+            wsitem.close();
+            console.log("enter");
+            console.log(itemfill);
+            storelocal( "category",itemfill);router.push(`/c/itemswindow`)
+          
+         }else{
+         
+         }}}
+           ></InputBase>
+           <div  name='cross' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}}  onClick={()=>{setItem([]);document.getElementById("iteminput").value = ""}} >
+           <MdClear color={CLR_HEAD}  size={6+"vw"}/>
+           </div>
            
          </div>
          

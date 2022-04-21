@@ -8,7 +8,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import Stack from '@mui/material/Stack';
 import { StaticTimePicker } from "@mui/lab";
-import { FormGroup } from "@mui/material";
+import { FormGroup, InputBase } from "@mui/material";
 import { postdata } from "../networking/postdata";
 import { mediaarr, put } from "../networking/getmedia";
 import { useRouter } from "next/router";
@@ -324,6 +324,9 @@ export function Itemform(props){
  
   const [value, setValue] = React.useState(new Date());
 
+  const [uimages , setUimages ] = useState(false);
+  const [categorydone , setCategorydone ] = useState(false);
+
 
   const[customerkey, setCustomerkey] = React.useState();
   const[description, setDescription] = React.useState();
@@ -399,7 +402,12 @@ const  readyform = async() => {
   if (tag){ formdatas.append("tags", tags)}
   if (category){ formdatas.append("category", category)}
 
-  formdatas.append("negotiable", negotiable)
+  if (negotiable){
+    formdatas.append("negotiable", negotiable)
+  }else{
+    formdatas.append("negotiable", false)
+  }
+  
 
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
  
@@ -450,7 +458,7 @@ const handlesubmit = async () =>{
 
   return (
 
-      <div style={{textAlign:"center"}}>
+      <div style={{textAlign:"center" , display:"flex", flex:1,flexDirection:"column", backgroundColor:"white"}}>
        
         <h1 style={{margin:5+"vw"}}>Enter Item Details</h1>
           <FormGroup>
@@ -466,14 +474,21 @@ const handlesubmit = async () =>{
   </Dropdown.Menu>
           </Dropdown>
 
+{category != undefined ?
+<>
+<div style={{margin:5+"vw"}}>
+  <h5>Title</h5>
+<InputBase  id="description" label="description" multiline style={{ width:100+"%" ,borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onChange={(e) => {setDescription(e.target.value); } } ></InputBase>
+</div>
+
 <div style={{margin:5+"vw"}}>
   <h5>Additional Information</h5>
-<textarea  id="description" label="description" style={{ width:100+"%" }} onChange={(e) => {setDescription(e.target.value); } } ></textarea>
+  <InputBase  id="description" label="description" multiline style={{ width:100+"%", minHeight:20+"vw" ,borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onChange={(e) => {setDescription(e.target.value); } } ></InputBase>
 </div>
 
 <div style={{margin:5+"vw"}}>
 
-<span><span style={{fontSize:5+"vw"}} >Price Per day*</span><input  id="price" label="price"   onChange={(e) => setPrice(e.target.value) } ></input></span>
+<span><span style={{fontSize:5+"vw",marginRight:5+"vw"}} >Price Per day*</span><InputBase placeholder="25 , 50 or 10.99 ..."  id="price" label="price"  inputMode="numeric" type="number" onChange={(e) => setPrice(e.target.value) } style={{ width:50+"%" ,borderStyle:"solid" , borderWidth:1+"px",paddingLeft:2+"vw" , paddingRight:2+"vw" }}></InputBase></span>
 </div>
 {/* <h5>Currency*</h5>
 <input  id="deno" label="deno"  onChange={(e) => setDeno(e.target.value) } ></input> */}
@@ -487,14 +502,21 @@ const handlesubmit = async () =>{
 <div style={{fontSize:3+"vw"}}>^^ Press enter to add more tags</div>
 
 </div>
+</>
+:<></>
+}
+
 {/* 
 <h5>categories</h5> <div>{allcat.size >0?filtercategory:<></>}</div>
 <TextField  id="category" label="add new category"   style={{margin:2+"vh"}} onChange={(e) => setCategory(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setCategorys,allcat,category,"category")}}></TextField> */}
 </FormGroup>
 
 {/* <div><Button onClick={()=>{ readyform()}}>Submit</Button></div> */}
-
-
+<>          
+ { category!= undefined && <div><Button style={{margin:3+"vw", borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onClick={()=>{ setUimages(true) }}>Upload Images</Button></div>
+}</>
+{uimages?
+<>
 <h5>Add Images</h5>
 <div>^^add some images relevant to the item to make it more appealing</div>
 <input type="file" name="file" id={"img1"}  accept="*/*" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile1(file[0]) }} />
@@ -512,10 +534,11 @@ const handlesubmit = async () =>{
 
 { files!= [] ?<>{fillpics}</>:<></> }
             <>
-            <div><Button onClick={()=>{ handlesubmit() }}>Submit</Button></div>
+            
+            <div><Button style={{margin:3+"vw", borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onClick={()=>{ handlesubmit() }}>Submit</Button></div>
             </>
-
-
+            </>
+ :<></>}
       </div>
   );
 }
