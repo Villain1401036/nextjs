@@ -103,11 +103,11 @@ const SearchContainer = (props) => {
   const [item , setItem] = useState([]);
 
   
-  // const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
-  // const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
+  const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
+  const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
 
-   const [wsplace,setWsplace] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setPlace(e.split("*"))}));
-  const [wsitem,setWsitem] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setItem(e.split("*")) }));
+  //  const [wsplace,setWsplace] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setPlace(e.split("*"))}));
+  // const [wsitem,setWsitem] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setItem(e.split("*")) }));
 
 
   const [loaded , setLoaded] = useState(false); 

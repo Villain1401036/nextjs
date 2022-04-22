@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 		cover: {
 			marginTop: 0,
-			height:70,
+			height:0,
 			margin:'auto',
   },
 	appsidebar:{
@@ -82,7 +82,7 @@ onRefresh(authContext);
 	</Head>
 
 	<ButtonAppBar itemName={Shopname}/>
-	<div className={classes.cover}></div>
+	
 	<Profilesummary />
 	
 	

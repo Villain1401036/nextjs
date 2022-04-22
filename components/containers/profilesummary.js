@@ -43,16 +43,17 @@ const useStyles = makeStyles((theme) => ({
 
 	},
 	profilepic:{
-		height:50+"vw",
-		width:50+"vw",
+		height:20+"vw",
+		width:20+"vw",
 		objectFit:"cover",
-		borderRadius:2+"vw",
+		borderRadius:10+"vw",
+		marginRight:10+"vw"
 		// borderColor:"black"	,
 		// borderWidth:3,
 		// borderStyle:"solid"
 	},
 	proname:{
-		fontSize:5+"vw",
+		fontSize:4+"vw",
 		fontWeight:"bold"
 
 	},
@@ -132,27 +133,22 @@ const refreshprofile = async () =>{
 	return(
 		<>
 
-       { loaded && 
-		<div style={{alignSelf:"center" , textAlign:"center" }}>
-			<h1 style={{color:CLR_HEAD}}>User Profile</h1>
+       { loaded &&  
+		<div style={{alignSelf:"center" , textAlign:"center" , marginTop:"10vw" }}>
 
-			
+			 <div style={{width:80+"vw" , marginLeft:"10vw", flex:1,display:"flex"}} >
                 <img src = {picurl} className={classes.profilepic}></img>
-				<div onClick={()=>{   }}><a>Change picture</a></div>
+				<div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}} >
+						{edit?<div><span className={classes.proname} >{profile.firstName} {profile.lastName}</span></div>:<input inputMode="numeric"></input>}
+						<div ><span className={classes.proname} >{profile.email}</span></div>
+				</div>
+			</div>
+				<div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:2+"vw"}} >
+					<div >About me</div> <span>Add Details</span>
+					<div style={{color:"grey",fontSize:80+"%"}}>share about yourself so that people can know better</div>
+				</div>
 
 
-                <div style={{margin:10+"vw"}} >
-				
-                    {edit?<div><span className={classes.proname} >{profile.firstName} {profile.lastName}</span></div>:<input inputMode="numeric"></input>}
-                    
-					<div ><span className={classes.proname} >{"Email :"} {profile.email}</span><span style={{fontSize:50+"%"}}>change Email</span></div> 
-					
-					<div ><span className={classes.proname} >{"Phone :"} {profile.phoneNumber}</span><span style={{fontSize:50+"%"}}>change Phone</span></div>
-
-
-                    </div>
-                      
-					
 					 <div>
   
              </div>

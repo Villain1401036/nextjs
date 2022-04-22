@@ -91,15 +91,6 @@ export default function SignupPage(props){
         <h1 style={{color:CLR_RCARD2, margin:5+"vw" ,}}>Settings</h1>
       <NavButton onClick={()=>{ }}/>
 
-      <NavButton onClick={()=>{ }}/>
-
-      <NavButton onClick={()=>{ }}/>
-
-      <NavButton onClick={()=>{ }}/>
-
-      <NavButton onClick={()=>{ }}/>
-
-      <NavButton onClick={()=>{ }}/>
       </div>
 		</div>
 	);

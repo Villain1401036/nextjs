@@ -226,7 +226,7 @@ return (
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
-          <Button onClick={()=>router.push("/c/home")}>
+          <Button onClick={()=> {authContext.accounttype? router.push("/c/home"):router.push("/p/home")}}>
 					{/*<img src={headerimg} className={classes.logo} />*/}
 
           <Typography variant="h6" className={classes.title}>

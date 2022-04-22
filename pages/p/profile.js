@@ -82,7 +82,7 @@ onRefresh(authContext);
 	</Head>
 
 	<ButtonAppBar itemName={Shopname}/>
-	<div className={classes.cover}></div>
+
 	<Profilesummary />
 	
 	

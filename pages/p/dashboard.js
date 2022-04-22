@@ -5,8 +5,6 @@ import ButtonAppBar from '../../components/headbar';
 import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 
 
-
-
 const useStyles = makeStyles((theme) => ({    
     root: {
           margin:"auto",
@@ -50,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
       },
       container:{
           minHeight:100+"vh",
-          backgroundColor:CLR_FBAR,
+          backgroundColor:"white",
           
       },
       nbuttonroot:
@@ -88,7 +86,7 @@ export default function SignupPage(props){
          
         <div style={{marginTop:8+"vw",padding:2+"vw"}}>
 
-        <h1 style={{color:CLR_RCARD2, margin:5+"vw" ,}}>Settings</h1>
+        
      
       </div>
 		</div>
