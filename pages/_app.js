@@ -4,7 +4,8 @@ import { AuthContext  } from '../context';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {initializeApp} from "firebase/app";
 import "firebase/auth";
-import router from 'next/router'
+import {SSRProvider} from '@react-aria/ssr'; 
+
 
 function MyApp({ Component, pageProps }) {
 
@@ -70,13 +71,13 @@ function MyApp({ Component, pageProps }) {
   const app = initializeApp(firebaseConfig);
  
   return (
-  
+    <SSRProvider>
       <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
       
         <Component {...pageProps} />
      
     </AuthContext.Provider>
-
+    </SSRProvider>
 
   
   )

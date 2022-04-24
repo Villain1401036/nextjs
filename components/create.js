@@ -392,7 +392,7 @@ const  readyform = async() => {
   var formdatas = new FormData();
  
   //storelocal("user_key",)
-  
+
   var userkey = await  getobjlocal("userdata")[0].userkey
   formdatas.append("customer_key", userkey);
   if (description){ formdatas.append("description", description)}
@@ -451,7 +451,7 @@ const handlesubmit = async () =>{
 
 }
   const cats = getallCategories();
-  const dropcats = cats.map( (item) => <Dropdown.Item href="#/action-3" onClick={()=>setCategory(item)} >{item}</Dropdown.Item> )
+  const dropcats = cats.map( (item) => <Dropdown.Item href="#/action-3"key={item} onClick={()=>setCategory(item)} >{item}</Dropdown.Item> )
 
 
    const [file1,setFile1] = useState();
@@ -467,7 +467,7 @@ const handlesubmit = async () =>{
           
           <h5 >Choose Category*</h5>
           <Dropdown >
-          <Dropdown.Toggle split={true}  bsPrefix='dropdown-toggle' style={{backgroundColor:"white",color:"black",width:80+"vw"}} >
+          <Dropdown.Toggle split={true}  bsPrefix='dropdown-toggle' id='categorytoogel' style={{backgroundColor:"white",color:"black",width:80+"vw"}} >
     {(category != undefined)?category:"select category"}
   </Dropdown.Toggle>
 
@@ -480,7 +480,7 @@ const handlesubmit = async () =>{
 <>
 <div style={{margin:5+"vw"}}>
   <h5>Title</h5>
-<InputBase  id="description" label="description" multiline style={{ width:100+"%" ,borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onChange={(e) => {setDescription(e.target.value); } } ></InputBase>
+<InputBase  id="title" label="title" multiline style={{ width:100+"%" ,borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onChange={(e) => {setDescription(e.target.value); } } ></InputBase>
 </div>
 
 <div style={{margin:5+"vw"}}>

@@ -17,6 +17,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@mui/lab": "^5.0.0-alpha.61",
     "@mui/material": "^5.2.5",
+    "@react-aria/ssr": "^3.1.2",
     "@react-firebase/auth": "^0.2.10",
     "@react-native-async-storage/async-storage": "^1.16.2",
     "@zxing/library": "^0.19.1",
@@ -64,6 +65,5 @@
   },
   "browser": {
     "crypto": false
-     
   }
 }

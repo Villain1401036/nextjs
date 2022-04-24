@@ -126,7 +126,7 @@ if(typeof window === 'undefined'){
       return(
 		  <>
 		  <div style={{display:"flex",flex:1,justifyContent:"center" , alignItems:"center" ,height:100+"vh" }}>
-		  <text >Please <span style={{color:"blue"}} onClick={()=>{router.push('/login')}}>sign in</span> to continue</text>
+		  <div >Please <span style={{color:"blue"}} onClick={()=>{router.push('/login')}}>sign in</span> to continue</div>
 		 
 		  </div>
 		  </>

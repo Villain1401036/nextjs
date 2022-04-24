@@ -216,8 +216,8 @@ export default function ButtonAppBar(props) {
  
 return (
    <>
-      <AppBar position="sticky" className={classes.appbar}>
-        <Toolbar className={classes.toolbar}>    
+      <AppBar position="sticky" className={classes.appbar} >
+        <Toolbar className={classes.toolbar} >    
           <IconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>toogleDstate()} >
 
             <MenuIcon />
