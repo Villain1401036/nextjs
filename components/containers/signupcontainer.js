@@ -101,7 +101,7 @@ const router = useRouter();
 
       <div style={ {textAlign:"center", padding:30 }}>
           <div> Already a user </div>
-          <button onClick={()=> router.push(`${siterooturl}c/login`)} >Login</button>
+          <button onClick={()=> router.push(`/c/login`)} >Login</button>
 
       </div>
     </div>

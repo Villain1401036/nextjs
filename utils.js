@@ -88,11 +88,11 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
        //checks if userdata exist or not if exist then  to homepage else to infofill 
       await getuserdata(idtype , email).then((value)=>{
          console.log("user exist in database");
-           router.push(`${siterooturl}c/home`)
+           router.push(`/c/home`)
 
          }).catch((err) =>{
              console.log(err);
-            router.push(`${siterooturl}info`)
+            router.push(`/info`)
               
              // 
          })

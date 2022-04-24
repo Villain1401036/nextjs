@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 
-export default function HomePage(props){
+export default function InfoPage(props){
 
   const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);

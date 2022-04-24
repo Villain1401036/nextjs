@@ -130,14 +130,15 @@ const handleSubmit = async () =>{
   }
     
     await getdata(urlform.url , "customers").then((value)=> {
-         
+         console.log(value);
         router.push("/c/home")
+
     }).catch((e)=>{
-       
+       alert(e)
     })
     }
     catch(e){
-         
+        //  alert(e)
     }
     
 

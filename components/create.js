@@ -21,7 +21,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { geturlFormdata } from "../constants";
 import { getallCategories, handleEnterKeyPress } from "../utils";
 import { Dropdown } from "react-bootstrap";
-import { getlocal, storelocal } from "../localstore";
+import { getlocal, getobjlocal, storelocal } from "../localstore";
 
 
 
@@ -370,7 +370,7 @@ const router = useRouter();
 const handleupload = (file) =>{
 if(typeof window != 'undefined'){
   
-  
+    
     put(file)
  
  }
@@ -391,8 +391,10 @@ const  readyform = async() => {
   try{
   var formdatas = new FormData();
  
-  storelocal("user_key",22)
-  formdatas.append("customer_key", getlocal("user_key"))
+  //storelocal("user_key",)
+  
+  var userkey = await  getobjlocal("userdata")[0].userkey
+  formdatas.append("customer_key", userkey);
   if (description){ formdatas.append("description", description)}
 
   if (price){ formdatas.append("price", price)}
@@ -413,7 +415,7 @@ const  readyform = async() => {
  
   await postdata(geturlFormdata("item","create",{}).url , "item" , formdatas ).then((val)=>{
       
-  })
+  }).catch((e)=>console.log(e))
   //router.reload();
    
   }

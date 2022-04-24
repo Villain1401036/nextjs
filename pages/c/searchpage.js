@@ -15,7 +15,7 @@ import { CLR_HEAD, CLR_RCARD1 } from '../../themes';
 import Wsocket from '../../Wsocket';
 import { FaArrowLeft, FaCross, FaCut, FaFilter, FaRemoveFormat, FaSearch }  from 'react-icons/fa'
 import { MdClear }  from 'react-icons/md'
-import { getlocal, storelocal } from '../../localstore';
+import { getlocal, getobjlocal, storelocal } from '../../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -133,8 +133,11 @@ const SearchContainer = (props) => {
   useEffect(() => {
     // var searchitems = new Wsocket("wss://127.0.0.1:8000" )
     // searchitems.connect()
-    
+
+
     if (!loaded ) {
+
+     
       setPlacefill(getlocal("place"))
     // var  ws = new WebSocket("wss://127.0.0.1:8000")
       //setWs( new Wsocket("wss://127.0.01:8000/") )
@@ -152,6 +155,8 @@ const SearchContainer = (props) => {
   //    //setItem(msgstr.split("*"))
   //    //setPlace(msgstr.split("*"))
   //  }
+
+
     }
     setLoaded(true)
     storelocal("place","bokaro")
