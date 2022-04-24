@@ -11,6 +11,7 @@
 
 
 import { cache } from "./cache";
+import { storeobjlocal } from "./localstore";
  export const siterooturl = 'http://www.smorentel.com/';
 // export const siterooturl = 'http://localhost:3000/'; //debug
 export const s3rooturl = 'https://cdn.smorentel.com'
@@ -18,6 +19,7 @@ export const convertToJson = (jsondata) => {
   var data =  JSON.parse(Buffer.from(jsondata ,'base64').toString('utf8') )
   return data 
 }
+
 const taskonPage = {}
 
 const workonPage = {}
@@ -26,6 +28,7 @@ const itemonPage = {}
 
 export const pushtask = (data) =>{
       taskonPage = data
+      storeobjlocal("taskonPage",data) 
 }
 
 export const pushwork = (data) =>{
@@ -33,7 +36,8 @@ export const pushwork = (data) =>{
 }
 
 export const pushitem = (data) =>{
-  itemonPage = data
+  //itemonPage = data
+  storeobjlocal("itemonPage",data) 
 }
 
 
@@ -254,13 +258,19 @@ export const workstatus_dict = {1 : "progress" , 2:"created" , 3:"done"}
 
 
 export const onRefresh = (authContext) =>{
-    if ( typeof window !== "undefined" ){ 
-         
-      }
-  
+  try{
+
+    
       if ( typeof window !== "undefined" ){ 
           if (localStorage.getItem("refresh_token") != undefined){
                   authContext.login()
           }
         }
+      else{
+        authContext.login()
+      }
+
+      }catch(e){
+        console.log(e);
+      }
 } 

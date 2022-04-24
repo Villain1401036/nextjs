@@ -49,7 +49,7 @@ export default function Logincontainer() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
+        <Button  size="lg" type="submit" disabled={!validateForm()}>
           Login
         </Button>
       </Form>

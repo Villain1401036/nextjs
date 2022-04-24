@@ -5,7 +5,7 @@ import ButtonAppBar from '../../components/headbar'
 import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import Profilesummary from '../../components/containers/profilesummary'
-import { useRouter } from 'next/router'
+import { router, useRouter } from 'next/router'
 import { AuthContext } from '../../context'
 import Logincontainer from '../../components/containers/logincontainer'
 import { Button } from '@material-ui/core';
@@ -66,15 +66,14 @@ useEffect (()=>{
 const authContext = useContext(AuthContext);
  
 
-onRefresh(authContext);
 
+
+
+if  (authContext.isLoggedIn ){
 
 
 	return(
 
-<>
-{ authContext.isLoggedIn && 
-  (
 	<div>
 	<Head>
 		<title>Spook</title>
@@ -84,20 +83,18 @@ onRefresh(authContext);
 	<ButtonAppBar itemName={Shopname}/>
 	
 	<Profilesummary />
-	
-	
-     
 
-  
 	</div>
-)
+
+	)
 }
-{
-  !authContext.isLoggedIn && (<Logincontainer />)
+else{
+   return router.push("/login")
 }
 
-</>
-	);
+
+
+
 
 }
 

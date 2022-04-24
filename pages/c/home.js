@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ButtonAppBar from '../../components/headbar'
 import Footer from '../../components/footer'
 
-import { useRouter } from 'next/router'
+import  {useRouter}  from 'next/router'
 
 import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
@@ -66,49 +66,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HomePage(props){
 
-	//////
-
- console.log(new Date().getTime()/1000);
- 
-
-
-
 const classes = useStyles();
 const router = useRouter();
 
 const authContext = useContext(AuthContext);
 
  
-
-// if (typeof window !== "undefined") {
-
-	
-// 	localStorage.setItem("isLoggedIn",false)
-
-// 	 
-
-// 	}
-
-//<button onClick={()=>{ localStorage.removeItem("refresh_token");localStorage.removeItem("access_token");  authContext.logout() }}>logout</button>
-
-if(typeof window === 'undefined'){
-	//put("C:/Users/kr716/OneDrive/Pictures/RAHUL.jpeg")
-}
-
-  const [isloaded,setIsLoaded] = React.useState(true);
-  //const [isloaded,setIsLoaded] = React.useState(true);
+  const [isloaded,setIsLoaded] = React.useState(false);
    
 
+console.log(authContext.isLoggedIn);
 
-  onRefresh(authContext)
-  
+useEffect(()=>{
+	if(!isloaded){
+		console.log("isloaded called");
+		
+	  setIsLoaded(true);
+	}
+	onRefresh(authContext);
+	
+})  
+
   const [key,setKey] = useState();
   
-	return(
-   <>
-		{ authContext.isLoggedIn && (
 
-  
+
+
+if (isloaded){
+  if (authContext.isLoggedIn){
+	return(
+
      <>
 			
 			<Head>
@@ -119,54 +106,20 @@ if(typeof window === 'undefined'){
 		
 			{/* <FilterTabbar /> */}
 			<BannerComponent />
-			
-           {/* <div className={classes.container}>
-
-		   <Latestitem />
-				 <Tabs
-      id="controlled-tab-example"
-      activeKey={key}
-      onSelect={(k) => setKey(k)}>
-	 
-      <Tab eventKey="item" title="Item" >
-	  <Latestitem />
-
-      </Tab>
-
-       <Tab eventKey="Services" title="Services">
-      <ServicesContainer />
-      </Tab>
-      <Tab eventKey="Tasks" title="Tasks" >
-	  <Latestwork />
-      </Tab> 
-
-    </Tabs>
-	</div> */}
+		
 
 				<Footer />
                  
 			</>
-				 
-				
-			
-		)
 
-		}
-		{ !authContext.isLoggedIn && (
- 
-				 <>
-				 <h1>You are not Signed in</h1>
-				 <div style={{textAlign:"center"}}>
-				   <LoginPage />
-				 </div>
-				 </>
-		
-		)
-
-		}
-		</>
 	);
- 
+  }
+  else{
+	  return <><div onClick={()=> router.push("/login")}>Login</div></> 
+  }
+}else{
+	return <>isnotload</>
+}
 	
 
 }

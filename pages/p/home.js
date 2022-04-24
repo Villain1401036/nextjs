@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ButtonAppBar from '../../components/headbar'
 import Footer from '../../components/footer'
 
@@ -76,7 +76,9 @@ const router = useRouter();
 
 const authContext = useContext(AuthContext);
 
- 
+ useEffect(()=>{
+	onRefresh(authContext);
+ })
 
 // if (typeof window !== "undefined") {
 
@@ -98,8 +100,6 @@ if(typeof window === 'undefined'){
    
 
 
-  onRefresh(authContext)
-  
   const [key,setKey] = useState();
   
    if (authContext.isLoggedIn ){

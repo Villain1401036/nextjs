@@ -21,7 +21,7 @@ export default function Orderpage(props){
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
-  onRefresh(authContext)
+
   
 	return(
 

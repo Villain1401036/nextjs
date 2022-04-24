@@ -73,7 +73,6 @@ useEffect (()=>{
 const authContext = useContext(AuthContext);
  
 
-onRefresh(authContext);
 
 
 
@@ -100,9 +99,9 @@ onRefresh(authContext);
 	</div>
 )
 }
-{
+{/* {
   !authContext.isLoggedIn && (<Logincontainer />)
-}
+} */}
 
 </>
 	);

@@ -55,7 +55,7 @@ const classes = useStyles();
 const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);
 
-  onRefresh(authContext)
+
 	return(
     <>
 		{ authContext.isLoggedIn && 

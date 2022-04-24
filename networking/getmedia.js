@@ -129,7 +129,7 @@ export const uploadFile = async (remoteFilename, fileName) => {
 // import aws4 from 'aws4';
 export function put(files){
 
-  mediaarr = []
+  var mediaarr = []
   var promises=[];
   for(var i=0;i<files.length;i++){
       var file = files[i];

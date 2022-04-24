@@ -17,6 +17,7 @@ import { postdata } from '../networking/postdata';
 import { style } from '@mui/system';
 import { getdata } from '../networking/getdata';
 import Footer from './footer';
+import { getobjlocal } from '../localstore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +92,7 @@ const [isbooked , setIsbooked] = useState();
 
 const [bookings,setBookings] = useState();
 const classes = useStyles();
-const router = useRouter();
+
 
 
   const [isloaded,setIsloaded] = React.useState(false);
@@ -99,7 +100,7 @@ const router = useRouter();
 
     // Update the document title using the browser API
     if ( !isloaded){
-      var itemdata = getitemonpage()
+      var itemdata = getobjlocal("itemonPage")
       console.log(itemdata);
       setItemdata(itemdata);
       setIsloaded(true);

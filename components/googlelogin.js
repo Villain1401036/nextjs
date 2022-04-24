@@ -53,7 +53,7 @@ function Login() {
          storelocal("temp_id",id)
           
        }).catch((e)=>{
-          
+          console.log(e);
        })
      })
     }

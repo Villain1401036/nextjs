@@ -1,6 +1,8 @@
 
 import router from 'next/router';
-import { geturlFormdata, siterooturl } from './constants';
+import { useContext } from 'react';
+import { geturlFormdata, onRefresh, siterooturl } from './constants';
+
 import { getlocal, storelocal, storeobjlocal } from './localstore';
 import { getdata, getTokens, refreshTokens } from './networking/getdata';
 
@@ -74,20 +76,25 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
          
       }
   }
+    
+  
    export const setup_after_LoginSuccess = async(data , idtype, email) =>{
-
+      
+     
       
       storelocal("access_token",data["AccessToken"])
        storelocal("refresh_token",data["RefreshToken"])
        storelocal("at_expiresin",data["AtExpires"])
        storelocal("rt_expiresin",data["RtExpires"])
-       
+       //console.log(AuthContext);
        try{
 
        
        //checks if userdata exist or not if exist then  to homepage else to infofill 
       await getuserdata(idtype , email).then((value)=>{
          console.log("user exist in database");
+            
+           // onRefresh(AuthContext)
            router.push(`/c/home`)
 
          }).catch((err) =>{

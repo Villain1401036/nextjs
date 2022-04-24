@@ -66,8 +66,6 @@ useEffect (()=>{
 const authContext = useContext(AuthContext);
  
 
-onRefresh(authContext);
-
 
 
 	return(
