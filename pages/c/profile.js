@@ -89,7 +89,7 @@ if  (authContext.isLoggedIn ){
 	)
 }
 else{
-   return router.push("/login")
+   return <></>
 }
 
 
