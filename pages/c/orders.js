@@ -21,7 +21,15 @@ export default function Orderpage(props){
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
-
+  React.useEffect(()=>{
+    if(!isloaded){
+      console.log("isloaded called");
+      
+      setIsLoaded(true);
+    }
+    onRefresh(authContext);
+    
+  })  
   
 	return(
 

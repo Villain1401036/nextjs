@@ -74,11 +74,19 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function SignupPage(props){
+export default function SettingsPage(props){
 
   const classes = useStyles();
   const [isloaded,setIsLoaded] = React.useState(true);
-
+  React.useEffect(()=>{
+    if(!isloaded){
+      console.log("isloaded called");
+      
+      setIsLoaded(true);
+    }
+  
+    
+  })  
 	return(
 		<div className={classes.container}>
 

@@ -84,17 +84,15 @@ const classes = useStyles();
 
 const authContext = useContext(AuthContext);
  
+React.useEffect(()=>{
+	if(!isloaded){
+		console.log("isloaded called");
+		
 
-// if (typeof window !== "undefined") {
-
+	}
+	onRefresh(authContext);
 	
-// 	localStorage.setItem("isLoggedIn",false)
-
-// 	 
-
-// 	}
-
-//<button onClick={()=>{ localStorage.removeItem("refresh_token");localStorage.removeItem("access_token");  authContext.logout() }}>logout</button>
+})  
 
 if(typeof window === 'undefined'){
 	//put("C:/Users/kr716/OneDrive/Pictures/RAHUL.jpeg")

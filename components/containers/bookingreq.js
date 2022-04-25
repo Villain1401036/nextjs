@@ -12,6 +12,7 @@ import Bookingreqcard from '../bookingreqcard';
 import { CLR_RCARD1 } from '../../themes';
 import { Dialog } from '@mui/material';
 import { getQrCode } from '../../utils';
+import { getobjlocal } from '../../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +73,7 @@ export default function Bookingcontainer(props){
 
    const refreshongoing =  () =>{ 
     //call the function to update with the latest tasks
-    var urlForm = geturlFormdata("booking" , "get" , {"lender":22 , "gettype":"lender"} , {}) //localStorage.getItem("customerid") }  )
+    var urlForm = geturlFormdata("booking" , "get" , {"lender":getobjlocal("userdata")[0].userkey , "gettype":"lender"} , {}) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 
     callwithcache(getdata, url, "bookings").then((value) =>{

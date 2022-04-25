@@ -159,10 +159,10 @@ const SearchContainer = (props) => {
 
     }
     setLoaded(true)
-    storelocal("place","bokaro")
+    //storelocal("place","bokaro")
     
-
   })
+
 
  
   return (
@@ -209,7 +209,7 @@ const SearchContainer = (props) => {
 
        {
          placesearch?
-<div style={{flex:1 ,borderTopColor:"white", borderTopWidth:10 , display:"flex", flexDirection:"column",marginTop:10+"px"}}>{place.map((v)=> <SearchResbut value={v} onClick={(e)=>{setPlacefill(e);setPlacesearch(false)}} ></SearchResbut>)}</div>
+<div style={{flex:1 ,borderTopColor:"white", borderTopWidth:10 , display:"flex", flexDirection:"column",marginTop:10+"px"}}>{place.map((v)=> <SearchResbut value={v} onClick={(e)=>{setPlacefill(e);setPlacesearch(false),storelocal("place",e)}} ></SearchResbut>)}</div>
          :
          <>
          <div style={{backgroundColor:CLR_HEAD,height:2+"vw" }}>

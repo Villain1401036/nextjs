@@ -17,7 +17,7 @@ import { postdata } from '../networking/postdata';
 import { style } from '@mui/system';
 import { getdata } from '../networking/getdata';
 import Footer from './footer';
-import { getobjlocal } from '../localstore';
+import { getlocal, getobjlocal } from '../localstore';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -264,7 +264,7 @@ const ddate =(date) =>{
       
      
   
-
+ console.log(isloaded);
 return(
     <>
 		{isloaded?
@@ -336,7 +336,8 @@ return(
 
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
-      <Button onClick={()=>{  bookitem(itemdata.itemKey,63,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
+    
+      <Button onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
 		  
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        

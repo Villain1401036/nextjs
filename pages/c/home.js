@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../../context'
 import LoginPage from '../login'
 import BannerComponent from '../../components/containers/banner'
+import { CLR_HEAD } from '../../themes'
+import { FaSearch } from 'react-icons/fa'
 
 
 
@@ -90,7 +92,7 @@ useEffect(()=>{
   const [key,setKey] = useState();
   
 
-
+  console.log(authContext);
 
 if (isloaded){
   if (authContext.isLoggedIn){
@@ -103,7 +105,13 @@ if (isloaded){
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
-		
+		     <div style={{width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center"}}>
+			 
+			 
+			 <div style={{width:85+"vw",height:10+"vw",backgroundColor:"white",borderRadius:"5vw" }}  onClick={()=>router.push("/c/searchpage")}>
+			 <FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"} style={{margin:"2vw"}} />
+				 </div>
+			 </div>
 			{/* <FilterTabbar /> */}
 			<BannerComponent />
 		

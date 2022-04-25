@@ -63,19 +63,19 @@ const [isloaded,setIsLoaded] = React.useState(false);
 const router = new useRouter();
 
 
-useEffect (()=>{
+React.useEffect (()=>{
 	if (!isloaded){
 		
 	}
-	
+	onRefresh(authContext);
  }); 
 
 const authContext = useContext(AuthContext);
  
 
 
-
-
+ console.log(authContext);
+ 
 	return(
 
 <>
@@ -99,9 +99,6 @@ const authContext = useContext(AuthContext);
 	</div>
 )
 }
-{/* {
-  !authContext.isLoggedIn && (<Logincontainer />)
-} */}
 
 </>
 	);

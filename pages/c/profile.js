@@ -56,16 +56,19 @@ const [isloaded,setIsLoaded] = React.useState(false);
 const router = new useRouter();
 
 
-useEffect (()=>{
-	if (!isloaded){
-		
-	}
-	
- }); 
 
 const authContext = useContext(AuthContext);
  
 
+useEffect(()=>{
+	if(!isloaded){
+		console.log("isloaded called");
+		
+	  setIsLoaded(true);
+	}
+	onRefresh(authContext);
+	
+})  
 
 
 

@@ -15,7 +15,7 @@ import { Dialog } from '@mui/material';
 import { checkQrCode } from '../../utils';
 import { postdata } from '../../networking/postdata';
 import { CLR_HEAD, CLR_HEAD1, CLR_RCARD1 } from '../../themes';
-import { getlocal, storelocal } from '../../localstore';
+import { getlocal, getobjlocal, storelocal } from '../../localstore';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -80,7 +80,7 @@ export default function Bookingorders(props){
 
    const refreshongoing =  () =>{ 
     //call the function to update with the latest tasks
-    storelocal("user_key" , 63)
+    storelocal("user_key" , getobjlocal("userdata")[0].userkey)
     var urlForm = geturlFormdata("booking" , "get" , {"customer_key":getlocal("user_key") , "gettype":"customer"} , {}) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 

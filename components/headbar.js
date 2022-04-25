@@ -190,7 +190,7 @@ export default function ButtonAppBar(props) {
   const [refresh , setRefresh] = React.useState(false);
 
 
-    const [location ,setLocation] = useState("bokaro");//get from the database
+    const [location ,setLocation] = useState("");//get from the database
   const toogleDstate = () => {
       setDrawerState(!drawerState); 
 	}
@@ -255,7 +255,7 @@ return (
 					 />
            </div> */}
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
-           <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div>
+           {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div> */}
         
             <>{
               locfocus? <div><InputBase
@@ -268,7 +268,7 @@ return (
               onKeyPress={(event)=>{ if(event.key === 'Enter'){
                  
                 storelocal("place",location);
-                router.reload()
+                // router.reload()
                 setLocfocus(false)
                 
               }}}
@@ -294,7 +294,7 @@ return (
       </AppBar>
       <>
       
-        <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{ setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
+        <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{ setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
        {/* <EditFilter filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />
          */}
          </Modal>
