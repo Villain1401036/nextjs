@@ -2,11 +2,12 @@
 import { Button, Input, InputBase, makeStyles, } from '@material-ui/core';
 import { Business } from '@material-ui/icons';
 import router from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FaArrowLeft, FaEdit } from 'react-icons/fa';
 import ButtonAppBar from '../../components/headbar';
+import { storelocal } from '../../localstore';
 import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 
 
@@ -90,42 +91,40 @@ export default function SettingsPage(props){
 
       
   
-		  <ButtonAppBar />
+		 
          
-        <div style={{marginTop:2+"vw",padding:2+"vw"}}>
+        <div style={{padding:2+"vw"}} >
         
-        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:15+"vw" }}>
+        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white" }}>
         {selected != ""  && <span onClick={()=> setSelected("") }><FaArrowLeft />back</span>}
-        <h1 style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw"}}>Settings</h1>
+        {selected == ""  && <span onClick={()=> router.back() }><FaArrowLeft /></span>}
+        <div style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw",flex:1,display:"flex" , fontSize:25}}>Settings</div>
+       {selected != "" &&
         <div style={{display:"flex",flex:1,flexDirection:"row-reverse",alignItems:"center" }}>
-
-         <span style={{fontSize:20}}>{selected}</span>
-         
-         
-
+         <span style={{fontSize:20 }}>{selected}</span>
         </div>
-        
+         }
         </div>
        {selected == "" &&
         <>
         <div style={{fontSize:5+"vw"}}>Accounts</div>
          <NavButton name="Personal Info" onClick={()=>{ setSelected("Personal Info") }}/>
-         <NavButton name="Business Account" onClick={()=>{ }}/>
+         <NavButton name="Business Account" onClick={()=>{setSelected("Business Account") }}/>
 
          <div style={{fontSize:5+"vw"}}>Start renting</div>
-         <NavButton name="Get Started" onClick={()=>{ }}/>
-         <NavButton name="Learn About Renting" onClick={()=>{ }}/>
-         <NavButton name="Promote" onClick={()=>{ }}/>
+         <NavButton name="Start Renting" onClick={()=>{setSelected("Get Started") }}/>
+         <NavButton name="Learn About Renting" onClick={()=>{ setSelected("Learn About Renting")}}/>
+         <NavButton name="Promote" onClick={()=>{ setSelected("Promote")}}/>
 
          <div style={{fontSize:5+"vw"}}>Support</div>
-         <NavButton name="How It Works" onClick={()=>{ }}/>
-         <NavButton name="Safety" onClick={()=>{ }}/>
-         <NavButton name="Contact Support" onClick={()=>{ }}/>
-         <NavButton name="Give Feedback" onClick={()=>{ }}/>
+         <NavButton name="How It Works" onClick={()=>{setSelected("How It Works") }}/>
+         <NavButton name="Safety" onClick={()=>{ setSelected("Safety")}}/>
+         <NavButton name="Contact Support" onClick={()=>{setSelected("Contact Support") }}/>
+         <NavButton name="Give Feedback" onClick={()=>{ setSelected("Give Feedback")}}/>
 
          <div style={{fontSize:5+"vw"}}>Legal</div>
-         <NavButton name="Terms of Service" onClick={()=>{ }}/>
-
+         <NavButton name="Terms of Service" onClick={()=>{ setSelected("Terms of Service")}}/>
+         <NavButton name="Privacy Policy" onClick={()=>{ setSelected("Privacy Policy")}}/>
          </>
         }
         {selected == "Personal Info" && 
@@ -138,7 +137,7 @@ export default function SettingsPage(props){
         <><Get_Started /> </>}
 
 {selected == "Learn About Renting" && 
-        <><Learn_About_Renting /></>}
+        <><Learn_About_Renting setSelected={(e)=>{setSelected(e)}} /></>}
 
 {selected == "Promote" && 
         <><Promote /></>}
@@ -157,6 +156,9 @@ export default function SettingsPage(props){
         
 {selected == "Terms of Service" && 
         <><Terms_of_Service /> </>}
+
+{selected == "Privacy Policy" && 
+        <><Privacy_Policy /> </>}
       </div>
 		</div>
 	);
@@ -277,6 +279,7 @@ function EditText(props){
 }
 function Profile_Info(props){ 
 
+    const [changed , setChanged ] = React.useState(false);
   
   return (
         <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
@@ -287,42 +290,138 @@ function Profile_Info(props){
 
       <EditText label="email" value="kr7168799@gmail.com" disabled />
       
+       <div style={{flex:1,display:"flex",backgroundColor:"white",width:100+"vw" ,position:"absolute",bottom:0,padding:2+"vw"}}>
+           { changed?<Button style={{backgroundColor:CLR_HEAD ,width:100+"%",color:"white"}} >Submit</Button> :
+           <Button style={{backgroundColor:"lightgrey" ,width:100+"%",color:"white"}} >Submit</Button>
+           }
+       </div>
       </div>
   )
 }
 
 function Business_Account(props){
-    return <>This is profile info</>
+
+    const [isBusiness , setIsBusiness] = useState(false);
+    React.useEffect(() =>{
+        // setIsBusiness(storelocal("isbusinessuser")) 
+    } )
+
+    if (!isBusiness){
+        return ( 
+            <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+            <h5>You dont have a business account</h5>
+            <Button style={{backgroundColor:CLR_RCARD2}} onClick={()=> { console.log("create business account")} }>Create business Account</Button>
+            </div>
+        )
+    }
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+            <h5>You dont have a business account</h5>
+            <Button style={{backgroundColor:CLR_RCARD2}} onClick={()=> { console.log("create business account")} }>Create business Account</Button>
+            </div>
+    ); 
   }
 
   function Get_Started(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Purpose</h5>
+        <div >Here we have to write why this app was made and the purpose of it and How to start renting</div>
+        <h5>Registration</h5>
+        <div>Work flow of registrations</div>
+        <Button style={{backgroundColor:CLR_RCARD2}} onClick={()=> { console.log("create business account")} }>Register as a Owner</Button>  
+        </div>
+    )
   }
 
   function Learn_About_Renting(props){
-    return <>This is profile info</>
+
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Why Rent</h5>
+        <div >Here we have to write why renting things makes and saves money as well as reduces the spending</div>
+
+        <Button style={{backgroundColor:CLR_RCARD2}} onClick={()=> { props.setSelected("Get Started") }} >Try Renting now</Button>  
+        </div>
+    )
   }
 
   function Promote(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Be A Part of It</h5>
+        <div >Help us Reach every individual so that we make an impact</div>
+
+        <div style={{backgroundColor:CLR_RCARD2}} >Share US on</div>  
+        </div>
+    )
   }
 
   function How_It_Works(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Steps to start Renting with SMOR</h5>
+        <div >Here we will be pointing how to use the app easily</div>
+        </div>
+    )
   }
 
   function Safety(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Safety of property</h5>
+        <div >Here we will get to know the steps to be followed to ensure a safe exchange of stuff</div>
+        </div>
+    )
   }
 
   function Contact_Support(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>Facing any Problems</h5>
+        <div>Email us at</div>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kr7168799@gmail.com" >kr7168799@gmail.com</a>
+        </div>
+    )
   }
 
   function Give_Feedback(props){
-    return <>This is profile info</>
+    return (
+        <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+        <h5>We always Want to improve</h5>
+        <div>If you have any suggestions or feedbacks please let us know by typing below</div>
+        <InputBase placeholder='your feedback here'  style={{ width:100+"%"  , borderColor:"grey",borderStyle:"solid" , flexDirection:"row",fontSize:15, color:'black'  }}
+                  multiline
+                  autoFocus
+                  
+                    onBlur={()=>{} }
+                 onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+                 }else{
+                 }}}
+                  onChange={(e)=>{ console.log(e.target.value);}} 
+                  
+                  ></InputBase>
+        </div>
+    )
   }
 
   function Terms_of_Service(props){
-    return <>This is profile info</>
+      return(
+    <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+
+    <h5>Terms of Service</h5>
+     <div>all terms and services will be here</div>
+    </div>
+      );
   }
+
+  
+  function Privacy_Policy(props){
+    return(
+  <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+
+  <h5>Privacy Policy</h5>
+   <div>all policies will be here</div>
+  </div>
+    );
+}
