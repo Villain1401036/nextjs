@@ -143,7 +143,17 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 		}
 		{ !authContext.isLoggedIn && (
  
-				 <>
+				 <><Head>
+				 <title>Spook</title>
+				 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+		 <meta name="description" content="At SMOR you will find the best list of rented items to rent doesnot matter where you are..Choose from a wide variety and see yourself"/>
+		 <meta property="og:title" content="SMOR"/>
+		 <meta property="og:description" content="Complete description of the content showed in this sample page for Open Graph."/>
+		 <meta property="og:url" content="https://smorentel.com/"/>
+		 <meta property="og:type" content="website"></meta>
+				 <link rel="icon" href="/favicon.ico" />
+				 
+			 </Head>
 				 <h1>You are not Signed in</h1>
 				 <div style={{textAlign:"center"}}>
 				   <LoginPage />
