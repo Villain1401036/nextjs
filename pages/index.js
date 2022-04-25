@@ -6,7 +6,7 @@ import FilterTabbar from '../components/filtertabbar'
 import { useRouter } from 'next/router'
 
 
-import { Shopname, user } from '../constants'
+import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../context'
 import LoginPage from './login'

@@ -103,7 +103,7 @@ const SearchContainer = (props) => {
   const [item , setItem] = useState([]);
 
   
-  const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setPlace(e.split("*"))}));
+  const [wsplace,setWsplace] = useState(new Wsocket(`wss://api.smorentel.com/searchplace`, (e)=>{setPlace(e.split("*"))}));
   const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{setItem(e.split("*")) }));
 
   //  const [wsplace,setWsplace] = useState(new Wsocket(`ws://localhost:8082/search`, (e)=>{setPlace(e.split("*"))}));
@@ -178,7 +178,7 @@ const SearchContainer = (props) => {
           <div style={{  alignItems:"center", backgroundColor:"white",width:70+"vw",borderRadius:15+"vw" }}>
             {
               !placesearch ?
-               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:10+"vw" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center"}}><span style={{ fontSize:25, color:"black" }}>{placefill}</span></div> 
+               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:10+"vw" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center",paddingLeft:4+"vw",paddingRight:4+"vw"}}><span style={{ overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color:"black" ,  }}>{placefill}</span></div> 
               :<div style={{ justifyContent:"flex-start", alignItems:"center"}}>
                 <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20,height:10+"vw" , color:'black' , paddingLeft:10+"vw"}}
                   autoFocus

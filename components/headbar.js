@@ -51,16 +51,15 @@ logo:{
     elevation: 0,
     width:100+"vw" ,
     backgroundColor: CLR_HEAD,
-		// height:10+"vw",
+		height:10+"vw",
+    boxShadow: "0px 0px",
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      height: 5+"vw"
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      height: 15+"vw"
+    }
 
-    // '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-    //   height: 5+"vw"
-    // },
-    // '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
-    //   height: 15+"vw"
-    // }
-
-    boxShadow: "0px 0px"
 	},
 
   toolbar:{ 
@@ -96,18 +95,19 @@ logo:{
     width:100+"%"
   },
 	search: {
-	 position: 'relative',
-	 borderRadius: theme.shape.borderRadius,
-	 backgroundColor: fade(theme.palette.common.white, 0.15),
-	 '&:hover': {
-		 backgroundColor: fade(theme.palette.common.white, 0.25),
-	 },
-	 marginLeft: 0,
-	 width: '100%' ,
-	 [theme.breakpoints.up('sm')]: {
-		 marginLeft: theme.spacing(1),
-		 width: 'auto',
-	 },
+	 
+    backgroundColor:"white",
+    height:4+"vw",
+    borderRadius:2+"vw",
+    display:"flex",
+    justifyContent:"center",
+
+    '@media (max-width:600px)': { // eslint-disable-line no-useless-computed-key
+      height: 0+"vw",
+      width:"0vw"
+    },
+  
+
  },
 	searchIcon: {
     padding: theme.spacing(0, 2),
@@ -171,7 +171,9 @@ logo:{
     width:7+"vw",
     height:7+"vw",
     //borderRadius:5+"vw"
-  }
+  },
+
+
 
 }));
 
@@ -243,17 +245,23 @@ return (
           {false?
             <div></div>:
             <>
-            {/* <div className={classes.search}>
+            <div className={classes.search}>
 					
-					 <InputBase
-						 placeholder="Search items…"
-						 classes={{
-							 root: classes.inputRoot,
-							 input: classes.inputInput,
-						 }}
-						 inputProps={{ 'aria-label': 'search' }}
-					 />
-           </div> */}
+            <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20, color:'black' , paddingLeft:10+"vw",borderRadius:100+"px"}}
+                  autoFocus
+                 onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+
+                    console.log("enter");
+                    wsplace.close(); setPlacesearch(false);
+                    console.log(place);
+                 }else{
+                 
+                 }}}
+                  onChange={(e)=>{  wsplace.send(e.target.value);console.log(e.target.value);}} 
+                  
+                  ></InputBase>
+					 
+           </div>
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
            {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div> */}
         
@@ -273,11 +281,11 @@ return (
                 
               }}}
             ></InputBase></div>:
-            <div style={{ maxWidth: 200+"px" ,  display: "flex",flex:1, flexDirection:"row-reverse",borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} >
+            <div style={{ maxWidth: 40+"vw" ,  display: "flex",flex:1, flexDirection:"row-reverse",borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} >
              <div style={{ borderStyle:"solid", borderWidth:0.5+"px", borderRadius:2+"px"}} ><FiMapPin fontSize={"large"}  style={{height:100+"%", marginLeft:5+"px" , marginRight: 5+"px" }} onClick={()=>{ }} /></div>
            
             <div
-              style={{color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
+              style={{overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
               onClick={()=>setLocfocus(true)} 
             >{location}</div>
 

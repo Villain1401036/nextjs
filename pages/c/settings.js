@@ -94,9 +94,9 @@ export default function SettingsPage(props){
   
 		  <ButtonAppBar />
          
-        <div style={{marginTop:8+"vw",padding:2+"vw"}}>
+        <div style={{marginTop:0+"vw",padding:2+"vw"}}>
 
-        <h1 style={{color:CLR_RCARD2, margin:5+"vw" ,}}>Settings</h1>
+        <h1 style={{color:CLR_RCARD2, margin:5+"vw" ,position:"sticky",top:0}}>Settings</h1>
       <NavButton onClick={()=>{ }}/>
 
       </div>
