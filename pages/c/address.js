@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ButtonAppBar from '../../components/headbar'
 
 
@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Addresses from '../../components/containers/addresses'
 import { AuthContext } from '../../context'
 import Logincontainer from '../../components/containers/logincontainer'
+import MapPage from '../test';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
 	contentArea:{
 		display:'flex',
 		flexDirection:'row',
+		justifyContent:"center",
+		flexDirection:"column",
+		alignItems:"center"
 	},
 	cover: {
 			marginTop: 0,
@@ -48,12 +53,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Addresspage(props){
 
 
-
-	
-
 const classes = useStyles();
 const authContext = useContext(AuthContext);
   const [isloaded,setIsLoaded] = React.useState(true);
+   
+
+  useEffect(()=>{
+	  onRefresh(authContext);
+  })
 
 
 	return(
@@ -74,6 +81,7 @@ const authContext = useContext(AuthContext);
 			  
 
 			 <Addresses />
+			 <MapPage />
 			 </div>
 
        

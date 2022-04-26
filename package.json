@@ -36,6 +36,7 @@
     "firebase": "^9.6.8",
     "fs-extra": "^10.0.0",
     "google-protobuf": "^3.19.1",
+    "leaflet": "^1.8.0",
     "lru-cache": "^6.0.0",
     "next": "^12.0.4",
     "next-pwa": "^5.4.4",
@@ -48,6 +49,7 @@
     "react-dom": "16.13.1",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.3.1",
+    "react-leaflet": "^4.0.0",
     "react-location-picker": "^1.5.0",
     "react-qr-reader": "^2.2.1",
     "react-redux": "^7.2.6",
@@ -60,6 +62,7 @@
     "sharp": "^0.30.3"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.7.9",
     "babel-plugin-styled-components": "^2.0.2",
     "cross-env": "^7.0.3"
   },
