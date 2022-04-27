@@ -1,7 +1,7 @@
 
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react'
-import ButtonAppBar from '../../components/headbar';
+import ButtonAppBar, { NameHead } from '../../components/headbar';
 import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 
 
@@ -81,7 +81,8 @@ export default function SignupPage(props){
 		<div className={classes.container}>
 
       
-  
+
+
 <NameHead label="Dashboard" onClick={()=> router.back() } onHomeClick={()=>{router.push('/p/home')}} /> 
          
         <div style={{marginTop:8+"vw",padding:2+"vw"}}>
