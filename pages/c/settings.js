@@ -95,7 +95,7 @@ export default function SettingsPage(props){
          
         <div style={{padding:2+"vw"}} >
         
-        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white" }}>
+        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey"  }}>
         {selected != ""  && <span onClick={()=> setSelected("") }><FaArrowLeft />back</span>}
         {selected == ""  && <span onClick={()=> router.back() }><FaArrowLeft /></span>}
         <div style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw",flex:1,display:"flex" , fontSize:25}}>Settings</div>
@@ -232,7 +232,7 @@ export function EditText(props){
         <div style={{display:"flex",}}>
             <div>
         <div style={{ fontSize:9 }}>{props.label}</div>
-        <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}>
+        <div  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}>
             {currvalue}
             
             </div>
@@ -251,7 +251,7 @@ export function EditText(props){
         <div style={{width:90+"%",borderColor:CLR_HEAD,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2, margin:"2vw" ,padding:"2vw" }}>
             <div style={{ fontSize:10 }}>{props.label}</div>
            
-            <InputBase placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'  }}
+            <InputBase  placeholder={props.placeholder}  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'  }}
                   
                   autoFocus
                   defaultValue={currvalue}

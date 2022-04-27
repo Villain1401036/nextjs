@@ -1,11 +1,11 @@
 import dynamic from 'next/dynamic'
 
-function MapPage() {
+function MapPage(props) {
   const Map = dynamic(
     () => import('/components/containers/Map'), 
     { ssr: false } 
   )
-  return ( <><Map /><>asdugiusdhals</></> )
+  return ( <><Map currentloc={props.currentloc} /></> )
 }
 
 export default MapPage

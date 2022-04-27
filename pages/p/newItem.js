@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../../components/headbar'
 
 import { Shopname } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,7 +65,7 @@ const router = useRouter();
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 
-		<ButtonAppBar itemName={Shopname}/>
+		<NameHead label="Post Item" onClick={()=> router.back() } onHomeClick={()=>{router.push('/p/home')}} /> 
 
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >

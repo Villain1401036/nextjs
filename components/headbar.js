@@ -17,13 +17,13 @@ import InputBase from '@material-ui/core/InputBase';
 
 import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, } from '../themes.js'
 
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import { AuthContext } from '../context';
 import {  FormGroup ,Modal } from 'react-bootstrap';
 
 
 import {FiMapPin , FiFilter} from 'react-icons/fi';
-import { FaSearch} from 'react-icons/fa';
+import { FaArrowLeft, FaHome, FaSearch} from 'react-icons/fa';
 import { getlocal, localkeys, storelocal } from '../localstore';
 
 
@@ -377,9 +377,9 @@ if (authContext.accounttype == true){
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/settings")}}>{"settings"}</div>
     </div >
-    <div className={classes.drawButt}>
+    {/* <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/searchpage")}}>{"searchpage"}</div>
-    </div>
+    </div> */}
     </div>
   );
 }
@@ -419,10 +419,10 @@ else{
     {/* <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
     </div> */}
-
+{/* 
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/p/dashboard")}}>{"Dashboard"}</div>
-    </div>
+    </div> */}
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
     </div>
@@ -580,5 +580,21 @@ style={{width:80+"vw"}}
 <button onClick={()=>{ props.closemodal(passdata()) }} >cancel</button>
 </div> 
          </>
+  )
+}
+
+
+export const NameHead = (props) =>{
+  
+  return(
+    <div style={{zIndex:2000, flex:1,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" }} >
+    <FaArrowLeft size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
+    <div style={{margin:3+"vw",fontSize:"7vw"}}>{props.label}</div>
+    <div style={{flex:1,display:"flex",height:"13vw", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >
+    <FaHome size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} />
+    
+    </div>
+</div>
+
   )
 }

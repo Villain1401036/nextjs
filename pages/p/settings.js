@@ -95,7 +95,7 @@ export default function SettingsPage(props){
          
         <div style={{padding:2+"vw"}} >
         
-        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white" }}>
+        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey" }}>
         {selected != ""  && <span onClick={()=> setSelected("") }><FaArrowLeft />back</span>}
         {selected == ""  && <span onClick={()=> router.back() }><FaArrowLeft /></span>}
         <div style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw",flex:1,display:"flex" , fontSize:25}}>Settings</div>

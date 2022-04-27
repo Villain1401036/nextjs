@@ -9,7 +9,6 @@ import { MapSharp } from '@material-ui/icons';
 import Addresscard from '../addresscard';
 import { callwithcache, geturlFormdata, setValuesfrommap } from '../../constants';
 import { CLR_RCARD1 } from '../../themes';
-import { EditText } from '../../pages/c/settings';
 import { FaMapMarked, FaMapMarkedAlt, FaMapMarker, FaMapMarkerAlt, FaMapPin } from 'react-icons/fa';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -58,7 +57,6 @@ export default function Addresses(props){
 
     const [loaded,setLoaded] = React.useState(false); 
    
-    const [editing , setEditing ] = React.useState(true);
     
     const [addresslist,setAddresslist] = React.useState([]);
     const classes = useStyles();
@@ -91,38 +89,27 @@ export default function Addresses(props){
 
    
    
-  const filllatest =  addresslist.map( (item) =>  <Addresscard key={item.addressId} address={item.addressId} ></Addresscard> )
+  const filllatest =  addresslist.map( (item) =>  <Addresscard key={item.addressId} address={item.addressId} addressobj={item} onEditClick={(data)=>props.onEditClick(data)} ></Addresscard> )
 
 
   // const loc = new Geolocation()
-  if (editing){
-      return ( 
-        <div style={{display:"flex",flex:1,justifyContent:"center" , alignItems:"center",flexDirection:"column",width:"100%" }}>
-           <h2>{"Home 1"}</h2> 
-            <EditText label="Address 1" value="sec - 9" />
-            <EditText label="Address 2" value="bokaro steel city" />
-
-            <EditText label="Phone" value="8405905399" disabled />
-
-            <div style={{fontSize:8+"vw"}} onClick={()=> navigator.geolocation.getCurrentPosition((d)=>{console.log(d);},()=>{} ,{enableHighAccuracy: true} )  }  >Set L<FaMapMarkerAlt />cation</div>
-            
-        </div>
-      );
-  }
-  else{
 
 
 
 	return(
-		<div style={{ backgroundColor:CLR_RCARD1 , width:"100%"}}>
-                <Button onClick={async()=>{refreshlatest()}} title="asdasd" >Addresses</Button>
-             <div>
+		<div style={{ flex:1,display:"flex",flexDirection:"column",width:"100%",flexGrow:1  }}>
+               
+             
              {filllatest}
-             </div>
+             
+            
+             <div style={{ flex:1,display:"flex",flexDirection:"column-reverse",width:"100%",flexGrow:1}}>
               
-             </div>
+              </div>
+              </div>
+             
 	);
-  }
+  
 }
  
 

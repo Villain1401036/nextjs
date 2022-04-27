@@ -82,7 +82,7 @@ export default function SignupPage(props){
 
       
   
-		  <ButtonAppBar />
+<NameHead label="Dashboard" onClick={()=> router.back() } onHomeClick={()=>{router.push('/p/home')}} /> 
          
         <div style={{marginTop:8+"vw",padding:2+"vw"}}>
 

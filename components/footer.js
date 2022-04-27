@@ -7,11 +7,23 @@ import { Facebook, Instagram, Twitter, YouTube } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   foot: {
-    flexGrow: 1,
+	  flex:1,
+    
+	flexDirection:"column-reverse",
+	display:"flex",
 	//position:'sticky',
 	bottom:0,
 	zIndex:10
   },
+  sweep: {
+	flex:1,
+  flexGrow: 1,
+  flexDirection:"column-reverse",
+  display:"flex",
+  //position:'sticky',
+  bottom:0,
+  zIndex:10
+},
 	 infoblocks: {
 		 width:30+"vw",
 	    flexGrow: 1,
@@ -29,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 	appbar:{
 		paddingLeft:5+"vw",
 		paddingTop:10+"vw",
-		  flexGrow: 1,
+		  maxWidth:100+"vw",
 			display:'flex',
 			flexDirection:'row',
 		backgroundColor:CLR_HEAD,
@@ -51,15 +63,20 @@ export default function Footer(props) {
 
   return (
     <div className={classes.foot}>
-		<div style={{height:.15+"px"}}></div>
+		
+		<Followblocks />
 		<div className={classes.appbar}>
       		
-			<Aboutblocks />
 			
-			<HSblocks />
+			
+			
+			
+			<Aboutblocks />
 			<Locationblocks />
+			<HSblocks />
 		</div>
-		<Followblocks />
+		<div className={classes.sweep}></div>
+		
 		
     </div>
   );

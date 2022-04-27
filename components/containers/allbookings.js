@@ -184,7 +184,13 @@ const onReturn = async (updatetype , status , booking_id ) =>{
   }
 
   
-
+   if (bookinglist.length == 0){
+     return (
+      <div style={{flex:1,display:"flex" , flexDirection:"column",flexGrow:1,alignItems:"fill",justifyContent:"center", alignItems:"center"}}>
+            <div>You do not have anything here </div>
+        </div>
+     );
+   }
 	return(
 		<div style={{ backgroundColor:CLR_RCARD1}}>
                  <Dialog
@@ -207,7 +213,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
           </Button>
       </Dialog>
       
-             <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button> 
+             {/* <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button>  */}
              <div style={{minWidth: 100+"%" , display: "grid"}}>
              {filllatest}
              </div>

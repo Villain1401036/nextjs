@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React , {useContext, useEffect} from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../../components/headbar'
 
 import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
@@ -79,8 +79,7 @@ const authContext = useContext(AuthContext);
 		<link rel="icon" href="/favicon.ico" />
 	</Head>
 
-	<ButtonAppBar itemName={Shopname}/>
-
+	<NameHead label={"You"} onClick={()=>router.back() } onHomeClick={()=>{router.push('/p/home')}} />
 	<Profilesummary />
 	
 	

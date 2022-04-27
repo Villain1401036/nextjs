@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React , {useContext, useEffect} from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../../components/headbar'
 
 import { onRefresh, Shopname, user } from '../../constants'
 import { makeStyles } from '@material-ui/core/styles';
@@ -53,10 +53,9 @@ const [profile , setProfile] = React.useState();
 const [isloaded,setIsLoaded] = React.useState(false);
 
 
-const router = new useRouter();
 
 
-
+const router = useRouter();
 const authContext = useContext(AuthContext);
  
 
@@ -83,7 +82,7 @@ if  (authContext.isLoggedIn ){
 		<link rel="icon" href="/favicon.ico" />
 	</Head>
 
-	<ButtonAppBar itemName={Shopname}/>
+	<NameHead label={"You"} onClick={()=> router.back() } onHomeClick={()=>{router.push('/c/home')}} />
 	
 	<Profilesummary />
 
