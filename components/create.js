@@ -22,6 +22,8 @@ import { geturlFormdata } from "../constants";
 import { getallCategories, handleEnterKeyPress } from "../utils";
 import { Dropdown } from "react-bootstrap";
 import { getlocal, getobjlocal, storelocal } from "../localstore";
+import ClothesInfo from "./filterfills/clothes";
+import { FaTag } from "react-icons/fa";
 
 
 
@@ -68,9 +70,9 @@ React.useEffect (()=>{
 });
 
 
-const filtertags =  tags.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
+const filtertags =  tags.slice(1).split("~").map( (item) =>  <Chip label={item} key={item} onClick={()=>{ }}  size="small"/> )
 
-const filtercategory =   categorys.split("~").map( (item) => <Chip label={item}  onClick={()=>{ }}  size="small"/> )
+const filtercategory =   categorys.split("~").map( (item) => <Chip label={item} key={item}  onClick={()=>{ }}  size="small"/> )
 
 const [files, setFiles] = React.useState([]); 
 
@@ -159,6 +161,8 @@ const handlesubmit = async () =>{
   await readyform()
 
 }
+
+
   const cats = getallCategories();
   const dropcats = cats.map( (item) => <Dropdown.Item href="#/action-3"key={item} onClick={()=>setCategory(item)} >{item}</Dropdown.Item> )
 
@@ -203,14 +207,20 @@ const handlesubmit = async () =>{
 </div>
 {/* <h5>Currency*</h5>
 <input  id="deno" label="deno"  onChange={(e) => setDeno(e.target.value) } ></input> */}
+<ClothesInfo onselectmany={(tags)=>{console.log(new Set(tags.slice(1).split("~")));var tset = new Set(tags.split("~"))  ;setAlltags(tset) }} alreadyselecteditems={alltags} /> 
 
 <h5>negotiable price<Switch checked={negotiable} onChange={()=>{setNegotiable(!negotiable)}} /></h5>
 
 <div style={{marginBottom:5+"vw"}}>
-<h5>tags</h5> <div>{alltags.size>0?filtertags:<></>}</div>
+<h5>tags</h5> 
+<div>{alltags.size>0?filtertags:<></>}</div>
 
-<input  id="tags" label="add new tag"    style={{marginTop:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></input>
+<FaTag style={{margin:"2vw"}}/>
+<input  id="tags"   style={{marginTop:2+"vh"}} onChange={(e) => setTag(e.target.value) } onKeyPress={(e)=>{handleEnterKeyPress(e,setTags,alltags,tag,"tags")}}></input>
+<div onClick={()=>{  }} >or choose from here</div>
+
 <div style={{fontSize:3+"vw"}}>^^ Press enter to add more tags</div>
+ 
 
 </div>
 </>
@@ -224,10 +234,10 @@ const handlesubmit = async () =>{
 
 {/* <div><Button onClick={()=>{ readyform()}}>Submit</Button></div> */}
 <>          
- { category!= undefined && <div><Button style={{margin:3+"vw", borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onClick={()=>{ setUimages(true) }}>Upload Images</Button></div>
+ { category!= undefined && <div><Button style={{margin:3+"vw", borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onClick={()=>{ setUimages(true);router.push('#uploadimages') }}>Upload Images</Button></div>
 }</>
 {uimages?
-<>
+<div id="uploadimages">
 <h5>Add Images</h5>
 <div>^^add some images relevant to the item to make it more appealing</div>
 <input type="file" name="file" id={"img1"}  accept="*/*" style={{display:'none'}}  onChange={()=>{var file  = event.target.files ; console.log(file) ; setFile1(file[0]) }} />
@@ -248,11 +258,10 @@ const handlesubmit = async () =>{
             
             <div><Button style={{margin:3+"vw", borderStyle:"solid" , borderWidth:1+"px",paddingLeft:20+"px" , paddingRight:20+"px" }} onClick={()=>{ handlesubmit() }}>Submit</Button></div>
             </>
-            </>
+            </div>
  :<></>}
       </div>
   );
 }
 
 
- 

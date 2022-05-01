@@ -111,46 +111,12 @@ if(typeof window === 'undefined'){
    <>
 		{ authContext.isLoggedIn && (
 
-  
-     <>
-			
-			<Head>
-				<title>Spook</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-
-            
-
-            <div style={{ minHeight:60+"vh" }} >
-
             <Latestitem />
-            </div>
-		    
 
-			
-
-
-				<Footer />
-                 
-			</>
-				 
-				
-			
 		)
 
 		}
-		{ !authContext.isLoggedIn && (
- 
-				 <>
-				 <h1>You are not Signed in</h1>
-				 <div style={{textAlign:"center"}}>
-				   <LoginPage />
-				 </div>
-				 </>
-		
-		)
-
-		}
+	
 		</>
 	);
  

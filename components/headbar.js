@@ -331,6 +331,9 @@ function Drawercomponent(props){
 
 const authContext = React.useContext(AuthContext);
 
+useEffect(()=>{
+  authContext.checkType()
+})
 
 if (authContext.accounttype == true){
 
@@ -587,7 +590,7 @@ style={{width:80+"vw"}}
 export const NameHead = (props) =>{
   
   return(
-    <div style={{zIndex:2000, flex:1,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" }} >
+    <div style={{zIndex:2000,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" }} >
     <FaArrowLeft size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
     <div style={{margin:3+"vw",fontSize:"7vw"}}>{props.label}</div>
     <div style={{flex:1,display:"flex",height:"13vw", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >

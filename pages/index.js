@@ -13,6 +13,8 @@ import LoginPage from './login'
 import Bookingcontainer from '../components/containers/bookingreq'
 // import { Itemform } from '../components/create'
 import SimpleBottomNavigation from '../components/bottomnav'
+import { Box, Paper } from '@material-ui/core'
+
 
 
 
@@ -109,7 +111,7 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 	return(
    <>
 		{ authContext.isLoggedIn && (
-			<div style={{minHeight:100+"vh"}}>
+			<>
 			<Head>
 				<title>Spook</title>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -131,13 +133,15 @@ if ( typeof window !== "undefined" ){ if ( localStorage.getItem("isLoggedIn") ==
 				{/* <Bookingorders />
 				<Itemform />
 				  */}
+				   <Footer />
 				 </div >
+				 
 				
-				 <Footer />
 				 <SimpleBottomNavigation />
-			     
+			   
 				
-			</div>
+				
+			</>
 		)
 
 		}

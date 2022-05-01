@@ -7,13 +7,13 @@ import { Facebook, Instagram, Twitter, YouTube } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   foot: {
-	  flex:1,
     
 	flexDirection:"column-reverse",
 	display:"flex",
 	//position:'sticky',
-	bottom:0,
-	zIndex:10
+	width:100+"%",
+	// bottom:0,
+	// zIndex:10
   },
   sweep: {
 	flex:1,

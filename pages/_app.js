@@ -5,6 +5,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {initializeApp} from "firebase/app";
 import "firebase/auth";
 import {SSRProvider} from '@react-aria/ssr'; 
+import { getlocal, storelocal } from '../localstore';
 
 
 function MyApp({ Component, pageProps }) {
@@ -22,6 +23,18 @@ function MyApp({ Component, pageProps }) {
         setLoggedIn(false);
     }
 
+      const checkType = () => {
+        console.log("check");
+        if (typeof window != undefined){
+        var a =   getlocal("accounttype")
+        if (a == 1){
+          setAcctype(true)
+        }else{
+          setAcctype(false)
+        }
+        
+        }
+      }
     
 
 
@@ -29,7 +42,14 @@ function MyApp({ Component, pageProps }) {
        
       setAcctype(!acctype)
       console.log(acctype);
-
+      if (typeof window != undefined){
+        if (acctype){
+          storelocal("accounttype",0)
+        }else{
+          storelocal("accounttype",1)
+        }
+      
+      }
     }
 
 
@@ -72,7 +92,7 @@ function MyApp({ Component, pageProps }) {
  
   return (
     <SSRProvider>
-      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount }} >
+      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount, checkType:checkType }} >
       
         <Component {...pageProps} />
      

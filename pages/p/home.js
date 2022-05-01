@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../../context'
 import LoginPage from '../login'
 import BannerComponent from '../../components/containers/banner'
+import SimpleBottomNavigation from '../../components/bottomnav'
 
 
 
@@ -78,6 +79,7 @@ const authContext = useContext(AuthContext);
 
  useEffect(()=>{
 	onRefresh(authContext);
+	authContext.checkType()
  })
 
 // if (typeof window !== "undefined") {
@@ -114,7 +116,8 @@ if(typeof window === 'undefined'){
 			<ButtonAppBar itemName={Shopname}/>
              { !authContext.premium && <Upgradetopremium /> }
 				<Footer />
-                 
+				<SimpleBottomNavigation />
+				
 			</>
 				 
 				 

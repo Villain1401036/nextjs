@@ -70,7 +70,7 @@ const removefromfav = () =>{
 }
 	return(
 		
-            <Card variant='outlined'  style={{ width:98+"vw",display:"flex"}} >
+            <div variant='outlined'  style={{ width:98+"vw",display:"flex", }} >
                 {/*<div name="name">{props.name}</div>*/}
                 <CardMedia
         component="img"
@@ -112,7 +112,7 @@ const removefromfav = () =>{
                 
                 
 
-            </Card>
+            </div>
 
         
 	);

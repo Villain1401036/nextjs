@@ -1,25 +1,58 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import { FaCog, FaEdit, FaHeart, FaHome, FaUser } from 'react-icons/fa';
+import { Paper, withStyles } from '@material-ui/core';
+import router from 'next/router';
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes';
+import { styled } from '@material-ui/styles';
+import { AuthContext } from '../context';
 
 
-export default function SimpleBottomNavigation() {
+
+const EBottomNavigationAction = styled(BottomNavigationAction)(`
+  color: red
+`)
+
+
+
+ function SimpleBottomNavigation(props) {
   const [value, setValue] = React.useState(0);
 
+  const authContext = React.useContext(AuthContext);
+
+  return(<></>)
   return (
-    <Box sx={{ width: 100+"vw" , position:"fixed", bottom:0 }}>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction label="Recents" /> 
-        <BottomNavigationAction label="Favorites"  />
-        <BottomNavigationAction label="Nearby"  />
-      </BottomNavigation>
-    </Box>
+    <>
+    <div style={{height:14+"vw",width:"100%"}}></div>
+    <Paper style={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} >
+      <div style={{height:13+"vw" ,width:"100%",background:CLR_HEAD,flex:1,display:"flex",color:CLR_RCARD1,
+          
+    }}>
+ 
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>{(authContext.accounttype?router.push('/c/home'):router.push('/p/home'))}} >
+         <FaHome size={25} />
+       </div>
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/settings')}  >
+         <FaCog size={25} />
+       </div>
+       
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/profile')}  >
+         <FaUser size={25} />
+       </div>
+     
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/home')} >
+         <FaHome size={25} />
+       </div>
+
+      </div>
+      
+      </Paper>
+</>
+
+
+  
   );
 }
+export default SimpleBottomNavigation;

@@ -140,7 +140,9 @@ export const postwitherror = async (func, url ,obj, formdata) =>{
 export const setValuesfrommap = (val,func, updatefunc , taskmap , mapkey ) =>{
 
   try{
-     var plist =  maping(val , taskmap , mapkey ); updatefunc(plist);
+     var plist =  maping(val , taskmap , mapkey ); 
+     
+     updatefunc(plist);
   }
   catch(e){
      

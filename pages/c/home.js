@@ -14,6 +14,7 @@ import LoginPage from '../login'
 import BannerComponent from '../../components/containers/banner'
 import { CLR_HEAD } from '../../themes'
 import { FaSearch } from 'react-icons/fa'
+import SimpleBottomNavigation from '../../components/bottomnav'
 
 
 
@@ -82,7 +83,7 @@ console.log(authContext.isLoggedIn);
 useEffect(()=>{
 	if(!isloaded){
 		console.log("isloaded called");
-		
+		authContext.checkType()
 	  setIsLoaded(true);
 	}
 	onRefresh(authContext);
@@ -117,7 +118,7 @@ if (isloaded){
 		
 
 				<Footer />
-                 
+                 <SimpleBottomNavigation />
 			</>
 
 	);

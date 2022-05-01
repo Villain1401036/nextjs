@@ -13,47 +13,24 @@ import { FaArrowLeft, FaFilter, FaSearch } from 'react-icons/fa';
 import { getlocal, storelocal } from '../../localstore';
 import { CLR_HEAD } from '../../themes';
 import router from 'next/router';
+import Footer from '../footer';
 
 const useStyles = makeStyles((theme) => ({
 
- 
-  root: {
-		margin:"auto",
-    display: 'grid',
-		gridTemplateColumns:"auto auto auto",
 
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-	},
-	contentArea:{
-		display:'flex',
-		flexDirection:'row',
-	},
-    cover: {
-			marginTop: 0,
-			height:70,
-			margin:'auto',
-  },
-	appsidebar:{
-		position:"sticky",
-		top:100,
-		right:0,
-		height:600+"px",
-		width:250+"px",
-		backgroundColor:'pink',
-
-
-	},
   itemsbucket:{
-    width:98+"vw",
+    width:100+"vw",
     overflowY : "scroll" ,
-    display:"grid" , 
-    gridTemplateColumns: "96vw" ,
-    gridColumnGap:1+"vw" ,
-    gridRowGap: 1+"vw",
-    marginBottom:1+"vw",
-    margin: 1+"vw",
+    // flex:1,
+    display:"flex" , 
+    flexDirection:"column",
+    // gridTemplateColumns: "100vw" ,
+    // gridColumnGap:1+"vw" ,
+    //  gridRowGap: 1+"vw",
+    
+    // marginBottom:1+"vw",
+    // margin: 1+"vw",
+    height:100+"vh",
     
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       width:75+"vw",
@@ -87,6 +64,7 @@ export default function Latestitem(props){
     //const filter = {"place": "" , "lat": "" , "lon":"" , "distance":"" , "tags":"" , "category" :"" , "price":"" }
     const [filterops, setFilterops] = React.useState(false);
 
+      const [xtime , setXtime] = useState(999999999999);
    //parameters to be passed in to get things filtered  
     // var place = filter.place
     // var lat = filter.lat
@@ -103,8 +81,8 @@ export default function Latestitem(props){
 
        if (!loaded){
         
-       refreshlatest(filter);
-       //setLoaded(true)
+       loadmore(filter);
+       setLoaded(true)
 
        }
     });
@@ -116,7 +94,7 @@ export default function Latestitem(props){
 
        setFilter(f);
       setFilterops(false);
-      refreshlatest(f);
+      loadmore(f);
         
       // setFilter({"place": place , "lat": lat , "lon":lon , "distance":distance , "tags":tags , "category" :category , "price":price })
     }
@@ -130,14 +108,15 @@ export default function Latestitem(props){
          
 
 
-        var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") } , {} )
+        var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place"), "Xtime":"current" } , {} )
         var url = urlForm.url
          
 
         callwithcache(getdata, url, "items").then((value) =>{
           setLoaded(true);
            
-          taskmap.clear() //for clearing every thing
+          setXtime(getXtime(value))
+          //taskmap.clear() //for clearing every thing
 
           setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
              
@@ -145,9 +124,64 @@ export default function Latestitem(props){
           )
           
     }
+    const listInnerRef = React.useRef();
+    const loadmore =  (f ) =>{
+      //call the function to update with the latest tasks
+
+       
 
 
-      const filllatest =  tasklist.map( (item) =>  <Itemcard key={item.itemId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard>  )
+      var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") , "xtime": xtime} , {} )
+      var url = urlForm.url
+       
+
+      callwithcache(getdata, url, "items").then((value) =>{
+        setLoaded(true);
+         
+        //taskmap.clear() //for clearing every thing
+        setXtime(getXtime(value))
+        setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
+           
+        }
+        )
+        
+  }
+
+  const getXtime = (list) =>{
+
+    var xtimes = 999999999999
+    if (list.length == 0){
+      return 0
+    }
+    list.forEach(element => {
+      if  ( element['createdAt'] < xtimes){
+          xtimes = element['createdAt']
+      } 
+    
+    });
+    return xtimes
+
+  }
+  
+
+      const fill_pairs = (list) =>{
+         
+         var reslist = []
+        var tl = Math.floor(list.length/2) 
+        for (var i = 0 ; i< tl ;i++ ){
+
+            reslist.push([list[i*2],list[i*2+1]])
+
+        }
+        if (list.length%2 != 0){
+          reslist.push([list[list.length -1 ],list[list.length -1 ]])
+        }
+        
+        return reslist
+      }
+      //const filllatest =  fill_pairs(tasklist).map( (item) => <div style={{display:"flex"}}><div style={{width:"50vw"}}> <Itemcard key={item[0].itemId}  name={item[0].itemId} itemobj={item[0]} description={item[0].description} place={item[0].place} price={item[0].price} scheduled_at={item[0].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div><div style={{width:"50vw"}}>  <Itemcard key={item[1].itemId}  name={item[1].itemId} itemobj={item[1]} description={item[1].description} place={item[1].place} price={item[1].price} scheduled_at={item[1].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div></div>   )
+      
+      const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard>  )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -156,64 +190,42 @@ export default function Latestitem(props){
       const filterprice = <Filterbox name={filter.price}/>
       
      
+      const gobottom = () =>{
+        console.log("bottom up");
+        var myDiv = document.getElementById("itemswin");
+          myDiv.scrollTop = myDiv.scrollHeight;
+          console.log(myDiv.scrollHeight,myDiv.scrollTop);
+      }
       
-      
-      
+      const onScroll = () => {
+        if (listInnerRef.current) {
+          const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+          // console.log(scrollHeight , clientHeight + scrollTop);
+          if (scrollTop + clientHeight <= scrollHeight  && scrollTop + clientHeight >= scrollHeight  ) {
+            // TO SOMETHING HERE
+            console.log('Reached bottom')
+            console.log(scrollHeight , clientHeight + scrollTop);
+            if (xtime == 0 ){
+              console.log("no more entries");
+            }else{
+              loadmore(filter)
+            }
+            
+          }
+        }
+      };
 
 	return(
-		<div style={{top:13+"vw" ,position:"static",backgroundColor:'white' , margin:"auto" , justifyContent:"center"  }} >
+		<div   style={{top:13+"vw" ,position:"static",backgroundColor:'white' ,  justifyContent:"center" ,height:100+"vh" }} >
                 
-                <div style={{    display:"flex" , flexDirection: "row"  }}>
-
-                {/* <Button onClick={async()=>{refreshlatest(filter)}} title="latesttask" style={{alignItems:"center"}} >
-               <div >{filter.category}</div>
-               <Refresh  />
-             </Button>
- 
-             <div style={{display:"flex"  }}></div>
-          <div style={{display:"flex" ,flex:1, flexDirection: "row-reverse"  }}>
-          
-             <Button onClick={()=>{ setHidden(!hidden) }} title="latesttask"  > 
-               
-               { !hidden ?<ArrowDropDown  />:<ArrowDropUp/> }
-             </Button>
-
-             <div style={{minWidth:20+"vw",height:100+"%",textAlign:"center",alignItems:"center"}} >
-             <div  style={{margin:"auto"}} onClick={()=>{ setFilterops(!filterops) ; console.log("filter") }} ><FaFilter fontSize={"large"}/></div>
-
-             </div>
-             </div> */}
-
-             
-             </div>
-
-              { filterops && <div style={{width:100+"vw", minHeight:20+"vw", overflowX:"scroll", minHeight:20+"vw" }}>
-
-
+                
+              { filterops && <div style={{width:100+"vw", minHeight:20+"vw", overflowX:"scroll" }}>
 
                  <EditFilter  filters={filter}  onClickgetfilter={async(f) => { changefilter(f);console.log(filter)}} /> 
                   
               </div> }
-
-             {/* <div style={{width:100+"vw", overflowX:"scroll", minHeight:2+"vw" , display:"flex"}}>
-                 
              
-
-               <div >place:</div>
-                 {filterplace}
-                  <div>tags:</div>
-                  {filtertags}
-                  <div>category:</div>
-                  {filtercategory}
-                  <div>price:</div>
-                  {filterprice}
-                  <div>distance:</div>
-                  {filterdistance}
-
-                  
-             </div> */}
-             
-              <div style={{padding:2+"vw" , display:"flex" ,flexDirection:"row", position:"sticky",top:0 , backgroundColor:"white"}}>
+              <div style={{padding:2+"vw" , display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:15+"vw" , backgroundColor:"white"}}>
               <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.back()}}><FaArrowLeft color={CLR_HEAD}  size={8+"vw"}/></div> 
                 <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
               
@@ -223,8 +235,13 @@ export default function Latestitem(props){
                 
                 </div>
                </div>
-             { !hidden ?<div className={classes.itemsbucket} >{filllatest}</div>:<></>}
+               {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
+             { !hidden ?
+                 <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {onScroll();}} >  {filllatest} {xtime == 0 && <Footer /> }</div> :<> <Footer /></>}
+
+              {/* <Button onClick={()=>{ loadmore(filter)}} >Load more</Button> */}
              
+              
              </div>
 	);
 

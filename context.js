@@ -1,5 +1,7 @@
 import router from 'next/router';
 import { createContext } from 'react';
+import { getlocal, storelocal } from './localstore';
+
 
 export const AuthContext = createContext({
     isLoggedIn: true,
@@ -8,10 +10,14 @@ export const AuthContext = createContext({
     premium : false,
     changeaccount: () => {
         accounttype = !accounttype ;
- 
+        storelocal("accounttype",accounttype)
     
     },
-    login: () => {isLoggedIn = true},
-    logout: () =>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token");isLoggedIn = false },
+    checkType:async( ) => {
+       var at = await getlocal("accounttype")
+       accounttype = at ;
+    },
+    login: () => {isLoggedIn = true  },
+    logout: () =>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); isLoggedIn = false },
 });
 
