@@ -78,13 +78,20 @@ export default function Latestitem(props){
 
     // before call the request check if there is some filters or not in the 
        useEffect (()=>{
-
+      //   const handleRouteChange = () => {
+      //     console.log("router event");
+      //     setTasklist([])
+          
+      // }
+      // router.events.on('routeChangeStart', handleRouteChange)
        if (!loaded){
         
        loadmore(filter);
        setLoaded(true)
+       taskmap.clear()
 
        }
+      //  taskmap.clear()
     });
     
 
@@ -139,6 +146,7 @@ export default function Latestitem(props){
         setLoaded(true);
          
         //taskmap.clear() //for clearing every thing
+        console.log(tasklist , taskmap);
         setXtime(getXtime(value))
         setValuesfrommap(value,refreshlatest ,setTasklist , taskmap , "itemId")}).catch((err) =>{
            
@@ -236,8 +244,8 @@ export default function Latestitem(props){
                 </div>
                </div>
                {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
-             { !hidden ?
-                 <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {onScroll();}} >  {filllatest} {xtime == 0 && <Footer /> }</div> :<> <Footer /></>}
+             { tasklist.length > 0 ?
+                 <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {onScroll();}} >  {filllatest} {xtime == 0 && <div style={{position:"relative",bottom:0}}><Footer /></div> }</div> :<div style={{position:"fixed",bottom:0}}><Footer /></div>}
 
               {/* <Button onClick={()=>{ loadmore(filter)}} >Load more</Button> */}
              
