@@ -245,7 +245,7 @@ export default function Latestitem(props){
                </div>
                {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
              { tasklist.length > 0 ?
-                 <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {onScroll();}} >  {filllatest} {xtime == 0 && <div style={{position:"relative",bottom:0}}><Footer /></div> }</div> :<div style={{position:"fixed",bottom:0}}><Footer /></div>}
+                 <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {onScroll();}} >  {filllatest} {xtime == 0 && <Footer /> }</div> :<div style={{position:"fixed",bottom:0}}><Footer /></div>}
 
               {/* <Button onClick={()=>{ loadmore(filter)}} >Load more</Button> */}
              
