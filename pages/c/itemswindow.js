@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AccountContext, AuthContext } from '../../context'
 import LoginPage from '../login'
 import Latestitem from '../../components/containers/latestitem'
+import { checktokensexpiry } from '../../utils'
+import { getlocal } from '../../localstore'
 
 
 
@@ -82,45 +84,45 @@ export default function ItemswindowPage(props){
 const classes = useStyles();
 
 
+const [isloaded,setIsLoaded] = React.useState(false);
 const authContext = useContext(AuthContext);
  
 React.useEffect(()=>{
 	if(!isloaded){
 		console.log("isloaded called");
 		
-
+		
+        setIsLoaded(true);
 	}
-	onRefresh(authContext);
-	
+
+	window.onpopstate = ()=> {
+		if(isloaded) {
+		  console.log("fuck me");
+		//   router.push()
+		}
+  
+	  }
+// onRefresh(authContext);
+
 })  
 
-if(typeof window === 'undefined'){
+if(typeof window !== 'undefined'){
 	//put("C:/Users/kr716/OneDrive/Pictures/RAHUL.jpeg")
-}
 
-  const [isloaded,setIsLoaded] = React.useState(true);
-  //const [isloaded,setIsLoaded] = React.useState(true);
-   
-  
-  
-
-  
-  const [key,setKey] = useState();
   
 	return(
    <>
-		{ authContext.isLoggedIn && (
-
-            <Latestitem />
-
-		)
-
+		{
+			  <Latestitem />
 		}
 	
 		</>
 	);
  
-	
+}
+ else {
+	 return (<>items loading</>)
+ }
 
 }
 

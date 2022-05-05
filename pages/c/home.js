@@ -96,7 +96,7 @@ useEffect(()=>{
   console.log(authContext);
 
 if (isloaded){
-  if (authContext.isLoggedIn){
+//   if (authContext.isLoggedIn){
 	return(
 
      <>
@@ -109,7 +109,7 @@ if (isloaded){
 		     <div style={{width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center"}}>
 			 
 			 
-			 <div style={{width:85+"vw",height:10+"vw",backgroundColor:"white",borderRadius:"5vw" }}  onClick={()=>router.push("/c/searchpage")}>
+			 <div style={{width:85+"vw",height:10+"vw",backgroundColor:"white",borderRadius:"5vw" }}  onClick={()=>router.replace("/c/searchpage","/c/home")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"} style={{margin:"2vw"}} />
 				 </div>
 			 </div>
@@ -122,10 +122,10 @@ if (isloaded){
 			</>
 
 	);
-  }
-  else{
-	  return <><div onClick={()=> router.push("/login")}>Login</div></> 
-  }
+//   }
+//   else{
+// 	  return <><div onClick={()=> router.push("/login")}>Login</div></> 
+//   }
 }else{
 	return <>isnotload</>
 }

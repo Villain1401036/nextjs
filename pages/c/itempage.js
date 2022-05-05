@@ -8,6 +8,11 @@ import { useRouter } from 'next/router'
 import { AuthContext } from '../../context'
 import Logincontainer from '../../components/containers/logincontainer'
 import Itemcontainer from '../../components/itemcontainer';
+ import { } from 'react-icons/';
+
+import { FaAccusoft, FaBabyCarriage, FaHome, FaTumblr } from 'react-icons/fa';
+import { MdBackpack, MdOutlineBackpack } from 'react-icons/md';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ItemPage(props){
 
+
+
 const classes = useStyles();
 const [profile , setProfile] = React.useState();
 const [isloaded,setIsLoaded] = React.useState(false);
@@ -65,7 +72,7 @@ const router = new useRouter();
 
 React.useEffect (()=>{
 	if (!isloaded){
-		
+		 setIsLoaded(true)
 	}
 	onRefresh(authContext);
  }); 
@@ -79,7 +86,7 @@ const authContext = useContext(AuthContext);
 	return(
 
 <>
-{ authContext.isLoggedIn && 
+{ isloaded && 
   (
 	<div>
 	<Head>
@@ -88,7 +95,7 @@ const authContext = useContext(AuthContext);
 	</Head>
 
 	
-	<NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/c/home')}}  />
+	<NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/c/orders')}} children={<MdOutlineBackpack size={25} /> }  />
 	<div >
 	<Itemcontainer />
 

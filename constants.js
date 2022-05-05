@@ -70,20 +70,22 @@ export const cachexpire = (key) =>{
 }
 
 
-export const callwithcache = async (func, url ,obj) =>{
+export const callwithcache = async (func, url ,obj, fdata) =>{
 
   try {
     var data = cachexpire(url)
      
     if (data != undefined ){
+      //console.log(data);
       return data
     }
-     
-    data = func(url, obj )
+    
+    data = func(url, obj ,{},fdata)
+    console.log(data);
     return data
   }
   catch (e) {
-       
+       console.log(e);
   }
 }
 

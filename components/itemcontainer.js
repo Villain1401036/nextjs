@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ButtonAppBar from './headbar'
 
 
@@ -7,7 +7,7 @@ import { convertToJson, getitemonpage, geturlFormdata, s3rooturl, Shopname } fro
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import { Dialog } from '@mui/material';
 import { DialogActions, DialogContent, DialogContentText, DialogTitle, Input, TextField ,Button, Box} from '@material-ui/core';
 import {  Carousel } from 'react-bootstrap';
@@ -17,7 +17,10 @@ import { postdata } from '../networking/postdata';
 import { style } from '@mui/system';
 import { getdata } from '../networking/getdata';
 import Footer from './footer';
-import { getlocal, getobjlocal } from '../localstore';
+import { getlocal, getobjlocal, storelocal } from '../localstore';
+import { AuthContext } from '../context';
+import Login from './googlelogin';
+import LoginPage from '../pages/login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
 //progress of the work 
 //any pictures related to the work 
 
+function checkifLogin(){
+
+}
 
 export default function Itemcontainer(props){
 
@@ -94,6 +100,7 @@ const [bookings,setBookings] = useState();
 const classes = useStyles();
 
 
+const authContext = useContext(AuthContext);
 
   const [isloaded,setIsloaded] = React.useState(false);
   React.useEffect(() => {
@@ -262,9 +269,13 @@ const ddate =(date) =>{
 
     }
       
-     
+    const [ login , setLogin ] = useState(false);
   
  console.log(isloaded);
+ 
+
+
+
 return(
     <>
 		{isloaded?
@@ -320,7 +331,7 @@ return(
 		style={{textAlign:"center"}}
     PaperProps={{style:{minWidth:80+"vw", minHeight:40+"vh"}}}
       >
-		  {true?
+		  { authContext.isLoggedIn ?
 		  <>
         <DialogTitle id="alert-dialog-title">
           BOOK ITEM
@@ -337,11 +348,11 @@ return(
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
     
-      <Button onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
-		  
+     
       <LocalizationProvider dateAdapter={AdapterDateFns}>
        
       <MobileDateRangePicker
+      
       
       allowSameDateSelection={false}
         disablePast
@@ -350,25 +361,33 @@ return(
         endText="Book to"
         value={value}
         onChange={(newValue) => {
-          //setValue(newValue);
+     
            
            
-          
+            console.log(newValue);
             setValue(newValue)
           
         }}
       
         shouldDisableDate={ddate}
         renderInput={(startProps, endProps) => (
+
           <React.Fragment>
-            <div >
-            <div>from : {startProps.inputProps.value}</div>
-            <div>to : {endProps.inputProps.value}</div>
-            <Button onClick={()=>{ startProps.inputProps.onClick() }}>Check Availablity</Button>
-            </div>
+            
+            {/* <div>from : {startProps.inputProps.value}</div>
+            <div>to : {endProps.inputProps.value}</div> */}
+            { value[1] != null &&
+            <>
+             <Button style={{width:"100%"}} onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
+             <Button style={{width:"100%"}} onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Change Dates</Button>
+             </>
+             }
+            <div style={{border:"1px solid grey",borderRadius:"10px",width:100+"%"}} onClick={()=>{ startProps.inputProps.onClick() }}>Check Availablity</div>
+          
             {/* <Box sx={{ mx: 2 }}> to </Box>
             <TextField {...endProps} /> */}
           </React.Fragment>
+        
         )}
       />
 		  {/* <MobileDatePicker
@@ -394,20 +413,13 @@ return(
         </DialogActions>
 		</>
            :
-<>
-        <DialogTitle id="alert-dialog-title">
-          {"Something went wrong"}
-        </DialogTitle>
-        <DialogContent style={{textAlign:"center"}}>Task not Created</DialogContent>
-        <Button onClick={()=>{ }} autoFocus>
-           press
-          </Button>
-		  </>
+           <>
+           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.replace('/login','/c/itempage')}}>Login</span> to continue </div>
+           <Login />
+           </>
+
 			}
       </Dialog>
-
-                 {/* { isloaded && <img src={ s3rooturl+convertToJson(itemdata.metadata).images[0]} style={{width:100+"vw" , objectFit:"contain" }} ></img>}
- */}
 
 { isloaded && <Carousel  onClick={()=>{}}  wrap={false}>
 
@@ -432,7 +444,9 @@ return(
         <Footer />
 				
 		</div>
-    :<></>}</>
+    :<></>}
+
+    </>
 	);
 
 

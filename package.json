@@ -54,7 +54,7 @@
     "react-location-picker": "^1.5.0",
     "react-qr-reader": "^2.2.1",
     "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.1",
+    "react-router-dom": "^6.3.0",
     "react-select": "^5.2.2",
     "react-webcam": "^6.0.1",
     "react-webcam-barcode-scanner": "^0.0.2-rc2",

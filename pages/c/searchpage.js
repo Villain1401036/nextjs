@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React , {useContext, useEffect, useState} from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar, { EditFilter } from '../../components/headbar'
 
 import { onRefresh, Shopname, siterooturl, user } from '../../constants'
 import { fade, makeStyles  } from '@material-ui/core/styles';
@@ -16,6 +16,8 @@ import Wsocket from '../../Wsocket';
 import { FaArrowLeft, FaCross, FaCut, FaFilter, FaRemoveFormat, FaSearch }  from 'react-icons/fa'
 import { MdClear }  from 'react-icons/md'
 import { getlocal, getobjlocal, storelocal } from '../../localstore';
+import { Modal } from 'react-bootstrap';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,13 +129,13 @@ const SearchContainer = (props) => {
     await setDefaultTheme({ theme: 'default', darkMode: null })
     navigateAndSimpleReset('Main')
   }
+
   
-   
   
   useEffect(() => {
     // var searchitems = new Wsocket("wss://127.0.0.1:8000" )
     // searchitems.connect()
-
+    
 
     if (!loaded ) {
 
@@ -159,19 +161,26 @@ const SearchContainer = (props) => {
 
     }
     setLoaded(true)
-    //storelocal("place","bokaro")
-    
+    storelocal("place","bokaro")
+    window.onpopstate = ()=> {
+      if(loaded) {
+        console.log("fuck me");
+        
+      }
+
+    }
+
   })
 
 
  
   return (
    
-    <div style={{backgroundColor: CLR_HEAD,marginTop:10}}>
+    <div style={{backgroundColor: CLR_HEAD}}>
 
       <div style={{backgroundColor:CLR_HEAD , flex:1 ,display:"flex", flexDirection:"row",padding:10 }}>
 
-          <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.back()}}>
+          <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.replace(router.asPath)}}>
             <FaArrowLeft color='white'  size={8+"vw"}/>
           </div>
            
@@ -222,7 +231,7 @@ const SearchContainer = (props) => {
             wsitem.close();
             console.log("enter");
             console.log(itemfill);
-            storelocal( "category",itemfill);router.push(`/c/itemswindow`)
+            storelocal( "category",itemfill);router.push(`/c/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
           
          }else{
          
@@ -234,13 +243,17 @@ const SearchContainer = (props) => {
            
          </div>
          
-         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)   ;router.push(`/c/itemswindow`)}}></SearchResbut>)}</div>
+         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)   ;router.push(`/c/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
        
        </div>
        
        </>
        }
-
+       
+<Modal onBackdropClick={()=> console.log("ASDasd") } onHide={()=>{setFilteropen(false)}} style={{zIndex:2000 , flexDirection:"column-reverse",display:"flex"}}  show={filteropen}  children={<EditFilter onClickgetfilter={(data)=>{ setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
+       {/* <EditFilter filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />
+         */}
+         </Modal>
     </div>
 
   )

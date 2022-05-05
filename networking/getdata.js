@@ -15,17 +15,19 @@ var  proto = require('../build/gen/user_pb.js');
 
 
 
-export const getdata = async(url, obj, options) => {
+export const getdata_post = async(url, obj, options,data) => {
   
-   var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
+  //  var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
 
-   var k = await axios.get(url
+   var k = await axios.post(url,
+    data
     ,{responseType:"arraybuffer",
       
       headers: { 'Authorization' : localStorage.getItem("access_token")}
     }
     ).then(response  => {
-  
+    
+    
     
    try {
    //when request is successful check if data can be serialized
@@ -55,13 +57,13 @@ export const getdata = async(url, obj, options) => {
       case "items":
             var data = proto.Items.toObject(false,proto.Items.deserializeBinary(response.data));  cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
       default:
-        var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
+        var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ;   return data.mtasksList
    }
    }
    catch (e) {
     //when request is successful but not good
        
-
+      console.log(e);
    }
    }
    ).catch(error => {
@@ -90,6 +92,83 @@ export const getdata = async(url, obj, options) => {
      
      return k
     }
+
+
+    export const getdata = async(url, obj, options) => {
+  
+      //  var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
+    
+       var k = await axios.get(url
+        ,{responseType:"arraybuffer",
+          
+          headers: { 'Authorization' : localStorage.getItem("access_token")}
+        }
+        ).then(response  => {
+      
+        
+       try {
+       //when request is successful check if data can be serialized
+       switch ( obj ){
+          case "tasks":
+            var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
+          case "services":
+            var data = proto.Services.toObject(false,proto.Services.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mservicesList }) ; return data.mservicesList
+          case "delays":
+            var data = proto.Delays.toObject(false,proto.Delays.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mdelaysList }) ;return data.mdelaysList
+          case "works":
+            var data = proto.Works.toObject(false,proto.Works.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworksList }) ; return data.mworksList
+          case "customers":
+            var data = proto.Customers.toObject(false,proto.Customers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mcustomersList }) ;return data.mcustomersList
+          case "workers":
+            var data = proto.Workers.toObject(false,proto.Workers.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mworkersList }) ; return data.mworkersList
+          case "biditems":
+              var data = proto.Biditems.toObject(false,proto.Biditems.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbiditemsList }) ; return data.mbiditemsList
+          case "bids":
+              var data = proto.Bids.toObject(false,proto.Bids.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbidsList }) ; return data.mbidsList
+          case "bookings":
+              var data = proto.Bookings.toObject(false,proto.Bookings.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mbookingsList }) ; return data.mbookingsList
+          case "confirmcodes":
+              var data = proto.Confirmcodes.toObject(false,proto.Confirmcodes.deserializeBinary(response.data));cache.set(url , {"expire": Date.now() + 10000 , "data":data.mconfirmcodesList }) ; return data.mconfirmcodesList  
+          case "address":
+              var data = proto.Addresses.toObject(false,proto.Addresses.deserializeBinary(response.data));  cache.set(url , {"expire": Date.now() + 10000 , "data":data.maddressesList }) ; return data.maddressesList 
+          case "items":
+                var data = proto.Items.toObject(false,proto.Items.deserializeBinary(response.data));  cache.set(url , {"expire": Date.now() + 10000 , "data":data.mitemsList }) ; return data.mitemsList 
+          default:
+            var data = proto.Tasks.toObject(false,proto.Tasks.deserializeBinary(response.data)); cache.set(url , {"expire": Date.now() + 10000 , "data":data.mtasksList }) ; return data.mtasksList
+       }
+       }
+       catch (e) {
+        //when request is successful but not good
+           
+    
+       }
+       }
+       ).catch(error => {
+        //failed result
+            if (error.response.status == 401){
+              var urlForm = geturlFormdata("user","refreshtoken",{},{})
+               refreshTokens(urlForm.url)
+               
+    
+            }
+    
+            else if (error.response.status == 500){
+                 
+                throw Error("url not ok")
+            }
+            else {
+               
+                throw Error("other than unauthorized and internal server")
+            }
+    
+           //  
+            //  
+    
+    
+         });
+         
+         return k
+        }
 
 export const getTokens = async(url , user , pass ) =>{
 

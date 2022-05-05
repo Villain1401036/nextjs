@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
 import { fade, makeStyles  } from '@material-ui/core/styles';
 import {Chip, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu'; 
 import InputBase from '@material-ui/core/InputBase';
 
 
@@ -19,7 +19,7 @@ import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, } from '../themes.js'
 
 import router, { useRouter } from 'next/router';
 import { AuthContext } from '../context';
-import {  FormGroup ,Modal } from 'react-bootstrap';
+import {  FormGroup ,Modal, Tab, Tabs } from 'react-bootstrap';
 
 
 import {FiMapPin , FiFilter} from 'react-icons/fi';
@@ -345,13 +345,17 @@ if (authContext.accounttype == true){
       <span style={{ marginTop:8+"vw"}}>MOR</span>
    </div>
       
-     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
-       
+
+   { authContext.isLoggedIn ?  
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} >
+    
+      
      <div className={classes.type} >   user   </div>
       
       <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/p/home")}}></Switch>
-       
-      </div>
+     
+      </div>: <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} ></div>
+      }
 
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
@@ -361,14 +365,14 @@ if (authContext.accounttype == true){
       
       </>:
 <>
-<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"login"}</span>
+<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ router.push('/login') }} >{"login"}</span>
       <span className={classes.drawButtinner}  onClick={()=>{router.push("/c/profile")}}></span> 
 </>
 }
 
     </div>
 
-
+  { authContext.isLoggedIn && <>
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
     </div>
@@ -380,6 +384,14 @@ if (authContext.accounttype == true){
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/settings")}}>{"settings"}</div>
     </div >
+    </>
+      }
+
+
+    {!authContext.isLoggedIn &&<>
+        
+    </>
+     }
     {/* <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/searchpage")}}>{"searchpage"}</div>
     </div> */}
@@ -411,7 +423,7 @@ else{
       
       </>:
 <>
-<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"login"}</span>
+<span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ router.push('/login') }} >{"login"}</span>
       <span className={classes.drawButtinner}  onClick={()=>{router.push("/p/profile")}}></span> 
 </>
 }
@@ -456,7 +468,7 @@ function Catdrop(props){
 }
 
 
-function EditFilter(props){
+export function EditFilter(props){
 
   const[place, setPlace] = React.useState(props.filters.place);
   const[distance, setDistance] = React.useState(props.filters.distance);
@@ -544,11 +556,30 @@ function EditFilter(props){
    
  
   return (
+    
+    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+  <Tab eventKey="home" title="Home">
+    <>asdasd</>
+  </Tab>
+  <Tab eventKey="profile" title="Profile">
+  <>asddgdsfsdfsdasd</>
+  </Tab>
+  <Tab eventKey="contact" title="Contact" disabled>
+  <>as asd  as d  das ddasd</>
+  </Tab>
+</Tabs>
+
+
+  )  
+
+
+
+  return (
     <>
      <div style={{textAlign:"center", backgroundColor: "white", borderRadius:5+"px"}}>
       <FormGroup >
         <div style={{margin:2+"vh"}}>
-<TextField  id="place" label="place"   onChange={(e)  => {setPlace(e.target.value);storelocal("place",e.target.value) }}  ></TextField>
+{/* <TextField  id="place" label="place"   onChange={(e)  => {setPlace(e.target.value);storelocal("place",e.target.value) }}  ></TextField> */}
 </div>
       <div style={{ fontWeight:"bold" }}>Under <span style={{ fontSize:8+"vw" , color:"blue" }}>{distance}</span> Kms</div>
 <Slider style={{width:80+"vw"}} onChange={(e,value) => { setDistance(value)}} min={1} max={50} defaultValue={5} aria-label="Default" valueLabelDisplay="auto"/>
@@ -594,9 +625,11 @@ export const NameHead = (props) =>{
     <FaArrowLeft size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
     <div style={{margin:3+"vw",fontSize:"7vw"}}>{props.label}</div>
     <div style={{flex:1,display:"flex",height:"13vw", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >
-    <FaHome size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} />
+    <div size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} >
+       {props.children}  
+     </div>
+     </div>
     
-    </div>
 </div>
 
   )
