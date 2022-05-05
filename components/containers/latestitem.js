@@ -124,9 +124,9 @@ export default function Latestitem(props){
 
       
       
-      // var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") , "xtime": xtime} , {} )
-      // var url = urlForm.url
-       var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
+      var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") , "xtime": xtime} , {} )
+      var url = urlForm.url
+      //  var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
        var formdata = makeformdata(navsdataclothes)
       formdata.append("category|array|&&",getlocal("category") )
