@@ -80,6 +80,8 @@ const authContext = useContext(AuthContext);
  useEffect(()=>{
 	onRefresh(authContext);
 	authContext.checkType()
+
+	
  })
 
 // if (typeof window !== "undefined") {
