@@ -126,10 +126,10 @@ export default function Latestitem(props){
       
       var urlForm = geturlFormdata("item", "get" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") , "xtime": xtime} , {} )
       var url = urlForm.url
-      //  var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
+       //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
        var formdata = makeformdata(navsdataclothes)
-      formdata.append("category|array|&&",getlocal("category") )
+      formdata.append("category|array|&&", getlocal("category") )
 
       if ( applyfill != undefined ){
         console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");
@@ -204,10 +204,12 @@ export default function Latestitem(props){
       }
       
       const onScroll = () => {
+        
         if (listInnerRef.current) {
           const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+          console.log(scrollHeight , clientHeight + scrollTop);
           // console.log(scrollHeight , clientHeight + scrollTop);
-          if (scrollTop + clientHeight == scrollHeight   ) {
+          if (scrollTop + clientHeight +1  > scrollHeight   ) {
             // TO SOMETHING HERE
             console.log('Reached bottom')
             console.log(scrollHeight , clientHeight + scrollTop);
@@ -223,6 +225,7 @@ export default function Latestitem(props){
 
 
       var tagsarr = ["body","reply","skin","compare"]
+      var colorarr = ["red", "green" , "blue" , "yellow"]
       // tagsarr = "body~reply"
       const gettags = (arr) =>{
         console.log(typeof(arr));
@@ -249,7 +252,7 @@ export default function Latestitem(props){
         "distance":{ type:"check" , data:[{"label":"433", selected:false },{"label":"4334", selected:false }] , datatype:"integer" , operation:"<",ismeta:false },
         
         "tags":{ type:"chip" , data:gettags(tagsarr) , datatype:"array" , operation:"&&",ismeta:false},
-        
+        "color":{type:"chip" , data:gettags(colorarr) , datatype:"in-array" , operation:"??", ismeta:true }
               });
 
       // const ndc = { 

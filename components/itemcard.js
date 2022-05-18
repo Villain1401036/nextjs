@@ -76,9 +76,15 @@ const removefromfav = () =>{
                 {/*<div name="name">{props.name}</div>*/}
 
                 <img
-        style={{width:100+"%",height:25+"vh",padding:.5+"px" , objectFit:"cover" , backgroundImage:"/image/SMOR-512.png"}}
-        src={s3rooturl + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp"}
+        style={{width:100+"%",height:25+"vh",padding:.5+"px" , objectFit:"cover" ,  }}
         
+         src={s3rooturl + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp"}
+        // onerror="this.src='/images/SMOR-512.png';"
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src="/images/SMOR-512.png";
+          
+        }}
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;router.push("/c/itempage") }}    
       />
