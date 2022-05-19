@@ -12,8 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '../../context'
 import LoginPage from '../login'
 import BannerComponent from '../../components/containers/banner'
-import { CLR_HEAD } from '../../themes'
-import { FaSearch } from 'react-icons/fa'
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes'
+import { FaSearch, FaTruckLoading } from 'react-icons/fa'
 import SimpleBottomNavigation from '../../components/bottomnav'
 
 
@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 	container:{
 		minHeight:100+"vh"
 	}
+
 }));
 
 
@@ -92,8 +93,12 @@ useEffect(()=>{
 
   const [key,setKey] = useState();
   
+  
 
   console.log(authContext);
+
+
+
 
 if (isloaded){
 //   if (authContext.isLoggedIn){
@@ -127,7 +132,18 @@ if (isloaded){
 // 	  return <><div onClick={()=> router.push("/login")}>Login</div></> 
 //   }
 }else{
-	return <>isnotload</>
+	return (
+
+	<div style={{display:"flex", flex:1,height: ( typeof window !== "undefined" ? window.screen.availHeight:100+"vh" ) , flexDirection:"column", justifyContent:"center" ,alignItems:"center",backgroundColor:CLR_HEAD  }}>
+		 <img src="/images/SMOR-512.png" style={{height:"30vw",weight:"30vw"}}></img>
+
+		 
+		 <div className="spinner-container">
+      <div className="loading-spinner">
+      </div>
+    </div>
+
+		</div>)
 }
 	
 
