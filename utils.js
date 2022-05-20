@@ -95,15 +95,14 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
          console.log("user exist in database");
             
            // onRefresh(AuthContext)
-         //   var path = getlocal('currentpath')
-           router.push("/c/home")
+           var path = getlocal('currentpath')
+           router.push(path,path,{shallow:true})
 
          }).catch((err) =>{
              console.log(err);
              var path = getlocal('currentpath')
-            router.replace(`/info`,path)
+            router.replace(`/info`,path,{shallow:true})
               
-             // 
          })
       }catch(e){
           

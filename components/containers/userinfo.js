@@ -135,7 +135,7 @@ const handleSubmit = async () =>{
         
         
         var path = getlocal('currentpath')
-        router.push(path)
+        router.push(path , path , {shallow:true})
     }).catch((e)=>{
        alert(e)
     })
