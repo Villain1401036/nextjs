@@ -95,8 +95,8 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
          console.log("user exist in database");
             
            // onRefresh(AuthContext)
-           var path = getlocal('currentpath')
-           router.push(path)
+         //   var path = getlocal('currentpath')
+           router.push("/c/home")
 
          }).catch((err) =>{
              console.log(err);
