@@ -96,7 +96,13 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
             
            // onRefresh(AuthContext)
            var path = getlocal('currentpath')
-           router.replace(path,path)
+           console.log(path);
+           if (path == undefined){
+            router.push("home")
+           }else{
+            router.push(path)
+           }
+           
 
          }).catch((err) =>{
              console.log(err);
