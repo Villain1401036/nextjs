@@ -208,6 +208,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
   formdatas.append("book_to", value[1].getTime())
   formdatas.append("book_from", value[0].getTime())
    
+  
   formdatas.append("metadata" , JSON.stringify(convertToJson(itemdata.metadata)) )
    setFetching(true);
   
@@ -365,6 +366,9 @@ return(
            
            
             console.log(newValue);
+            
+            console.log(newValue[0].getTimezoneOffset());
+
             setValue(newValue)
           
         }}
@@ -415,7 +419,7 @@ return(
            :
            <>
            <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.replace('/login','/c/itempage')}}>Login</span> to continue </div>
-           <Login />
+           
            </>
 
 			}

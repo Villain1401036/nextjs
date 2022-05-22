@@ -87,7 +87,10 @@ const removefromfav = () =>{
           
         }}
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
-           ;router.push("/c/itempage") }}    
+           ;
+           router.push(`/c/itempage`)
+           
+           }}    
       />
         <div style={{ margin:1+"vw"}}>
         <span style={{ flex:1 }}>{props.name}</span>

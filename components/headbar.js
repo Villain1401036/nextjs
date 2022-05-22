@@ -286,7 +286,8 @@ return (
            
             <div
               style={{overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
-              onClick={()=>setLocfocus(true)} 
+              onClick={()=>{ router.push('/c/searchpage');
+                setLocfocus(true) } } 
             >{location}</div>
 
             </div>

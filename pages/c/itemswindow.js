@@ -14,6 +14,7 @@ import LoginPage from '../login'
 import Latestitem from '../../components/containers/latestitem'
 import { checktokensexpiry } from '../../utils'
 import { getlocal } from '../../localstore'
+import ItemPage from './itempage'
 
 
 
@@ -109,7 +110,7 @@ React.useEffect(()=>{
 if(typeof window !== 'undefined'){
 	//put("C:/Users/kr716/OneDrive/Pictures/RAHUL.jpeg")
 
-  
+
 	return(
    <>
 		{
@@ -143,17 +144,3 @@ if(typeof window !== 'undefined'){
 
   }
 
-
-  function Sections(props){
-
-	  const children = props.sections.map((item) => <div style={{display:"flex",flexDirection:"row" , flex:1 }} onClick={()=>{
-
-	  }}>{item}</div>)
-
-	  return (
-		  <>
-			<div id="sec-container" style={{display:"flex",flexDirection:"row" , flex:1 }} >{children}</div>
-			
-		  </>
-	  );
-  }

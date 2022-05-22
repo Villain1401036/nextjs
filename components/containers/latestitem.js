@@ -122,7 +122,7 @@ export default function Latestitem(props){
     const loadmore =  (f , applyfill ) =>{
       //call the function to update with the latest tasks
 
-      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place") , "xtime": xtime} , {} )
+      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place").split(",")[0] , "xtime": xtime} , {} )
       var url = urlForm.url
        //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 

@@ -99,14 +99,14 @@ export default function Bookingorders(props){
   //const ftest = () => taskmap.forEach( (value) => { tlist.push(value) } )
     const tolocaltime = (epoch) =>{
         var date = new Date(0);
-        date.setUTCMilliseconds(epoch)
+        date.setUTCMilliseconds(epoch - (date.getTimezoneOffset()*60*1000 ))
          
         return date
     }
 
     const Verifypickup = async(gettype,bookingobj) =>{
       try{
-        var data = checkQrCode( gettype ,bookingobj.bookingId).then(data=>{setCode(data);console.log(data, "fromveri"); ;setBookobj(bookingobj)})
+        var data = checkQrCode( gettype ,bookingobj.bookingKey).then(data=>{setCode(data);console.log(data, "fromveri"); ;setBookobj(bookingobj)})
        
           
       }catch{
@@ -151,7 +151,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
 
       const filllatest =  bookinglist.map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
        Verifypickup={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
-       status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo   )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
+       status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
    
 
     const classes = useStyles();

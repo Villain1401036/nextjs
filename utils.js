@@ -118,11 +118,15 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
     }
   
 
-   export  const getQrCode = async (Id ,gettype , booking_id) =>{
+   export  const getQrCode = async (Id ,gettype , booking_key) =>{
      
     var QRCode = require('qrcode')
     var data = null
-    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_id} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ; 
+
+    console.log(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_key} ).url);
+
+    
+    await getdata(geturlFormdata("confirmcode","get", {"gettype":gettype,"booking_key":booking_key} ).url , "confirmcodes").then((val)=>{ data = val[0].confirmCode ; 
     
     QRCode.toCanvas(data, { errorCorrectionLevel: 'H' }, function (err, canvas) {
       if (err) throw err

@@ -161,7 +161,7 @@ const SearchContainer = (props) => {
 
     }
     setLoaded(true)
-    storelocal("place","bokaro")
+    // storelocal("place","bokaro")
     window.onpopstate = ()=> {
       if(loaded) {
         console.log("fuck me");
@@ -180,7 +180,7 @@ const SearchContainer = (props) => {
 
       <div style={{backgroundColor:CLR_HEAD , flex:1 ,display:"flex", flexDirection:"row",padding:10 }}>
 
-          <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.replace(router.asPath)}}>
+          <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.back()}}>
             <FaArrowLeft color='white'  size={8+"vw"}/>
           </div>
            
@@ -211,7 +211,7 @@ const SearchContainer = (props) => {
           </div>
          
          { !placesearch && <div size={25} name='filter' style={{height:8+"vw" ,width:8+"vw" ,marginLeft:4+"vw" ,color:CLR_RCARD1}} onClick={()=>{setFilteropen(true);}}>
-         <FaFilter color='white'  size={8+"vw"}/>
+         
          </div> }
 
       </div>

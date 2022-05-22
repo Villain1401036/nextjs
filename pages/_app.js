@@ -7,6 +7,8 @@ import "firebase/auth";
 import {SSRProvider} from '@react-aria/ssr'; 
 import { getlocal, storelocal } from '../localstore';
 
+import ItemswindowPage from './c/itemswindow';
+import ItemPage from './c/itempage';
 
 function MyApp({ Component, pageProps }) {
 
@@ -91,6 +93,7 @@ function MyApp({ Component, pageProps }) {
   const app = initializeApp(firebaseConfig);
  
   return (
+
     <SSRProvider>
       <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount, checkType:checkType }} >
       
@@ -99,7 +102,7 @@ function MyApp({ Component, pageProps }) {
     </AuthContext.Provider>
     </SSRProvider>
 
-  
+    
   )
 }
 
