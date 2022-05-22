@@ -59,9 +59,12 @@ const bidhandler = () =>{
 
     var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
    await  postdata( urlform.url , "booking" , formdatas ).then(()=>{ }).then(()=>{
-       if(props.status == 1){
+       if(props.status == 1 && status == 2){
         setStatus(2)
+       }else{
+         setStatus(-1)
        }
+
      
    })
 
@@ -104,7 +107,11 @@ const bidhandler = () =>{
                     
                 }}>confirmed</button><button onClick={() => props.Verifypickup(props.booking_id, props.bookingobj)}>Verify Pickup</button> </>} */}
 
-                {status == "1" && <Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",2,props.bookingobj.bookingKey)}}>confirm booking</Button> }
+
+{status == "-1" && <><Button disabled  style={{color:"white",backgroundColor:"red", opacity:20+"%"}} onClick={()=>{ catchbooking("status",-1,props.bookingobj.bookingKey)}}>rejected</Button></> }
+                
+
+                {status == "1" && <><Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",2,props.bookingobj.bookingKey)}}>confirm booking</Button> <Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",-1,props.bookingobj.bookingKey)}}>reject</Button></> }
                 {status == "2" && <><Button className={classes.returnbutt}  style={{color:"white",backgroundColor:"green", opacity:20+"%"}} disabled onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange"}} onClick={() => { console.log(props.bookingobj.bookingKey); props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj) ; }}>Verify Pickup</Button> </>}
                 {status == "3" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"}} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)}>Verify Return</Button> </>}
                 {status == "4" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"  , backgroundColor:"purple",color:"white" , opacity:20+"%" }} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)} disabled>Returned</Button> </>}

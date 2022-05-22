@@ -248,7 +248,7 @@ return (
             <div className={classes.search}>
 					
             <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20, color:'black' , paddingLeft:10+"vw",borderRadius:100+"px"}}
-                  autoFocus
+                  
                  onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
 
                     console.log("enter");
@@ -270,7 +270,7 @@ return (
               placeholder="Location"
               style={{color: CLR_HEAD , backgroundColor: CLR_RCARD1 , borderRadius:3+"px" , paddingRight:5+"%" ,paddingLeft:5+"%" , textAlign:"center"  }}
               
-              autoFocus
+              
               onChange={(e)=>{if(e.target.value){setLocation(e.target.value)}; }}
 
               onKeyPress={(event)=>{ if(event.key === 'Enter'){
