@@ -172,9 +172,9 @@ const onReturn = async (updatetype , status , booking_id ) =>{
       if (code === scandata){
           
           if(bookobj.status == "2" ){
-            onPickup("status",3,bookobj.bookingId)
+            onPickup("status",3,bookobj.bookingKey)
           }else if(bookobj.status == "3"){
-            onReturn("status",4,bookobj.bookingId)
+            onReturn("status",4,bookobj.bookingKey)
           }
           
           setOpen(false);
