@@ -26,8 +26,10 @@ export default function Bookingcard(props){
 
   const getStatus = (num) =>{
     switch (num){
+      case -1:
+            return "Booking cancelled"
         case 1:
-            return "Booking Requested"
+            return <>Booking Requested<button onClick={() =>{ props.Cancelbooking("cancel", props.bookingobj) }}>cancel</button></>
         case 2:
             return <>Booking Confirmed<button onClick={() =>{ props.Verifypickup("pickup", props.bookingobj) }}>pickup</button></> 
         case 3:
@@ -47,11 +49,29 @@ export default function Bookingcard(props){
 
 
 
+  const statuscolor = (status) =>{
+ 
+      switch (status) {
+        case -1:
+          return "#f04a37"
+          case 1:
+            return "lightblue"
+            case 2:
+          return "yellow"
+          case 3:
+          return "green"
+          case 4:
+            return "grey"
+        default:
+
+          return "white"
+      }
+  }
    
 
 	return(
 		
-            <Card variant='normal'  style={{ margin:1+"vw",borderColor:CLR_HEAD, padding:1+"vw" , borderRadius:1+"vw" }} >
+            <Card variant='normal'  style={{ margin:1+"vw",borderColor:CLR_HEAD, padding:1+"vw" , borderRadius:1+"vw" , backgroundColor:statuscolor(props.bookingobj.status) }} >
                 {/*<div name="name">{props.name}</div>*/}
                 <div style={{}}>
                 <CardMedia

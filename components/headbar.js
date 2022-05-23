@@ -51,7 +51,7 @@ logo:{
     elevation: 0,
     width:100+"vw" ,
     backgroundColor: CLR_HEAD,
-		height:10+"vw",
+		// height:10+"vw",
     boxShadow: "0px 0px",
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       height: 5+"vw"
@@ -64,7 +64,7 @@ logo:{
 
   toolbar:{ 
     
-    height:10+"vw",
+    // height:10+"vw",
     
   	elevation: 0,
     width:100+"vw" ,

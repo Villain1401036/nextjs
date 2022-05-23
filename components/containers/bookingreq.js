@@ -114,7 +114,7 @@ const Verifyreturn = async (bookid,bookingtrgt) => {
 
 const tolocaltime = (epoch) =>{
   var date = new Date(0);
-  date.setUTCMilliseconds(epoch)
+  date.setUTCMilliseconds(epoch - (date.getTimezoneOffset()*60*1000 ))
     
   return date
 }

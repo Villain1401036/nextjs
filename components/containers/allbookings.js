@@ -16,6 +16,7 @@ import { checkQrCode } from '../../utils';
 import { postdata } from '../../networking/postdata';
 import { CLR_HEAD, CLR_HEAD1, CLR_RCARD1 } from '../../themes';
 import { getlocal, getobjlocal, storelocal } from '../../localstore';
+import router from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
     
@@ -104,8 +105,35 @@ export default function Bookingorders(props){
         return date
     }
 
+
+    const cancelbooking = async (updatetype , status , booking_id ) =>{
+
+
+      var formdatas = new FormData();
+  
+       formdatas.append("status", status)
+  
+      var urlform = geturlFormdata("booking", "update" , {"updatetype":updatetype , "booking_id": booking_id }) 
+     await  postdata( urlform.url , "booking" , formdatas ).then(()=>{ }).then(()=>{
+         if(props.status == 1 && status == 2){
+          // setStatus(2)
+         }else{
+          //  setStatus(-1)
+          router.reload()
+         }
+  
+       
+     })
+      
+    }
+
+    
     const Verifypickup = async(gettype,bookingobj) =>{
       try{
+        if (gettype == "cancel"){
+          cancelbooking("status",-1,bookingobj.bookingKey)
+          return 
+        }
         var data = checkQrCode( gettype ,bookingobj.bookingKey).then(data=>{setCode(data);console.log(data, "fromveri"); ;setBookobj(bookingobj)})
        
           
@@ -151,6 +179,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
 
       const filllatest =  bookinglist.map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
        Verifypickup={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
+       Cancelbooking={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  })} } 
        status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
    
 

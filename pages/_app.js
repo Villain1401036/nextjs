@@ -7,8 +7,6 @@ import "firebase/auth";
 import {SSRProvider} from '@react-aria/ssr'; 
 import { getlocal, storelocal } from '../localstore';
 
-import ItemswindowPage from './c/itemswindow';
-import ItemPage from './c/itempage';
 
 function MyApp({ Component, pageProps }) {
 

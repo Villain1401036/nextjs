@@ -19,16 +19,19 @@ const useStyles = makeStyles((theme) => ({
     position:'sticky'
   }, 
 	appbar:{
-		flexGrow: 1,
+    flex:1,
+    flexDirection:"column",
+    display:"flex",
+	  flexGrow:1,
 		backgroundColor:CLR_HEAD,
 		justifyContent:'center',
 		top: 10+"vw",
-		
-		opacity: 1.0,
+	
 		zIndex:5,
 		overflowX: 'hidden',
 		//height:5+"vw",
 		maxWidth:100+"vw",
+
 		
 		
 
@@ -102,7 +105,10 @@ page:{
 
   prevsearchroot:{
       padding:2+"vw",
-      marginTop:"2vw"
+      marginTop:"2vw",
+      flex:1,
+      flexDirection:"column",
+      display:"flex",
   }
   ,
 
@@ -208,7 +214,7 @@ function SeeCat(props){
 
               
             <div style={{ marginBottom: 2+"vw" ,  borderRadius: 2+ "vw" , borderColor:CLR_RCARD2 ,  backgroundColor:CLR_HEAD , color:CLR_RCARD2  }}>You are looking for ... <Search onClick={props.onClick} /></div>
-            <div style={{minHeight:40+"vh"}}>{categories}</div>
+            <div style={{minHeight:10+"vh"}}>{categories}</div>
             
                   
            

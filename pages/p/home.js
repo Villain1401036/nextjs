@@ -116,10 +116,13 @@ if(typeof window === 'undefined'){
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<ButtonAppBar itemName={Shopname}/>
-             { !authContext.premium && <Upgradetopremium /> }
-				<Footer />
-				<SimpleBottomNavigation />
-				
+			
+			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),backgroundColor:"red" ,display:"flex" , flexDirection:"column" ,flex:1}}>
+             <div style={{  bottom:0}}>{ !authContext.premium && <Upgradetopremium /> }</div>
+			 <div style={{ display:"flex" , flexDirection:"column-reverse" ,flex:1}}>
+				<div style={{  bottom:0}}><Footer /></div>
+				</div>
+				</div>
 			</>
 				 
 				 

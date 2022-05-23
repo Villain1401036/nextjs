@@ -110,20 +110,29 @@ if (isloaded){
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+
 			<ButtonAppBar itemName={Shopname}/>
-		     <div style={{width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center"}}>
+		     
+			
+			
+
+			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),backgroundColor:"red" ,display:"flex" , flexDirection:"column" ,flex:1}}>
+             <div style={{  bottom:0}}>
+			 <div style={{width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center"}}>
 			 
 			 
 			 <div style={{width:85+"vw",height:10+"vw",backgroundColor:"white",borderRadius:"5vw" }}  onClick={()=>router.replace("/c/searchpage","/c/home")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"} style={{margin:"2vw"}} />
 				 </div>
 			 </div>
-			{/* <FilterTabbar /> */}
-			<BannerComponent />
-		
-
-				<Footer />
-                 <SimpleBottomNavigation />
+				 <BannerComponent />
+				 
+			</div>
+			 <div style={{ display:"flex" , flexDirection:"column-reverse" ,flex:1}}>
+				<div style={{  bottom:0}}><Footer /></div>
+				</div>
+				</div>
+			
 			</>
 
 	);
