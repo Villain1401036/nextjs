@@ -188,7 +188,7 @@ const handleClickOpen = () => {
 const images = (list) =>  { 
 	return list.map((item)=> <Carousel.Item style={{minHeight:40+"vh" , backgroundColor:"lightgrey"}}>
     <img style={{ backgroundColor:"lightgrey" ,height: 100+"%" ,objectFit:"contain" }} 
-    src={s3rooturl+item.split(".")[0]+"x800.webp"}
+    src={s3rooturl+"/images-prod-a"+item.split(".")[0]+"x800.webp"}
   onError={({ currentTarget }) => {
     currentTarget.onerror = !null; // prevents looping
     currentTarget.src="/images/no-image.png";

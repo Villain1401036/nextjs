@@ -62,7 +62,7 @@ const bidhandler = () =>{
 
 const addtofav = () =>{
   //code to save the itemid somewhere in the cloud and in the app
-  
+
  
 }
 
@@ -79,7 +79,7 @@ const removefromfav = () =>{
                 <img
         style={{width:100+"%",height:25+"vh",padding:.5+"px" , objectFit:"cover"}}
         
-         src={ s3rooturl + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp" }
+         src={ s3rooturl +"/images-prod-a" + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp" }
         // onerror="this.src='/images/no-image.png';"
         onError={({ currentTarget }) => {
           currentTarget.onerror = null; // prevents looping
