@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React, { useContext, useState } from 'react'
 import ButtonAppBar from './headbar'
-
+import Image from 'next/image'
 
 import { convertToJson, getitemonpage, geturlFormdata, s3rooturl, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
@@ -186,8 +186,12 @@ const handleClickOpen = () => {
 
 
 const images = (list) =>  { 
-	return list.map((item)=> <Carousel.Item style={{minHeight:40+"vh" , backgroundColor:"lightgrey"}}>
-    <img style={{ backgroundColor:"lightgrey" ,height: 100+"%" ,objectFit:"contain" }} 
+	return list.map((item)=> <Carousel.Item style={{minHeight:window.innerWidth , backgroundColor:"lightgrey"}}>
+    <Image 
+    layout="fill"
+    objectFit="cover"
+    
+    
     src={s3rooturl+"/images-prod-a"+item.split(".")[0]+"x800.webp"}
   onError={({ currentTarget }) => {
     currentTarget.onerror = !null; // prevents looping
@@ -198,7 +202,7 @@ const images = (list) =>  {
   
   className="d-block w-100"
 
- ></img></Carousel.Item>
+ ></Image></Carousel.Item>
 
 )
 }
