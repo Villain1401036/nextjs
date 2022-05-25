@@ -115,7 +115,7 @@ if(typeof window === 'undefined'){
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<ButtonAppBar itemName={Shopname}/>
+			<ButtonAppBar disablesearchbar itemName={Shopname}/>
 			
 			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),backgroundColor:"red" ,display:"flex" , flexDirection:"column" ,flex:1}}>
              <div style={{  bottom:0}}>{ !authContext.premium && <Upgradetopremium /> }</div>

@@ -22,13 +22,19 @@ import { Modal } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-		margin:"auto",
-    display: 'grid',
-		gridTemplateColumns:"auto auto auto",
+    backgroundColor: CLR_HEAD , paddingTop:20+"px",paddingbottom:20+"px",
+    '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+		
+      display:"flex",flex:1,flexDirection:"column", height:5+"vw"
 
-    '& > *': {
-      margin: theme.spacing(1),
-    },
+
+},
+'@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+  
+   
+  //height:10+"vw",
+
+}
 	},
 	contentArea:{
 		display:'flex',
@@ -86,7 +92,24 @@ const useStyles = makeStyles((theme) => ({
          paddingLeft:10
 
 
-     }
+     },
+     
+	psearch:{
+		backgroundColor:CLR_HEAD , flex:1 ,display:"flex", alignItems:"center",height:50+"px",
+		'@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+		
+          height:80+"px"
+		
+
+		},
+		'@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+			
+		   
+			//height:10+"vw",
+	
+		}
+	},
+  
 }));
 
 
@@ -96,6 +119,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchContainer = (props) => {
 
+
+  const classes = useStyles();
   const [placefill , setPlacefill] = useState();
   const [itemfill , setItemfill] = useState();
 
@@ -176,20 +201,20 @@ const SearchContainer = (props) => {
  
   return (
    
-    <div style={{backgroundColor: CLR_HEAD}}>
+    <div className={classes.root}>
 
-      <div style={{backgroundColor:CLR_HEAD , flex:1 ,display:"flex", flexDirection:"row",padding:10 }}>
+      <div className={classes.psearch}>
 
-          <div   style={{height:8+"vw" ,width:8+"vw" ,marginRight:4+"vw" }} onClick={()=>{router.back()}}>
-            <FaArrowLeft color='white'  size={8+"vw"}/>
-          </div>
+          
+            <FaArrowLeft color='white'  style={{height:50+"%",width:5+"%" , marginLeft:"2%",marginRight:"2%"}} onClick={()=>{router.back()}}/>
+         
            
-          <div style={{  alignItems:"center", backgroundColor:"white",width:70+"vw",borderRadius:15+"vw" }}>
+          <div style={{  alignItems:"center", backgroundColor:"white",width:70+"vw",borderRadius:15+"vw" ,height:100+"%"}}>
             {
               !placesearch ?
-               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:10+"vw" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center",paddingLeft:4+"vw",paddingRight:4+"vw"}}><span style={{ overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color:"black" ,  }}>{placefill}</span></div> 
-              :<div style={{ justifyContent:"flex-start", alignItems:"center"}}>
-                <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20,height:10+"vw" , color:'black' , paddingLeft:10+"vw"}}
+               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:100+"%" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center",paddingLeft:4+"vw",paddingRight:4+"vw"}}><span style={{ overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color:"black" ,  }}>{placefill}</span></div> 
+              :<div style={{  display:"flex",alignItems:"center",height:"100%"}}>
+                <InputBase placeholder='Place' style={{ fontSize:20,height:100+"%" , color:'black' , paddingLeft:10+"vw"}}
                   autoFocus
                  onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
 

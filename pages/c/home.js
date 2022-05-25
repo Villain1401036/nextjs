@@ -63,8 +63,24 @@ const useStyles = makeStyles((theme) => ({
 	},
 	container:{
 		minHeight:100+"vh"
-	}
+	},
 
+	searchbut:{
+		width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center",
+
+		'@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+		
+          height:0,
+		
+
+		},
+		'@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+			
+		   
+			//height:10+"vw",
+	
+		}
+	}
 }));
 
 
@@ -118,12 +134,12 @@ if (isloaded){
 
 			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),backgroundColor:"red" ,display:"flex" , flexDirection:"column" ,flex:1}}>
              <div style={{  bottom:0}}>
-			 <div style={{width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center"}}>
+			 <div className={classes.searchbut}>
 			 
 			 
-			 <div style={{width:85+"vw",height:10+"vw",backgroundColor:"white",borderRadius:"5vw" }}  onClick={()=>router.replace("/c/searchpage","/c/home")}>
-			 <FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"} style={{margin:"2vw"}} />
-				 </div>
+			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" ,  alignItems:"center" }}  onClick={()=>router.replace("/c/searchpage","/c/home")}>
+			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
+				 </div> 
 			 </div>
 				 <BannerComponent />
 				 

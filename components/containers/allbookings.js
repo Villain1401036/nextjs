@@ -48,6 +48,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 	},
+  bookingcontainer:{minWidth: 100+"%" , display: "grid" ,gridTemplateColumns:"auto" ,
+  '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+		
+    gridTemplateColumns:"auto auto auto"
+
+
+},
+'@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+
+ 
+//height:10+"vw",
+
+}
+}
 }));
 
 
@@ -243,7 +257,7 @@ const onReturn = async (updatetype , status , booking_id ) =>{
       </Dialog>
       
              {/* <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button>  */}
-             <div style={{minWidth: 100+"%" , display: "grid"}}>
+             <div className={classes.bookingcontainer}>
              {filllatest}
              </div>
              

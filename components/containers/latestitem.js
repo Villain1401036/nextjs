@@ -17,16 +17,27 @@ import Footer from '../footer';
 import { MdClear } from 'react-icons/md';
 
 const useStyles = makeStyles((theme) => ({
+  appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:15+"vw" , backgroundColor:"white", alignItems:"center",
 
-
+  '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+    height:10+"vw"
+  },
+  '@media (min-width:800px)': { // eslint-disable-line no-useless-computed-key
+    height:5+"vw"
+  },
+  '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+    
+  }}
+  ,
   itemsbucket:{
     width:100+"vw",
     overflowY : "scroll" ,
-    // flex:1,
-    display:"flex" , 
-    flexDirection:"row",
-    flexWrap: "wrap",
     
+    // flex:1,
+    display:"grid" , 
+    gridTemplateColumns: "50vw 50vw " ,
+      gridRowGap: 1+"vw",
+      gridColumnGap:1+"vw" ,
     // gridTemplateColumns: "100vw" ,
     // gridColumnGap:1+"vw" ,
     //  gridRowGap: 1+"vw",
@@ -35,11 +46,17 @@ const useStyles = makeStyles((theme) => ({
     // margin: 1+"vw",
     height:100+"vh",
     
-    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+    '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
       width:75+"vw",
-      overflow:"hidden",
-     
-      gridTemplateColumns: "18vw 18vw 18vw 18vw" ,
+      overflow:"scroll",
+      "*":{
+        "-ms-overflow-style": "none"
+    },
+      "::-webkit-scrollbar": {
+        display: "none"
+    },
+    display:"grid",
+      gridTemplateColumns: "24vw 24vw 24vw 24vw" ,
       gridRowGap: 1+"vw",
       gridColumnGap:1+"vw" ,
     },
@@ -185,7 +202,7 @@ export default function Latestitem(props){
       
       // const filllatest =  fill_pairs(tasklist).map( (item) => <div key={item[0].itemId} style={{display:"flex"}}><div style={{width:"50vw"}}> <Itemcard key={item[0].itemId}  name={item[0].itemId} itemobj={item[0]} description={item[0].description} place={item[0].place} price={item[0].price} scheduled_at={item[0].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div><div style={{width:"50vw"}}>  <Itemcard key={item[1].itemId}  name={item[1].itemId} itemobj={item[1]} description={item[1].description} place={item[1].place} price={item[1].price} scheduled_at={item[1].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div></div>   )
       
-      const filllatest =  tasklist.map( (item) => <div style={{width:"50vw" }}><Itemcard key={item.itemId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div> )
+      const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId}  name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -298,27 +315,28 @@ export default function Latestitem(props){
 		<div style={{top:13+"vw" ,position:"static",backgroundColor:'white' ,  justifyContent:"center" ,height:100+"vh" }} >
                 
              
-              <div style={{padding:2+"vw" , display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:15+"vw" , backgroundColor:"white"}}>
+              <div className={classes.appbar}>
               
-              <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.back()}}><FaArrowLeft color={CLR_HEAD}  size={8+"vw"}/></div>
+              <FaArrowLeft color={CLR_HEAD}   style={{  height:50+"%" ,width:10+"%"}} onClick={()=>{router.back()}}/>
                
               <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
               
-              <div style={{ height:10+"vw" , display:"flex" ,flexDirection:"row-reverse" ,flex:1 }}>
-              <div style={{ width: 32 , height:100+"%",margin:5}} ><FaFilter 
-                color={CLR_HEAD}  size={8+"vw"} onClick={()=>setFilteropen(true)}/></div> 
-                <div style={{ width: 32 , height:100+"%",margin:5}} onClick={()=>{router.replace('/c/searchpage',router.asPath)}}><FaSearch color={CLR_HEAD}  size={8+"vw"}/></div> 
+              <div style={{ height:100+"%" , width:100+"%", display:"flex" ,flexDirection:"row-reverse" ,flex:1 , alignItems:"center"}}>
+              
+                <FaFilter color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>setFilteropen(true)}/>
+               
+                  <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.replace('/c/searchpage',router.asPath)}}/> 
                  </div>
                
                </div>
                {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
              { tasklist.length > 0 ?
-                 <div ref={listInnerRef} className={classes.itemsbucket} style={{width:100+"vw"}} id="itemswin" onScroll={() => {onScroll()}} >  {filllatest} {xtime == 0 && <Footer /> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
+                 <div ref={listInnerRef} className={classes.itemsbucket} style={{width:100+"vw"}} id="itemswin" onScroll={() => {onScroll()}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
 
               {/* <Button onClick={()=>{ loadmore(filter)}} >Load more</Button> */}
 
              </div>
-             <Modal onHide={()=>{setFilteropen(false)}} style={{zIndex:2000 , flexDirection:"column-reverse",display:"flex"}}  show={filteropen}  
+             <Modal onHide={()=>{setFilteropen(false)}} style={{zIndex:2000 , flexDirection:"column-reverse",display:"flex" }}  show={filteropen}  
              
              children={
              
@@ -505,22 +523,22 @@ const changeFilterObject = (filters , filter, label , value) =>{
 
   return (
     <>
-     <div style={{height:8+"vh" ,padding:"3vw",borderBottom:"1px solid lightgrey" ,display:"flex" }}>
+     <div style={{height:8+"vh" ,borderBottom:"1px solid lightgrey" ,display:"flex",alignItems:"center" ,paddingInline:5+"%"}}>
       <div style={{fontWeight:"bolder"}}>Filters</div>
-      <div style={{display:"flex" , flexDirection:"row-reverse",flex:1,alignItems:"center"}}>
-         <MdClear color={CLR_HEAD}  size={6+"vw"} onClick={()=>{ props.closemodal() }}/>
+      <div style={{display:"flex" , flexDirection:"row-reverse",flex:1,alignItems:"center",height:100+"%"}}>
+         <MdClear color={CLR_HEAD} style={{height:80+"%",width:"10%"}} onClick={()=>{ props.closemodal() }}/>
         </div>
      </div>
     <>
     <Tab.Container id="left-tabs-example" defaultActiveKey="price"  >
-    <div style={{flexDirection:"row",display:"flex"  }}>
+    <div style={{flexDirection:"row",display:"flex" ,height:window.innerHeight*.8 ,width:100+"%"}}>
      
-        <Nav variant="tabs" className="flex-column" style={{backgroundColor:CLR_HEAD ,borderRadius:0 , width:30+"vw", color:CLR_RCARD1 ,height:80+"vh"}}   >
+        <Nav variant="tabs" className="flex-column" style={{backgroundColor:CLR_HEAD ,borderRadius:0 , width:50+"%", color:CLR_RCARD1 ,height:window.innerHeight*.8}}   >
             {Navbuttons}
         </Nav>
      
       
-        <Tab.Content style={{ height:80+"vh", overflowY:"scroll"}} >
+        <Tab.Content style={{ height:window.innerHeight*.8 ,  width:50+"vw" ,  overflowY:"scroll"}} >
           {makefilters}
         </Tab.Content> 
       
@@ -584,7 +602,7 @@ function Navbutt(props) {
 
    return(
     <Nav.Item  >
-    <Nav.Link style={{borderRadius:0 , width:30+"vw"  }}  eventKey={props.eventKey}>{props.name}</Nav.Link>
+    <Nav.Link style={{borderRadius:0 , width:100+"%"  }}  eventKey={props.eventKey}>{props.name}</Nav.Link>
   </Nav.Item>
    )
 }

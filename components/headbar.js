@@ -62,6 +62,27 @@ logo:{
 
 	},
 
+   namebar:{
+     zIndex:2000,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 ,
+      borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" 
+   ,'@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+    height: 5+"vw"
+  },
+  '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+    
+  }
+
+  
+  },
+  labelname:{
+    fontSize: 7+"vw",
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      fontSize: 3+"vw"
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      fontSize: 7+"vw"
+    }
+  },
   toolbar:{ 
     
     // height:10+"vw",
@@ -95,12 +116,8 @@ logo:{
     width:100+"%"
   },
 	search: {
-	 
-    backgroundColor:"white",
-    height:4+"vw",
-    borderRadius:2+"vw",
-    display:"flex",
-    justifyContent:"center",
+    width:40+"%",height:70+"%",backgroundColor:"white",borderRadius:"5vw" , flex:1 , display:"flex",alignItems:"center" ,
+   
 
     '@media (max-width:600px)': { // eslint-disable-line no-useless-computed-key
       height: 0+"vw",
@@ -136,22 +153,24 @@ logo:{
   },
   drawerroot :{
     backgroundColor:CLR_HEAD,
-    
-    height:100+"%"
+    width:60+"vw",
+    height:100+"%",
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      width:50+"vw",
+    },
   },
   drawButt:{
     width:60+"vw",
-    padding:2+"vw",
+    padding:2+"%",
     borderStyle:"solid",
     borderWidth:0,
-    borderTopLeftRadius:2+"vw",
-    borderBottomLeftRadius:2+"vw",
     borderTopWidth:1+"px",
     opacity:100,
     textAlign:"right",
     backgroundColor:CLR_RCARD2,
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-      width:20+"vw",
+      width:50+"vw",
+      
     },
 
   
@@ -245,23 +264,13 @@ return (
           {false?
             <div></div>:
             <>
-            <div className={classes.search}>
+            
 					
-            <InputBase placeholder='Place' style={{ flexDirection:"row",fontSize:20, color:'black' , paddingLeft:10+"vw",borderRadius:100+"px"}}
-                  
-                 onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
-
-                    console.log("enter");
-                    wsplace.close(); setPlacesearch(false);
-                    console.log(place);
-                 }else{
-                 
-                 }}}
-                  onChange={(e)=>{  wsplace.send(e.target.value);console.log(e.target.value);}} 
-                  
-                  ></InputBase>
-					 
-           </div>
+            { !props.disablesearchbar && <div className={classes.search }  onClick={()=>router.replace("/c/searchpage","/c/home")}>
+			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
+				 </div> }
+            
+					
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
            {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div> */}
         
@@ -347,18 +356,19 @@ if (authContext.accounttype == true){
    </div>
       
 
-   { authContext.isLoggedIn ?  
-     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} >
+   { authContext.isLoggedIn ?
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
     
       
      <div className={classes.type} >   user   </div>
-      
+     <div  style={{display:"flex",justifyContent:"center",alignItems:"center"}} >
       <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/p/home")}}></Switch>
-     
+     </div>
       </div>: <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} ></div>
       }
 
 <div className={classes.drawButt}>
+
       {authContext.isLoggedIn ?
       <>
       <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
@@ -407,13 +417,13 @@ else{
       <span style={{ marginTop:8+"vw"}}>MOR</span>
    </div>
       
-     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" }} >
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
        
      
       <div className={classes.type} >   work    </div>
-      
+      <div  style={{display:"flex",justifyContent:"center",alignItems:"center"}} >
       <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/c/home")}}></Switch>
-      
+      </div>
       </div>
 
 <div className={classes.drawButt}>
@@ -621,11 +631,12 @@ style={{width:80+"vw"}}
 
 export const NameHead = (props) =>{
   
+  const classes = useStyles();
   return(
-    <div style={{zIndex:2000,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" }} >
-    <FaArrowLeft size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
-    <div style={{margin:3+"vw",fontSize:"7vw"}}>{props.label}</div>
-    <div style={{flex:1,display:"flex",height:"13vw", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >
+    <div className={classes.namebar}  >
+    <FaArrowLeft  style={{height:"80%",width:10+"%"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
+    <div className={classes.labelname}>{props.label}</div>
+    <div style={{flex:1,display:"flex",height:"100%", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >
     <div size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} >
        {props.children}  
      </div>

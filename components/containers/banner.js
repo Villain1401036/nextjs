@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
 		top: 5+"vw",
 		scrollbarWidth:"thin",
+    height:0
 		//height:3+"vw",
 	
 

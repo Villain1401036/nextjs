@@ -62,6 +62,7 @@ const bidhandler = () =>{
 
 const addtofav = () =>{
   //code to save the itemid somewhere in the cloud and in the app
+  
  
 }
 
@@ -72,7 +73,7 @@ const removefromfav = () =>{
 
 	return(
 		
-            <div variant='outlined'  style={{ display:"flex",borderBottom:"1px solid lightgrey",flexDirection:"column" }} >
+            <div variant='outlined'  style={{ display:"flex",borderBottom:"1px solid lightgrey",flexDirection:"column" ,width:"100%" }} >
                 {/*<div name="name">{props.name}</div>*/}
 
                 <img

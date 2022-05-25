@@ -33,22 +33,38 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(0),
     },
 	},
-  contentArea:{ 
+  itemcontainer:{ 
         
-    marginTop:10+"vw",
+    display:"flex",
+    flex:1,
+    flexDirection:"column",
     
 
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-      marginTop: 5+"vw"
+      flexDirection:"row",
+      
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
-        marginTop: 15+"vw"
+       
     }
     },
+
 		cover: {
 			marginTop: 0,
 			height:70,
 			margin:'auto',
+  },
+  carousel:{
+         
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+      width:50+"vw",
+      
+      margin:2+"vw",
+      // width:window.innerWidth*.5
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+       
+    }
   },
 	appsidebar:{
 		position:"sticky",
@@ -170,9 +186,19 @@ const handleClickOpen = () => {
 
 
 const images = (list) =>  { 
-	return list.map((item)=> <Carousel.Item style={{height:60+"vw"}}><img style={{ backgroundColor:"lightgray" ,height: 100+"%" ,objectFit:"cover"}}  className="d-block w-100"
-src={s3rooturl+item.split(".")[0]+"x800.webp"}
-alt="slide" ></img></Carousel.Item>
+	return list.map((item)=> <Carousel.Item style={{minHeight:40+"vh" , backgroundColor:"lightgrey"}}>
+    <img style={{ backgroundColor:"lightgrey" ,height: 100+"%" ,objectFit:"contain" }} 
+    src={s3rooturl+item.split(".")[0]+"x800.webp"}
+  onError={({ currentTarget }) => {
+    currentTarget.onerror = !null; // prevents looping
+    currentTarget.src="/images/no-image.png";
+    currentTarget.alt="no image"
+    
+  }}
+  
+  className="d-block w-100"
+
+ ></img></Carousel.Item>
 
 )
 }
@@ -424,10 +450,11 @@ return(
 
 			}
       </Dialog>
-
-{ isloaded && <Carousel  onClick={()=>{}}  wrap={false}>
-
+<div className={classes.itemcontainer}>
+{ isloaded && <Carousel className={classes.carousel}  onClick={()=>{}}  wrap={false}>
+  
 {images(convertToJson(itemdata.metadata).images)}
+
 </Carousel>}
 
        <div style={{margin:3+"vw"}}> 
@@ -444,6 +471,8 @@ return(
 				 <div>{itemdata.negotiable?<Button onClick={()=>{ setOpenbid(true)}} >place bid</Button>:<></>}</div>
 
 				{/* <div><button onClick={()=>{ open(convertToJson(itemdata.metadata).buylink) }}  >buy here</button></div> */}
+        </div>
+
         </div>
         <Footer />
 				

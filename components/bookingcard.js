@@ -1,5 +1,5 @@
 //task card for a new task that has been posted
-import {  Card } from '@material-ui/core';
+import {  Card, makeStyles } from '@material-ui/core';
 import { CardMedia } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -8,10 +8,23 @@ import {  s3rooturl } from '../constants';
 import { CLR_HEAD, CLR_RCARD2 } from '../themes';
 
 
+const useStyles = makeStyles((theme) => ({    
+  root: 
+{
+   margin:1+"vw",
+borderColor:CLR_HEAD,
+ padding:1+"vw" ,
+  borderRadius:1+"vw" ,
+  '@media (min-width:600px)':{
+   
+  }
+}
+
+}))
 
 export default function Bookingcard(props){
 
-//const classes = useStyles();
+const classes = useStyles();
 
   const [isloaded,setIsLoaded] = React.useState(true);
 
@@ -71,28 +84,34 @@ export default function Bookingcard(props){
 
 	return(
 		
-            <Card variant='normal'  style={{ margin:1+"vw",borderColor:CLR_HEAD, padding:1+"vw" , borderRadius:1+"vw" , backgroundColor:statuscolor(props.bookingobj.status) }} >
+            <Card variant='normal'  className={classes.root} style={{backgroundColor:statuscolor(props.bookingobj.status)}} >
                 {/*<div name="name">{props.name}</div>*/}
                 <div style={{}}>
                 <CardMedia
         component="img"
-        style={{ maxHeight:70+"vw" , display:"-ms-flexbox" ,minHeight:40+"vw",  objectFit:"contain" , backgroundColor: "lightgrey"  }}
+        style={{  display:"-ms-flexbox" ,  objectFit:"contain" , backgroundColor: "lightgrey"  }}
         image={rooturl+props.image}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src="/images/no-image.png";
+          currentTarget.alt="no image"
+          
+        }}
         alt="green iguana"
       />
                 <div>
-                <div name="description"  style={{fontSize:3+"vw"}}>{props.description}</div>
+                <div name="description"  >{props.description}</div>
                 
-                <div name="price"  style={{fontSize:4+"vw"}}>Booking Price: {props.price}</div>
-                <div name="price"  style={{fontSize:4+"vw"}}>Item Key: {props.bookingobj.itemKey}</div>
+                <div name="price"  >Booking Price: {props.price}</div>
+                <div name="price"  >Item Key: {props.bookingobj.itemKey}</div>
                 <a href=''>go to item</a> 
-                <div name="book_from" style={{fontSize:5+"vw"}}>FROM :{props.book_from.getUTCFullYear()} {props.book_from.toUTCString().substring(8,11)} {props.book_from.getUTCDate()}</div>
-                <div name="book_to" style={{fontSize:5+"vw"}}>TO : {props.book_to.getUTCFullYear()} {props.book_to.toUTCString().substring(8,11)} {props.book_to.getUTCDate()}</div>
+                <div name="book_from" >FROM :{props.book_from.getUTCFullYear()} {props.book_from.toUTCString().substring(8,11)} {props.book_from.getUTCDate()}</div>
+                <div name="book_to" >TO : {props.book_to.getUTCFullYear()} {props.book_to.toUTCString().substring(8,11)} {props.book_to.getUTCDate()}</div>
                 </div>
                 </div>
 
 
-                <div name="status"  style={{fontSize:4+"vw"}}>{getStatus(props.bookingobj.status)}</div>
+                <div name="status" >{getStatus(props.bookingobj.status)}</div>
                
 
 

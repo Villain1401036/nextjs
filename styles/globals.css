@@ -46,7 +46,7 @@ body {
 body, html, .App, #root, .outer {
   width: 100%;
   min-height: 100%;
-
+ 
 }
 
 .navbar-light {
@@ -133,4 +133,8 @@ body, html, .App, #root, .outer {
   border-top: 10px solid #45a29e; /* Black */
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

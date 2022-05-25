@@ -51,7 +51,8 @@ const bidhandler = () =>{
 
   const catchbooking = async (updatetype , status , booking_id ) =>{
 
-
+     
+  
     var formdatas = new FormData();
 
      formdatas.append("status", status)
