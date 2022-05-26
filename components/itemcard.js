@@ -8,6 +8,8 @@ import { convertToJson, pushitem, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 import { makeStyles } from '@material-ui/core/styles';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import Image from 'next/image'
+
 
 const useStyles = makeStyles((theme) => ({
 
@@ -38,11 +40,19 @@ const useStyles = makeStyles((theme) => ({
     padding:2+"vw",
     objectFit:"cover" ,
      backgroundColor: "white",
+  
+
      '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       minHeight:10+"vw",
    maxHeight:20+"vw" , 
      
     },
+
+    wallimg:{
+      height:50+"vh",
+      width:78
+    }
+    
    }
 }));
 
@@ -71,22 +81,46 @@ const removefromfav = () =>{
    
 }
 
+const heightimage = () =>{
+  console.log(window.innerWidth);
+    if ( window.innerWidth < 600){
+      return window.innerWidth/2
+    }else{
+      return window.innerWidth/6
+    }
+ }
+
+ const widthtimage = () =>{
+  console.log(window.innerWidth);
+  if ( window.innerWidth < 600){
+    return window.innerWidth/2 
+  }else{
+    return window.innerWidth/4
+  }
+ }
+
 	return(
 		
-            <div variant='outlined'  style={{ display:"flex",borderBottom:"1px solid lightgrey",flexDirection:"column" ,width:"100%" }} >
+            <div variant='outlined'  style={{  border:"1px solid lightgrey" }} >
                 {/*<div name="name">{props.name}</div>*/}
 
-                <img
-        style={{width:100+"%",height:25+"vh",padding:.5+"px" , objectFit:"cover"}}
-        
+                <Image
+              
+        height={heightimage()}
+        width={widthtimage()}
+        objectFit='cover'
+
          src={ s3rooturl +"/images-prod-a" + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp" }
-        // onerror="this.src='/images/no-image.png';"
-        onError={({ currentTarget }) => {
+        
+         onError={({ currentTarget }) => {
+          //  console.log(currentTarget);
           currentTarget.onerror = null; // prevents looping
-          currentTarget.src="/images/no-image.png";
-          currentTarget.alt="no image"
+          currentTarget.srcset="/images/no-image.png"
+          // currentTarget.alt="no image"
           
         }}
+
+
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;
            router.push(`/c/itempage`)

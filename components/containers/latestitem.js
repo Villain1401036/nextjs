@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
     // flex:1,
     display:"grid" , 
     gridTemplateColumns: "50vw 50vw " ,
-      gridRowGap: 1+"vw",
-      gridColumnGap:1+"vw" ,
+      // gridRowGap: 1+"vw",
+      // gridColumnGap:1+"vw" ,
     // gridTemplateColumns: "100vw" ,
     // gridColumnGap:1+"vw" ,
     //  gridRowGap: 1+"vw",
@@ -56,9 +56,10 @@ const useStyles = makeStyles((theme) => ({
         display: "none"
     },
     display:"grid",
-      gridTemplateColumns: "24vw 24vw 24vw 24vw" ,
+      gridTemplateColumns: "20vw 20vw 20vw 20vw" ,
       gridRowGap: 1+"vw",
       gridColumnGap:1+"vw" ,
+      justifyContent:"center"
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
       
