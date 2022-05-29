@@ -109,8 +109,7 @@ export default function Profilesummary(props){
 		
 	 }); 
 
-	 
-const refreshprofile = async () =>{
+const  refreshprofile = async () =>{
 	var urlForm = geturlFormdata("customer","get",  {"user_id":getlocal("temp_id") , idtype:"email" }) //localStorage.getItem("customerid") }  )
     var url = urlForm.url
 	callwithcache(getdata, url, "customers" ).then((value) =>{

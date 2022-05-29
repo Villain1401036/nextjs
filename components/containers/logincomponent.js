@@ -231,7 +231,7 @@ if (isloaded && isSignInWithEmailLink(auth, window.location.href)) {
 
              
                 <h3>Log in</h3>
-                <div className="form-group" >
+                <div className={"form-group"} >
                    
                     <input type="email" className="form-control" style={{width:100+"%"}} autoFocus placeholder="Enter email" value={email}
             onChange={(e) => setEmail(e.target.value)}/>

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
 		top: 5+"vw",
 		scrollbarWidth:"thin",
-    height:0
+    // height:0
 		//height:3+"vw",
 	
 
@@ -87,8 +87,8 @@ page:{
     backgroundColor:CLR_RCARD3,
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
 		
-       
-		
+       height:0,
+		   hidden:true,
 
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
@@ -132,11 +132,20 @@ page:{
 export default function BannerComponent(props) {
   const classes = useStyles();
 
+
+  const hidebc = ()=>{
+
+    if(window.innerWidth > 600){
+        return true
+    }
+
+  }
+
   return (
     
 		<div className={classes.appbar}>
 	             
-                 <Carousel style={{width:100+"%"}}   indicators={false}  >
+                 <Carousel style={{width:100+"%"}}  hidden={hidebc()}  indicators={false}  >
                  <CarouselItem >
                  <div className={classes.page}>
                      <img src={'/freebessimagelight.png'} style={{ width:100+"%" ,objectFit:"cover"}} />

@@ -108,7 +108,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
          }).catch((err) =>{
              console.log(err);
              var path = getlocal('currentpath')
-            router.replace(`/info`,path)
+            router.push(`/info`)
               
              // 
          })

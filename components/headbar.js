@@ -266,7 +266,7 @@ return (
             <>
             
 					
-            { !props.disablesearchbar && <div className={classes.search }  onClick={()=>router.replace("/c/searchpage","/c/home")}>
+            { !props.disablesearchbar && <div className={classes.search }  onClick={()=>router.push("/c/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> }
             
@@ -384,9 +384,15 @@ if (authContext.accounttype == true){
     </div>
 
   { authContext.isLoggedIn && <>
+
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/wishlist")}}>{"wishlist"}</div>
+    </div>
+
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
     </div>
+
 
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/c/address")}}>{"address"}</div>

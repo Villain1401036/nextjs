@@ -94,7 +94,7 @@ export const getdata_post = async(url, obj, options,data) => {
     }
 
 
-    export const getdata = async(url, obj, options) => {
+export const getdata = async(url, obj, options) => {
   
       //  var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
     

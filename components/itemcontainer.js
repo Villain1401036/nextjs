@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   carousel:{
          
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
-      width:50+"vw",
+      
       
       margin:2+"vw",
       // width:window.innerWidth*.5
@@ -118,7 +118,10 @@ const classes = useStyles();
 
 const authContext = useContext(AuthContext);
 
+
+
   const [isloaded,setIsloaded] = React.useState(false);
+
   React.useEffect(() => {
 
     // Update the document title using the browser API
@@ -179,6 +182,23 @@ const handleClickOpen = () => {
   };
 
 
+  const heightimage = () =>{
+    console.log(window.innerWidth);
+      if ( window.innerWidth < 600){
+        return window.innerWidth
+      }else{
+        return window.innerWidth/3
+      }
+   }
+  
+   const widthtimage = () =>{
+    console.log(window.innerWidth);
+    if ( window.innerWidth < 600){
+      return window.innerWidth
+    }else{
+      return window.innerWidth/2.5
+    }
+   }
 
 
 //
@@ -186,16 +206,19 @@ const handleClickOpen = () => {
 
 
 const images = (list) =>  { 
-	return list.map((item)=> <Carousel.Item style={{minHeight:window.innerWidth , backgroundColor:"lightgrey"}}>
+	return list.map((item)=> <Carousel.Item style={{ height: heightimage() , width:widthtimage() , backgroundColor:"lightgrey"}}>
     <Image 
-    layout="fill"
+    
     objectFit="cover"
     
+    height={heightimage()}
+    width={widthtimage()}
+
     
     src={s3rooturl+"/images-prod-a"+item.split(".")[0]+"x800.webp"}
   onError={({ currentTarget }) => {
     currentTarget.onerror = !null; // prevents looping
-    currentTarget.src="/images/no-image.png";
+    currentTarget.srcset="/images/no-image.png";
     currentTarget.alt="no image"
     
   }}
@@ -448,14 +471,14 @@ return(
 		</>
            :
            <>
-           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.replace('/login','/c/itempage')}}>Login</span> to continue </div>
+           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.push('/login')}}>Login</span> to continue </div>
            
            </>
 
 			}
       </Dialog>
 <div className={classes.itemcontainer}>
-{ isloaded && <Carousel className={classes.carousel}  onClick={()=>{}}  wrap={false}>
+{ isloaded && <Carousel className={classes.carousel} style={{height: heightimage() , width:widthtimage() }} onClick={()=>{}}  wrap={false}>
   
 {images(convertToJson(itemdata.metadata).images)}
 

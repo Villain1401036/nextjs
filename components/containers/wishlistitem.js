@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { getdata, getdata_post } from '../../networking/getdata';
 import { Button, Chip, Slider, TextField } from '@material-ui/core';
 
-import { callwithcache, convertToJson, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
+import { callwithcache, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
 import { Col, Form, FormGroup, Modal, Nav, Row, Tab, Tabs } from 'react-bootstrap';
 import Itemcard from '../itemcard';
 
@@ -15,7 +15,6 @@ import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 import router from 'next/router';
 import Footer from '../footer';
 import { MdClear } from 'react-icons/md';
-import { getuserdata } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
   appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:window.innerWidth*.15 , backgroundColor:"white", alignItems:"center",
@@ -85,7 +84,7 @@ const taskmap = new Map();
 
 //this will be a container for all the recent work that is going on
 
-export default function Latestitem(props){
+export default function WishlistItem(props){
 
     const [loaded,setLoaded] = React.useState(false); 
     
@@ -123,7 +122,7 @@ export default function Latestitem(props){
       // router.events.on('routeChangeStart', handleRouteChange)
      
        if (!loaded){
-        getuserdata("email",getobjlocal("userdata")[0]["email"])
+
         loadmore(filter);
        setLoaded(true)
        taskmap.clear()
@@ -148,13 +147,14 @@ export default function Latestitem(props){
     const parseFilter = (allfilters) =>{
         
     }
+
     
     const listInnerRef = React.useRef();
 
-    const loadmore =  (f , applyfill ) =>{
+    const loadmore =  (f , applyfill ) => {
       //call the function to update with the latest tasks
-
-      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place").split(",")[0] , "xtime": xtime} , {} )
+      console.log(getobjlocal("userdata"));
+      var urlForm = geturlFormdata("item", "get" ,{ "gettype": "wishlist" ,"user_id": getobjlocal("userdata")[0]["userkey"] , "xtime": xtime} , {} )
       var url = urlForm.url
        //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
@@ -168,7 +168,7 @@ export default function Latestitem(props){
       
       
 
-      callwithcache(getdata_post, url, "items",formdata).then((value) =>{
+      callwithcache(getdata, url, "items",formdata).then((value) =>{
         // setLoaded(true);
          
         //taskmap.clear() //for clearing every thing
@@ -216,13 +216,8 @@ export default function Latestitem(props){
       
       
       // const filllatest =  fill_pairs(tasklist).map( (item) => <div key={item[0].itemId} style={{display:"flex"}}><div style={{width:"50vw"}}> <Itemcard key={item[0].itemId}  name={item[0].itemId} itemobj={item[0]} description={item[0].description} place={item[0].place} price={item[0].price} scheduled_at={item[0].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div><div style={{width:"50vw"}}>  <Itemcard key={item[1].itemId}  name={item[1].itemId} itemobj={item[1]} description={item[1].description} place={item[1].place} price={item[1].price} scheduled_at={item[1].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div></div>   )
-   
-
-      const wishdata = convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]
-      console.log(wishdata);
-      console.log(wishdata.includes(654));
-
-      const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
+      
+      const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} hidefavbutton name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
       
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
@@ -332,15 +327,15 @@ export default function Latestitem(props){
 
 	return(
     <>
-		<div style={{backgroundColor:'white' ,  justifyContent:"center"  }} onScroll={ ()=>{console.log("top elem") }}   >
+		<div style={{backgroundColor:'white' ,  justifyContent:"center"  }} onScroll={ ()=>{console.log("top elem"); }}   >
                 
              
               <div className={classes.appbar}>
               
               <FaArrowLeft color={CLR_HEAD}   style={{  height:50+"%" ,width:10+"%"}} onClick={()=>{router.back()}}/>
                
-              <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
-              
+              {/* <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span>  */}
+              <span style={{fontWeight:"bold"}}>wishlist</span>
               <div style={{ height:100+"%" , width:100+"%", display:"flex" ,flexDirection:"row-reverse" ,flex:1 , alignItems:"center"}}>
               
                 <FaFilter color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>setFilteropen(true)}/>
@@ -349,13 +344,13 @@ export default function Latestitem(props){
                  </div>
                
                </div>
-               
+               {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
              { tasklist.length > 0 ?
                  <div ref={listInnerRef} className={classes.itemsbucket}  id="itemswin" onScroll={() => {onScroll()}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
 
-             
+              {/* <Button onClick={()=>{ loadmore(filter)}} >Load more</Button> */}
 
-        </div>
+             </div>
              <Modal onHide={()=>{setFilteropen(false)}} style={{zIndex:2000 , flexDirection:"column-reverse",display:"flex" }}  show={filteropen}  
              
              children={

@@ -15,6 +15,7 @@ import Latestitem from '../../components/containers/latestitem'
 import { checktokensexpiry } from '../../utils'
 import { getlocal } from '../../localstore'
 import ItemPage from './itempage'
+import WishlistItem from '../../components/containers/wishlistitem'
 
 
 
@@ -113,7 +114,7 @@ if(typeof window !== 'undefined'){
 
 	return(
 
-			  <Latestitem />
+			 <WishlistItem />
 
 	);
  

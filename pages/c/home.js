@@ -137,7 +137,7 @@ if (isloaded){
 			 <div className={classes.searchbut}>
 			 
 			 
-			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" ,  alignItems:"center" }}  onClick={()=>router.replace("/c/searchpage","/c/home")}>
+			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" ,  alignItems:"center" }}  onClick={()=>router.push("/c/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> 
 			 </div>
