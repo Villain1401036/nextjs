@@ -220,6 +220,7 @@ const SearchContainer = (props) => {
 
                     console.log("enter");
                     wsplace.close(); setPlacesearch(false);
+                    
                     console.log(place);
                  }else{
                  
@@ -250,13 +251,15 @@ const SearchContainer = (props) => {
          <div style={{flex:1 ,paddingLeft:2+"vw",paddingRight:2+"vw" ,flexDirection:"row",display:"flex", justifyContent:"flex-start", alignItems:"center", backgroundColor:"white", marginTop:15 ,paddingTop:10,borderTopRightRadius:7+"vw",borderTopLeftRadius:7+"vw"}}>
              {/* <div size={20} name='search' style={{marginRight:23 ,color:CLR_RCARD1}} onClick={()=>{navigation.pop()}}></div> */}
              <div  name='cross' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}} ><FaSearch color={CLR_HEAD} overlineThickness={1} size={6+"vw"}/></div>
-           <InputBase placeholder='Looking for ...' id='iteminput' style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 ,fontSize:5+"vw" , fontWeight:"300"}}  autoFocus onFocus={()=>{wsitem.connect() }} 
+           <InputBase placeholder='Looking for ...' id='iteminput'  style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 ,fontSize:5+"vw" , fontWeight:"300"}}  autoFocus onFocus={()=>{wsitem.connect() }} 
            onChange={(e)=>{if (e.target.value.length >= 0) {wsitem.send(e.target.value);setItemfill(e.target.value) ; console.log(e.target.value);}}}
            onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
             wsitem.close();
             console.log("enter");
             console.log(itemfill);
-            storelocal( "category",itemfill);router.push(`/c/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
+            storelocal( "category",itemfill) ;
+            document.getElementById('iteminput').blur()
+            router.push(`/c/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
           
          }else{
          
