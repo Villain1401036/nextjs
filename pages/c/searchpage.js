@@ -197,7 +197,9 @@ const SearchContainer = (props) => {
 
   })
 
-
+ const closekeyboard = (id) =>{
+  document.getElementById(id).blur()
+ }
  
   return (
    
@@ -258,7 +260,7 @@ const SearchContainer = (props) => {
             console.log("enter");
             console.log(itemfill);
             storelocal( "category",itemfill) ;
-            document.getElementById('iteminput').blur()
+            closekeyboard('iteminput')
             router.push(`/c/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
           
          }else{
@@ -271,7 +273,7 @@ const SearchContainer = (props) => {
            
          </div>
          
-         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)   ;router.push(`/c/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
+         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)  ; closekeyboard('iteminput') ;router.push(`/c/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
        
        </div>
        
