@@ -132,10 +132,14 @@ const handleSubmit = async () =>{
     await getdata(urlform.url , "customers").then((value)=> {
          console.log(value);
 
-        
-        
         var path = getlocal('currentpath')
-        router.push(path , path , {shallow:true})
+           console.log(path);
+           if (path == undefined){
+            router.push("/c/home")
+            
+           }else{
+            router.push(path)
+           }
     }).catch((e)=>{
        alert(e)
     })
