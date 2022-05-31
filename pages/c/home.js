@@ -67,10 +67,13 @@ const useStyles = makeStyles((theme) => ({
 
 	searchbut:{
 		width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center",
-
+		 position:"sticky" , 
+		 top:13+"vw" ,
+		 zIndex:10,
 		'@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
 		
           height:0,
+		  top:13+"vw" ,
 		
 
 		},
@@ -132,17 +135,34 @@ if (isloaded){
 			
 			
 
-			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),backgroundColor:"red" ,display:"flex" , flexDirection:"column" ,flex:1}}>
-             <div style={{  bottom:0}}>
-			 <div className={classes.searchbut}>
-			 
-			 
-			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" ,  alignItems:"center" }}  onClick={()=>router.push("/c/searchpage")}>
+			 <div style={{minHeight:(window.innerHeight - window.innerWidth*.13),display:"flex" , flexDirection:"column" ,flex:1}}>
+             <div >
+			 <div className={classes.page} style={{paddingTop:5+"vh",backgroundColor:CLR_HEAD}}>
+                     {/* <img src={'/freebessimagelight.png'} style={{ width:100+"%" ,objectFit:"cover"}} /> */}
+					 <div style={{display:"flex", flexDirection:"column" , justifyContent:"center"}}>
+					 <div style={{backgroundColor:CLR_HEAD , color:"white", paddingInline:5+"vw" , fontSize:8+"vw" }}>Rent anything </div>
+					 <div style={{backgroundColor:CLR_HEAD , color:"white", paddingInline:5+"vw" , fontSize:8+"vw" }}>directly from your</div>
+				 	<div style={{backgroundColor:CLR_HEAD , color:"white", paddingInline:5+"vw" , fontSize:8+"vw" }}>NEIGHBOURHOOD</div>
+					 <div style={{backgroundColor:CLR_HEAD , color:"white", paddingInline:5+"vw"  }}>Rent almost everything from people in your surrounding for work , fun or  leisure .</div>
+					 </div>
+						 </div>
+
+			
+				 <div className={classes.searchbut}>
+			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" , alignItems:"center" }}  onClick={()=>router.push("/c/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> 
-			 </div>
-				 <BannerComponent />
+				
 				 
+			 </div>
+			 <img src={'/freebessimagelight.png'} style={{ width:100+"%" ,objectFit:"cover"}} />
+
+			 <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}>Or<span className='btn' style={{color:"white" , fontWeight:"bold" , fontSize:"5vw" ,margin:"2vw" , border:"1px solid "+CLR_RCARD2}}>Post Item</span></div>
+			 
+			 <BannerComponent />
+			 
+			
+
 			</div>
 			 <div style={{ display:"flex" , flexDirection:"column-reverse" ,flex:1}}>
 				<div style={{  bottom:0}}><Footer /></div>
