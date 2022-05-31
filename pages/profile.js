@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import React , {useContext, useEffect} from 'react'
-import ButtonAppBar, { NameHead } from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../components/headbar'
 
-import { onRefresh, Shopname, user } from '../../constants'
+import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Profilesummary from '../../components/containers/profilesummary'
+import Profilesummary from '../components/containers/profilesummary'
 import { router, useRouter } from 'next/router'
-import { AuthContext } from '../../context'
-import Logincontainer from '../../components/containers/logincontainer'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
 import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ if  (authContext.isLoggedIn ){
 		<link rel="icon" href="/favicon.ico" />
 	</Head>
 
-	<NameHead label={"You"} onClick={()=> router.back() } onHomeClick={()=>{router.push('/c/home')}} />
+	<NameHead label={"You"} onClick={()=> router.back() } onHomeClick={()=>{router.push('/home')}} />
 	
 	<Profilesummary />
 

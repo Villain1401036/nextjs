@@ -154,7 +154,7 @@ const heightimage = () =>{
 
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;
-           router.push(`/c/itempage`)
+           router.push(`/itempage`)
            
            }}    
       /></div>
@@ -212,7 +212,7 @@ className={classes.imgcard}
 image={s3rooturl + convertToJson(props.itemobj.metadata).images[0].split(".")[0] + "x400"+".webp"}
 alt="green iguana"
 onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
-   ;router.push("/c/itempage") }}
+   ;router.push("/itempage") }}
 />
 <div style={{ margin:1+"vw"}}>
 

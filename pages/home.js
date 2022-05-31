@@ -1,20 +1,20 @@
 import Head from 'next/head'
 import React, { useContext, useEffect, useState } from 'react'
-import ButtonAppBar from '../../components/headbar'
-import Footer from '../../components/footer'
+import ButtonAppBar from '../components/headbar'
+import Footer from '../components/footer'
 
 import  {useRouter}  from 'next/router'
 
-import { onRefresh, Shopname, user } from '../../constants'
+import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { AuthContext } from '../../context'
-import LoginPage from '../login'
-import BannerComponent from '../../components/containers/banner'
-import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes'
+import { AuthContext } from '../context'
+import LoginPage from './login'
+import BannerComponent from '../components/containers/banner'
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes'
 import { FaSearch, FaTruckLoading } from 'react-icons/fa'
-import SimpleBottomNavigation from '../../components/bottomnav'
+import SimpleBottomNavigation from '../components/bottomnav'
 
 
 
@@ -149,7 +149,7 @@ if (isloaded){
 
 			
 				 <div className={classes.searchbut}>
-			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" , alignItems:"center" }}  onClick={()=>router.push("/c/searchpage")}>
+			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" , alignItems:"center" }}  onClick={()=>router.push("/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> 
 				

@@ -1,16 +1,16 @@
 import Head from 'next/head'
 import React, { useContext, useEffect } from 'react'
-import  { NameHead } from '../../components/headbar'
+import  { NameHead } from '../components/headbar'
 
 
-import { EditText } from '../../pages/c/settings';
+import { EditText } from '../pages/settings';
 
-import { onRefresh, Shopname } from '../../constants'
+import { onRefresh, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
-import Addresses from '../../components/containers/addresses'
-import { AuthContext } from '../../context'
-import Logincontainer from '../../components/containers/logincontainer'
-import MapPage from '../mappage';
+import Addresses from '../components/containers/addresses'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
+import MapPage from './mappage';
 
 
 
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 import router from 'next/router'
 import { Button, ButtonBase } from '@material-ui/core';
-import { CLR_HEAD } from '../../themes';
+import { CLR_HEAD } from '../themes';
 import { FaDumpster, FaMapMarkedAlt, FaMapMarkerAlt, FaReact, FaRecycle, FaSave, FaTrash } from 'react-icons/fa';
 
 export default function Addresspage(props){
@@ -88,7 +88,7 @@ const authContext = useContext(AuthContext);
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		
-        <NameHead label="Addresses" onClick={()=>router.back()} onHomeClick={()=>{router.push('/c/home')}}  />
+        <NameHead label="Addresses" onClick={()=>router.back()} onHomeClick={()=>{router.push('/home')}}  />
 		
 		
 		 

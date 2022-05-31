@@ -6,9 +6,8 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FaArrowLeft, FaEdit } from 'react-icons/fa';
-import ButtonAppBar from '../../components/headbar';
-import { storelocal } from '../../localstore';
-import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
+import { storelocal } from '../localstore';
+import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes';
 
 
 
@@ -23,6 +22,32 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
       },
       },
+
+      pinfo:{
+        display:"flex",
+          flex:1,
+          flexWrap:"wrap",
+          justifyContent:"center",
+          height:10+"vh",
+          marginBottom:2+"vw",
+          width:100+"%",
+        '@media (min-width:600px)':{
+          width:50+"%",
+          
+
+       }
+      },
+      settElem:{
+       
+      '@media (min-width:600px)':{
+         display:"flex",
+         flex:1,
+         flexWrap:"wrap",
+         alignItems:"center",
+         height:10+"vh",
+         marginBottom:2+"vw"
+      }
+    },
       contentArea:{
           
           height:100+'%',
@@ -60,21 +85,27 @@ const useStyles = makeStyles((theme) => ({
           
       },
       nbuttonroot:
-     
       {
         display:"flex",
         backgroundColor:"white",
         color:CLR_HEAD ,
          margin:2+"vw" ,
-         height:10+"vw",
+         height:100+"%",
          
-         borderRadius:2+"vw",
+         borderRadius:"10px",
          borderColor:CLR_HEAD,
          borderStyle:"solid",
          borderWidth:1+"px",
          
          justifyContent:"center",
          alignItems: "center",
+
+         '@media (min-width:600px)':{
+          display:"flex",
+          flex:1,
+          fontSize:"200%"
+       }
+
         
         }
   }));
@@ -95,7 +126,7 @@ export default function SettingsPage(props){
          
         <div style={{padding:2+"vw"}} >
         
-        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey" }}>
+        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey"  }}>
         {selected != ""  && <span onClick={()=> setSelected("") }><FaArrowLeft />back</span>}
         {selected == ""  && <span onClick={()=> router.back() }><FaArrowLeft /></span>}
         <div style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw",flex:1,display:"flex" , fontSize:25}}>Settings</div>
@@ -107,24 +138,32 @@ export default function SettingsPage(props){
         </div>
        {selected == "" &&
         <>
-        <div style={{fontSize:5+"vw"}}>Accounts</div>
+        <div className={classes.settElem}>
+        <div >Accounts</div>
          <NavButton name="Personal Info" onClick={()=>{ setSelected("Personal Info") }}/>
          <NavButton name="Business Account" onClick={()=>{setSelected("Business Account") }}/>
+         </div>
 
-         <div style={{fontSize:5+"vw"}}>Start renting</div>
+         <div className={classes.settElem}>
+         <div >Start renting</div>
          <NavButton name="Start Renting" onClick={()=>{setSelected("Get Started") }}/>
          <NavButton name="Learn About Renting" onClick={()=>{ setSelected("Learn About Renting")}}/>
          <NavButton name="Promote" onClick={()=>{ setSelected("Promote")}}/>
+         </div>
 
-         <div style={{fontSize:5+"vw"}}>Support</div>
+         <div className={classes.settElem}>
+         <div >Support</div>
          <NavButton name="How It Works" onClick={()=>{setSelected("How It Works") }}/>
          <NavButton name="Safety" onClick={()=>{ setSelected("Safety")}}/>
          <NavButton name="Contact Support" onClick={()=>{setSelected("Contact Support") }}/>
          <NavButton name="Give Feedback" onClick={()=>{ setSelected("Give Feedback")}}/>
+         </div>
 
-         <div style={{fontSize:5+"vw"}}>Legal</div>
+         <div className={classes.settElem}>
+         <div >Legal</div>
          <NavButton name="Terms of Service" onClick={()=>{ setSelected("Terms of Service")}}/>
          <NavButton name="Privacy Policy" onClick={()=>{ setSelected("Privacy Policy")}}/>
+         </div>
          </>
         }
         {selected == "Personal Info" && 
@@ -173,7 +212,7 @@ function NavButton(props){
 }
 
 
-function ChooseText(props){
+export function ChooseText(props){
     const [filteropen , setFilteropen] = useState(false);
     const [currvalue, setCurrvalue] = useState(props.value);
 
@@ -183,7 +222,7 @@ function ChooseText(props){
         {
             filteropen?
         
-        <div style={{width:90+"%",borderColor:CLR_HEAD,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2, margin:"2vw" ,padding:"2vw" }}>
+        <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"10px", borderWidth:2 , margin:"2%",padding:"2%" }}>
             <div style={{ fontSize:10 }}>{props.label}</div>
             <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}
           
@@ -192,10 +231,10 @@ function ChooseText(props){
 
                   
         </div>
-    : <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2 , margin:"2vw",padding:"2vw" }}>
+    : <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"10px", borderWidth:2 , margin:"2%",padding:"2%" }}>
     <div style={{ fontSize:9 }}>{props.label}</div>
    
-    <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}
+    <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15 , color:'black'   }}
            onClick={()=>{setFilteropen(true)}}
           
           >{currvalue}</div>
@@ -210,7 +249,7 @@ function ChooseText(props){
         aria-labelledby="contained-modal-title-vcenter"
         centered
          >
-             <Modal.Body style={{flex:1 ,display:"flex" ,  flexDirection:"column" ,justifyContent:"center",alignItems:"center" ,}}><div style={{ flex:1 ,display:"flex" ,  flexDirection:"column" ,justifyContent:"center",alignItems:"center" ,backgroundColor:"white" , borderRadius:2+"vw" }}>
+             <Modal.Body style={{flex:1 ,display:"flex" ,  flexDirection:"column" ,justifyContent:"center",alignItems:"center" ,}}><div style={{ flex:1 ,display:"flex" ,  flexDirection:"column" ,justifyContent:"center",alignItems:"center" ,backgroundColor:"white" , borderRadius:"10px" }}>
                  <div style={{height:10+"vw"}} onClick={()=>{ console.log("Male");setFilteropen(false);setCurrvalue("Male") }}>Male</div>
                  <div style={{height:10+"vw"}} onClick={()=>{ console.log("Female");setFilteropen(false);setCurrvalue("Female") }}>Female</div>
                  <div style={{height:10+"vw"}} onClick={()=>{ console.log("Others"); setFilteropen(false);;setCurrvalue("Others")}}>Others</div>
@@ -221,24 +260,24 @@ function ChooseText(props){
    
 }
 
-function EditText(props){
+export function EditText(props){
     const [editing , setEditing] = useState(false);
     const [currvalue, setCurrvalue] = useState(props.value);
 
     if (props.disabled){
         return (
         
-        <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2 , margin:"2vw",padding:"2vw" , backgroundColor:"lightgrey" }}>
+        <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"10px", borderWidth:2 , margin:"2%",padding:"2%" , backgroundColor:"lightgrey" }}>
         <div style={{display:"flex",}}>
             <div>
         <div style={{ fontSize:9 }}>{props.label}</div>
-        <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}>
+        <div  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15 , color:'black'   }}>
             {currvalue}
             
             </div>
             </div>
             <div style={{display:"flex",flex:1}} ></div>
-            <FaEdit size={8+"vw"} color={CLR_HEAD} onClick={()=>{console.log("asdas"); }}/>
+            <FaEdit  color={CLR_HEAD} onClick={()=>{console.log("asdas"); }}/>
             </div>
               
     </div>);
@@ -248,15 +287,16 @@ function EditText(props){
         {
             editing?
         
-        <div style={{width:90+"%",borderColor:CLR_HEAD,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2, margin:"2vw" ,padding:"2vw" }}>
+        <div style={{width:90+"%",borderColor:CLR_HEAD,borderStyle:"solid" ,borderRadius:"10px", borderWidth:2, margin:"2%" ,padding:"2%" }}>
             <div style={{ fontSize:10 }}>{props.label}</div>
            
-            <InputBase placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'  }}
+            <InputBase  placeholder={props.placeholder}  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'  }}
                   
                   autoFocus
                   defaultValue={currvalue}
                     onBlur={()=>setEditing(false) }
                  onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+                   setEditing(false)
                  }else{
                  }}}
                   onChange={(e)=>{ setCurrvalue(e.target.value); console.log(e.target.value);}} 
@@ -264,10 +304,10 @@ function EditText(props){
                   ></InputBase>
                   
         </div>
-    : <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"2vw", borderWidth:2 , margin:"2vw",padding:"2vw" }}>
+    : <div style={{width:90+"%",borderColor:CLR_RCARD1,borderStyle:"solid" ,borderRadius:"10px", borderWidth:2 , margin:"2%",padding:"2%" }}>
     <div style={{ fontSize:9 }}>{props.label}</div>
    
-    <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15,height:8+"vw" , color:'black'   }}
+    <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'   }}
            onClick={()=>{setEditing(true)}}
           
           >{currvalue}</div>
@@ -278,19 +318,22 @@ function EditText(props){
    
 }
 function Profile_Info(props){ 
-
+    const classes = useStyles()
     const [changed , setChanged ] = React.useState(false);
   
   return (
         <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
+          <div className={classes.pinfo} >
         <EditText label="first name" value="rahul" />
       <EditText label="last name" value="kumar" />
 
       <ChooseText label="Gender" value="Male" />
 
       <EditText label="email" value="kr7168799@gmail.com" disabled />
+
+      </div>
       
-       <div style={{flex:1,display:"flex",backgroundColor:"white",width:100+"vw" ,position:"absolute",bottom:0,padding:2+"vw"}}>
+       <div style={{display:"flex",backgroundColor:"white",width:100+"vw" ,bottom:0,padding:2+"vw"}}>
            { changed?<Button style={{backgroundColor:CLR_HEAD ,width:100+"%",color:"white"}} >Submit</Button> :
            <Button style={{backgroundColor:"lightgrey" ,width:100+"%",color:"white"}} >Submit</Button>
            }

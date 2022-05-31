@@ -240,8 +240,8 @@ function SeeCat(props){
 
 
      const listcats = getallCategories()
-    //  const categories = listcats.map((item) => <Chip key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, padding:2+"vw", margin:.5+"vw" , borderColor:CLR_RCARD2}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/c/itemswindow?items="+item) }} /> )
-    const categories = listcats.map((item) => <div key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, borderRadius:5+"vw" ,padding:2+"vw", margin:2+"vw" , minHeight:40+"vw" , width:40+"vw" , border:"1px solid"+CLR_RCARD2 , textAlign:"center"}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/c/itemswindow?items="+item) }} >{item}</div> )
+    //  const categories = listcats.map((item) => <Chip key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, padding:2+"vw", margin:.5+"vw" , borderColor:CLR_RCARD2}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} /> )
+    const categories = listcats.map((item) => <div key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, borderRadius:5+"vw" ,padding:2+"vw", margin:2+"vw" , minHeight:40+"vw" , width:40+"vw" , border:"1px solid"+CLR_RCARD2 , textAlign:"center"}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} >{item}</div> )
      
     return (
           

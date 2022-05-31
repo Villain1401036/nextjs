@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar from '../components/headbar'
 
 
-import { convertToJson, gettaskonpage, s3rooturl, Shopname } from '../../constants'
+import { convertToJson, gettaskonpage, s3rooturl, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
 import { useRouter } from 'next/router'
-import Bidcontainer from '../../components/containers/bidcontainer';
+import Bidcontainer from '../components/containers/bidcontainer';
 
 
 const useStyles = makeStyles((theme) => ({

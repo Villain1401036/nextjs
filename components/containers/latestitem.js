@@ -18,7 +18,8 @@ import { MdClear } from 'react-icons/md';
 import { getuserdata } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
-  appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:window.innerWidth*.15 , backgroundColor:"white", alignItems:"center",
+  appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , 
+  height:window.innerWidth*.15 , backgroundColor:"white", alignItems:"center",
   zIndex:2900,
   '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
     height:window.innerWidth*.1
@@ -33,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
   itemsbucket:{
     zIndex:0,
     height:window.innerHeight - window.innerWidth*.15,
+    
+    // height:window.outerHeight - window.outerWidth*.15,
     // marginTop:window.innerHeight*.15,
     width:100+"vw",
     overflowY : "scroll" ,
@@ -345,7 +348,7 @@ export default function Latestitem(props){
               
                 <FaFilter color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>setFilteropen(true)}/>
                
-                  <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.push('/c/searchpage')}}/> 
+                  <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.push('/searchpage')}}/> 
                  </div>
                
                </div>

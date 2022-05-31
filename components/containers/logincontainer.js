@@ -24,7 +24,7 @@ export default function Logincontainer() {
     await getTokens( urlForm.url, email , password ).then((value)=>{
       
       
-      router.push(`/c/home`)
+      router.push(`/home`)
     })
   }
 
@@ -56,7 +56,7 @@ export default function Logincontainer() {
 
       <div style={ {textAlign:"center", padding:30 }}>
           <div> Not a user </div>
-          <button onClick={()=> router.push(`/c/signup`)} >Sign up</button>
+          <button onClick={()=> router.push(`/signup`)} >Sign up</button>
 
       </div>
     </div>

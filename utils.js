@@ -98,7 +98,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
            var path = getlocal('currentpath')
            console.log(path);
            if (path == undefined){
-            router.push("/c/home")
+            router.push("/home")
             
            }else{
             router.push(path)

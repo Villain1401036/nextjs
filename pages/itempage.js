@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import React , {useContext, useEffect} from 'react'
-import ButtonAppBar, { NameHead } from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../components/headbar'
 
-import { onRefresh, Shopname, user } from '../../constants'
+import { onRefresh, Shopname, user } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 import { useRouter } from 'next/router'
-import { AuthContext } from '../../context'
-import Logincontainer from '../../components/containers/logincontainer'
-import Itemcontainer from '../../components/itemcontainer';
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
+import Itemcontainer from '../components/itemcontainer';
  import { } from 'react-icons/';
 
 import { FaAccusoft, FaBabyCarriage, FaHome, FaTumblr } from 'react-icons/fa';
@@ -95,7 +95,7 @@ const authContext = useContext(AuthContext);
 	</Head>
 
 	
-	<NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/c/orders')}} children={<MdOutlineBackpack size={25} /> }  />
+	<NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/orders')}} children={<MdOutlineBackpack size={25} /> }  />
 	<div >
 	<Itemcontainer />
 

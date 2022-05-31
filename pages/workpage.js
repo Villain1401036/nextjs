@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import ButtonAppBar from '../../components/headbar'
+import ButtonAppBar from '../components/headbar'
 
 
-import { convertToJson, getworkonpage, s3rooturl, Shopname, workstatus_dict } from '../../constants'
+import { convertToJson, getworkonpage, s3rooturl, Shopname, workstatus_dict } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 

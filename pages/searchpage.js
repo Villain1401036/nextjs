@@ -1,21 +1,21 @@
 import Head from 'next/head'
 import React , {useContext, useEffect, useState} from 'react'
-import ButtonAppBar, { EditFilter } from '../../components/headbar'
+import ButtonAppBar, { EditFilter } from '../components/headbar'
 
-import { onRefresh, Shopname, siterooturl, user } from '../../constants'
+import { onRefresh, Shopname, siterooturl, user } from '../constants'
 import { fade, makeStyles  } from '@material-ui/core/styles';
-import Profilesummary from '../../components/containers/profilesummary'
+import Profilesummary from '../components/containers/profilesummary'
 import { useRouter } from 'next/router'
-import { AuthContext } from '../../context'
-import Logincontainer from '../../components/containers/logincontainer'
+import { AuthContext } from '../context'
+import Logincontainer from '../components/containers/logincontainer'
 import { Button } from '@material-ui/core';
 import { InputBase } from '@mui/material';
 import { display } from '@mui/system';
-import { CLR_HEAD, CLR_RCARD1 } from '../../themes';
-import Wsocket from '../../Wsocket';
+import { CLR_HEAD, CLR_RCARD1 } from '../themes';
+import Wsocket from '../Wsocket';
 import { FaArrowLeft, FaCross, FaCut, FaFilter, FaRemoveFormat, FaSearch }  from 'react-icons/fa'
 import { MdClear }  from 'react-icons/md'
-import { getlocal, getobjlocal, storelocal } from '../../localstore';
+import { getlocal, getobjlocal, storelocal } from '../localstore';
 import { Modal } from 'react-bootstrap';
 
 
@@ -261,7 +261,7 @@ const SearchContainer = (props) => {
             console.log(itemfill);
             storelocal( "category",itemfill) ;
             document.getElementById('iteminput').blur()
-            router.push(`/c/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
+            router.push(`/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
           
          }else{
          
@@ -273,7 +273,7 @@ const SearchContainer = (props) => {
            
          </div>
          
-         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)  ; document.getElementById('iteminput').blur() ;router.push(`/c/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
+         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)  ; document.getElementById('iteminput').blur() ;router.push(`/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
        
        </div>
        

@@ -68,7 +68,7 @@ const bidtask = () =>{
 		
             <Card variant='outlined'  style={{ margin:0.4+"vw"}} >
                 {/*<div name="name">{props.name}</div>*/}
-                <div onClick={() =>{ console.log(props.taskobj) ;pushtask(props.taskobj) ; router.push("/p/taskpage") }}>
+                <div onClick={() =>{ console.log(props.taskobj) ;pushtask(props.taskobj) ; router.push("/taskpage") }}>
                 <CardMedia
         component="img"
         style={{ maxHeight:70+"vw" , minHeight:40+"vw",  objectFit:"contain" , backgroundColor: "lightgrey" }}

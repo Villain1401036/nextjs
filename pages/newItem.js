@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import React, { useState } from 'react'
-import ButtonAppBar, { NameHead } from '../../components/headbar'
+import ButtonAppBar, { NameHead } from '../components/headbar'
 
-import { Shopname } from '../../constants'
+import { Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { Itemform } from '../../components/create'
+import { Itemform } from '../components/create'
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +65,7 @@ const router = useRouter();
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 
-		<NameHead label="Post Item" onClick={()=> router.back() } onHomeClick={()=>{router.push('/p/home')}} /> 
+		<NameHead label="Post Item" onClick={()=> router.back() } onHomeClick={()=>{router.push('/home')}} /> 
 
 			 <div className={classes.contentArea}>
 			 <div className={classes.root} >

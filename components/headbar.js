@@ -247,7 +247,7 @@ return (
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
-          <Button onClick={()=> {authContext.accounttype? router.push("/c/home"):router.push("/p/home")}}>
+          <Button onClick={()=> {authContext.accounttype? router.push("/home"):router.push("/home")}}>
 					{/*<img src={headerimg} className={classes.logo} />*/}
 
           <Typography variant="h6" className={classes.title}>
@@ -266,13 +266,13 @@ return (
             <>
             
 					
-            { !props.disablesearchbar && <div className={classes.search }  onClick={()=>router.push("/c/searchpage")}>
+            { !props.disablesearchbar && <div className={classes.search }  onClick={()=>router.push("/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> }
             
 					
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
-           {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/c/searchpage")}} /></div> */}
+           {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/searchpage")}} /></div> */}
         
             <>{
               locfocus? <div><InputBase
@@ -295,7 +295,7 @@ return (
            
             <div
               style={{overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color: CLR_RCARD2 , padding: 5+"px" , flex:1, textAlign:"center"}}
-              onClick={()=>{ router.push('/c/searchpage');
+              onClick={()=>{ router.push('/searchpage');
                 setLocfocus(true) } } 
             >{location}</div>
 
@@ -360,10 +360,10 @@ if (authContext.accounttype == true){
      <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
     
       
-     <div className={classes.type} >   user   </div>
+     {/* <div className={classes.type} >   user   </div>
      <div  style={{display:"flex",justifyContent:"center",alignItems:"center"}} >
-      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/p/home")}}></Switch>
-     </div>
+      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
+     </div> */}
       </div>: <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} ></div>
       }
 
@@ -372,12 +372,12 @@ if (authContext.accounttype == true){
       {authContext.isLoggedIn ?
       <>
       <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/c/profile")}}>{user.name}</span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
       
       </>:
 <>
 <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ router.push('/login') }} >{"login"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/c/profile")}}></span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}></span> 
 </>
 }
 
@@ -386,20 +386,20 @@ if (authContext.accounttype == true){
   { authContext.isLoggedIn && <>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/wishlist")}}>{"wishlist"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/wishlist")}}>{"wishlist"}</div>
     </div>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
     </div>
 
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/address")}}>{"address"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/address")}}>{"address"}</div>
     </div>
 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/settings")}}>{"settings"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/settings")}}>{"settings"}</div>
     </div >
     </>
       }
@@ -410,7 +410,7 @@ if (authContext.accounttype == true){
     </>
      }
     {/* <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/searchpage")}}>{"searchpage"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/searchpage")}}>{"searchpage"}</div>
     </div> */}
     </div>
   );
@@ -418,30 +418,26 @@ if (authContext.accounttype == true){
 else{
   return (
     <div className={classes.drawerroot}>
-   <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}>
-   <img style={{width:100+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
-      <span style={{ marginTop:8+"vw"}}>MOR</span>
+   <div style={{ display:"flex"  ,marginBlock:"5vh",justifyContent:"center", color:CLR_RCARD2}}>
+   <img style={{width:50+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
+      <div style={{ marginTop:8+"vw",textAlign:"bottom"}}>MOR</div>
    </div>
       
      <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
        
      
-      <div className={classes.type} >   work    </div>
-      <div  style={{display:"flex",justifyContent:"center",alignItems:"center"}} >
-      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/c/home")}}></Switch>
-      </div>
       </div>
 
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
       <>
       <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/p/profile")}}>{user.name}</span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
       
       </>:
 <>
 <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ router.push('/login') }} >{"login"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/p/profile")}}></span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}></span> 
 </>
 }
 
@@ -449,21 +445,50 @@ else{
 
 
     {/* <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/c/orders")}}>{"orders"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
     </div> */}
 {/* 
     <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/dashboard")}}>{"Dashboard"}</div>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/dashboard")}}>{"Dashboard"}</div>
     </div> */}
-    <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/bookingreqpage")}}>{"Requests"}</div>
+
+<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}>
+    {/* <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div> */}
     </div>
-    <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/settings")}}>{"settings"}</div>
-    </div >
-    <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/p/newItem")}}>{"Post Item"}</div>
+<>
+
+<div className={classes.drawButt}>
+<div className={classes.drawButtinner} onClick={()=>{router.push("/wishlist")}}>{"wishlist"}</div>
+</div>
+
+<div className={classes.drawButt}>
+<div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
+</div>
+
+
+<div className={classes.drawButt}>
+<div className={classes.drawButtinner} onClick={()=>{router.push("/address")}}>{"address"}</div>
+</div>
+
+<div className={classes.drawButt}>
+<div className={classes.drawButtinner} onClick={()=>{router.push("/settings")}}>{"settings"}</div>
+</div >
+</>
+
+
+<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}>
+    {/* <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div> */}
     </div>
+
+    
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div>
+    </div>
+   
+    <div className={classes.drawButt}>
+    <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
+    </div>
+    
     </div>
   );
 }

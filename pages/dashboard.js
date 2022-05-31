@@ -1,8 +1,8 @@
 
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react'
-import ButtonAppBar, { NameHead } from '../../components/headbar';
-import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
+import ButtonAppBar, { NameHead } from '../components/headbar';
+import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes';
 
 
 const useStyles = makeStyles((theme) => ({    
@@ -83,7 +83,7 @@ export default function SignupPage(props){
       
 
 
-<NameHead label="Dashboard" onClick={()=> router.back() } onHomeClick={()=>{router.push('/p/home')}} /> 
+<NameHead label="Dashboard" onClick={()=> router.back() } onHomeClick={()=>{router.push('/home')}} /> 
          
         <div style={{marginTop:8+"vw",padding:2+"vw"}}>
 

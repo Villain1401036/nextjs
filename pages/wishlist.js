@@ -1,21 +1,21 @@
 import Head from 'next/head'
 import React, { useContext, useState } from 'react'
-import ButtonAppBar from '../../components/headbar'
-import Footer from '../../components/footer'
+import ButtonAppBar from '../components/headbar'
+import Footer from '../components/footer'
 
 import { useRouter } from 'next/router'
 
-import { onRefresh, Shopname } from '../../constants'
+import { onRefresh, Shopname } from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
-import { AccountContext, AuthContext } from '../../context'
-import LoginPage from '../login'
-import Latestitem from '../../components/containers/latestitem'
-import { checktokensexpiry } from '../../utils'
-import { getlocal } from '../../localstore'
+import { AccountContext, AuthContext } from '../context'
+import LoginPage from './login'
+import Latestitem from '../components/containers/latestitem'
+import { checktokensexpiry } from '../utils'
+import { getlocal } from '../localstore'
 import ItemPage from './itempage'
-import WishlistItem from '../../components/containers/wishlistitem'
+import WishlistItem from '../components/containers/wishlistitem'
 
 
 

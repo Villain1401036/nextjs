@@ -62,7 +62,7 @@ export default function Logincomponent(props){
 
     
       // getuserdata(idtype , email).then((value)=>{
-      //   router.push(`/c/home`)
+      //   router.push(`/home`)
       // })
         
       })
@@ -139,7 +139,7 @@ if (isloaded && isSignInWithEmailLink(auth, window.location.href)) {
       console.log("logged in");
       window.localStorage.removeItem('emailForSignIn');
 
-      router.push('/c/home')
+      router.push('/home')
       // You can access the new user via result.user
       // Additional user info profile not available via:
       // result.additionalUserInfo.profile == null

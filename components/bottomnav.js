@@ -31,18 +31,18 @@ const EBottomNavigationAction = styled(BottomNavigationAction)(`
           
     }}>
  
-       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>{(authContext.accounttype?router.push('/c/home'):router.push('/p/home'))}} >
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>{(authContext.accounttype?router.push('/home'):router.push('/home'))}} >
          <FaHome size={25} />
        </div>
-       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/settings')}  >
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/settings')}  >
          <FaCog size={25} />
        </div>
        
-       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/profile')}  >
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/profile')}  >
          <FaUser size={25} />
        </div>
      
-       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/c/home')} >
+       <div style={{display:"flex",flex:1,justifyContent:"center",alignItems:"center"}} onClick={()=>router.push('/home')} >
          <FaHome size={25} />
        </div>
 
