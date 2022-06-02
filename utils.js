@@ -6,6 +6,15 @@ import { geturlFormdata, onRefresh, siterooturl } from './constants';
 import { getlocal, storelocal, storeobjlocal } from './localstore';
 import { getdata, getTokens, refreshTokens } from './networking/getdata';
 
+export const sortlist = (list, sortkey) =>{
+   list.sort((a,b) => { return b[sortkey] - a[sortkey] } )
+   return list
+}
+
+export const sortmap = {
+   "price increasing":"price",
+   "price decreasing":"price desc"
+}
 
 export const checktokensexpiry = async (atoken,aexpiry,rexpiry) =>{
     var now = new Date().getTime()

@@ -247,13 +247,15 @@ return (
              <Drawercomponent />
 				          </Drawer>
           </IconButton>
-          <Button onClick={()=> {authContext.accounttype? router.push("/home"):router.push("/home")}}>
-					{/*<img src={headerimg} className={classes.logo} />*/}
+
+          <img src='/images/SMOR-192.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.reload()}}></img>
+          {/* <Button onClick={()=> {authContext.accounttype? router.push("/home"):router.push("/home")}}>
+					
 
           <Typography variant="h6" className={classes.title}>
             {props.itemName }
           </Typography>
-          </Button>
+          </Button> */}
              {/* {
                authContext.accounttype?
              <Button  className={classes.createbtn} onClick={()=>{router.push("/newTask")}}>create Task</Button>
@@ -273,7 +275,7 @@ return (
 					
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
            {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/searchpage")}} /></div> */}
-        
+         { props.placebutt &&
             <>{
               locfocus? <div><InputBase
               placeholder="Location"
@@ -303,6 +305,8 @@ return (
 
             }
             </>
+          }
+
                </div>
 				 </>
           }
@@ -371,7 +375,7 @@ if (authContext.accounttype == true){
 
       {authContext.isLoggedIn ?
       <>
-      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token");localStorage.removeItem("userdata") ;authContext.logout() }} >{"logout"}</span>
       <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
       
       </>:
@@ -431,7 +435,7 @@ else{
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
       <>
-      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token") ;authContext.logout() }} >{"logout"}</span>
+      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); localStorage.removeItem("userdata");authContext.logout() }} >{"logout"}</span>
       <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
       
       </>:

@@ -65,7 +65,7 @@ const classes = useStyles();
   const [save,setSave] = React.useState(props.fav);
  const router = useRouter();
 
- console.log( props.itemobj.itemKey ,props.fav);
+//  console.log( props.itemobj.itemKey ,props.fav);
  React.useEffect (()=>{
 
 

@@ -46,6 +46,7 @@
     "protoc": "^1.0.4",
     "qrcode": "^1.5.0",
     "react": "^17.0.2",
+    "react-autowhatever": "^10.2.1",
     "react-bootstrap": "^2.1.1",
     "react-dom": "16.13.1",
     "react-google-login": "^5.2.2",

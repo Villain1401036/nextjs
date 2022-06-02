@@ -18,6 +18,6 @@ export const AuthContext = createContext({
        accounttype = at ;
     },
     login: () => {isLoggedIn = true  },
-    logout: () =>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); isLoggedIn = false },
+    logout: () =>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); localStorage.removeItem("userdata") ; isLoggedIn = false },
 });
 

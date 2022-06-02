@@ -1,9 +1,11 @@
 
 import React, { useEffect, useState } from 'react'
 
+import Autowhatever from "react-autowhatever";
+
 import { makeStyles } from '@material-ui/core/styles';
 import { getdata, getdata_post } from '../../networking/getdata';
-import { Button, Chip, Slider, TextField } from '@material-ui/core';
+import { Button, Chip, InputBase, Slider, TextField } from '@material-ui/core';
 
 import { callwithcache, convertToJson, geturlFormdata, latestworkobj, setValuesfrommap } from '../../constants';
 import { Col, Form, FormGroup, Modal, Nav, Row, Tab, Tabs } from 'react-bootstrap';
@@ -15,17 +17,22 @@ import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 import router from 'next/router';
 import Footer from '../footer';
 import { MdClear } from 'react-icons/md';
-import { getuserdata } from '../../utils';
+import { getuserdata, sortlist, sortmap } from '../../utils';
+import FilterTabbar from '../filtertabbar';
+import Wsocket from '../../Wsocket';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , 
   height:window.innerWidth*.15 , backgroundColor:"white", alignItems:"center",
-  zIndex:2900,
+  zIndex:2900,  flex:1,
   '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
-    height:window.innerWidth*.1
+    height:window.innerWidth*.05
   },
   '@media (min-width:800px)': { // eslint-disable-line no-useless-computed-key
-    height:window.innerWidth*.05
+    // height:window.innerWidth*.05
   },
   '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
     
@@ -33,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   ,
   itemsbucket:{
     zIndex:0,
-    height:window.innerHeight - window.innerWidth*.15,
+    height:window.innerHeight - window.innerWidth*(.15 + .15),
     
     // height:window.outerHeight - window.outerWidth*.15,
     // marginTop:window.innerHeight*.15,
@@ -55,14 +62,14 @@ const useStyles = makeStyles((theme) => ({
       
 
       // overflow:"scroll",
-      height:window.innerHeight - window.innerWidth*.1,
+      height:window.innerHeight - window.innerWidth*(.05+.05),
     
     },
     
     '@media (min-width:800px)': { // eslint-disable-line no-useless-computed-key
       
       // overflow:"scroll",
-      height:window.innerHeight - window.innerWidth*.05,
+      // height:window.innerHeight - window.innerWidth*(.1+.05),
       
       
       "*":{
@@ -80,6 +87,12 @@ const useStyles = makeStyles((theme) => ({
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
       
+    }
+  },
+  poplist:{
+    top:window.innerWidth*.16 ,
+    '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+      top:window.innerWidth*.05 ,
     }
   }
 }));
@@ -126,12 +139,31 @@ export default function Latestitem(props){
       // router.events.on('routeChangeStart', handleRouteChange)
      
        if (!loaded){
-        getuserdata("email",getobjlocal("userdata")[0]["email"])
+        // console.log(getlocal("userdata"));
+        // console.log(getlocal("access_token"));
+        // console.log(getlocal("refresh_token"));
+         if(getlocal("userdata") != undefined){
+          //  console.log(getlocal("userdata"));
+          //  console.log(getlocal("access_token"));
+          //  console.log(getlocal("refresh_token"));
+           getuserdata("email",getobjlocal("userdata")[0]["email"])
+       }else{
+        console.log("no user LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+       }
+        
         loadmore(filter);
        setLoaded(true)
        taskmap.clear()
 
        }
+
+       window.onpopstate = ()=> {
+       
+          // console.log("fuck me 2 times");
+        //   router.push()
+        
+      
+        }
      
     });
     
@@ -156,9 +188,9 @@ export default function Latestitem(props){
 
     const loadmore =  (f , applyfill ) =>{
       //call the function to update with the latest tasks
-
-      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":getlocal("category") , "place" : getlocal("place").split(",")[0] , "xtime": xtime} , {} )
-      var url = urlForm.url
+   /// sorts - price ++ , price -- , 
+      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":( getlocal("category") != null ? getlocal("category").split(",")[0] : "clothes" ) , "place" : ( getlocal("place") != null ? getlocal("place").split(",")[0] : "jharkhand" ) , "xtime": xtime} , {} )
+      var url = urlForm.url + (getlocal("sortorder") != null ? `&sortby=${sortmap[getlocal("sortorder")]}`:"")
        //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
        var formdata = makeformdata(navsdataclothes)
@@ -167,6 +199,7 @@ export default function Latestitem(props){
       if ( applyfill != undefined ){
         console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");
         formdata.set("created_at|bigint|<",xtime)
+        // formdata.set("price")
       }
       
       
@@ -220,13 +253,19 @@ export default function Latestitem(props){
       
       // const filllatest =  fill_pairs(tasklist).map( (item) => <div key={item[0].itemId} style={{display:"flex"}}><div style={{width:"50vw"}}> <Itemcard key={item[0].itemId}  name={item[0].itemId} itemobj={item[0]} description={item[0].description} place={item[0].place} price={item[0].price} scheduled_at={item[0].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div><div style={{width:"50vw"}}>  <Itemcard key={item[1].itemId}  name={item[1].itemId} itemobj={item[1]} description={item[1].description} place={item[1].place} price={item[1].price} scheduled_at={item[1].scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard></div></div>   )
    
+  const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{if(e !== ""){setItem(e.split("*")) }else{ setItem([]) }  }));
       
-      const wishdata = convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]
+      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
       console.log(wishdata);
-      console.log(wishdata.includes(654));
+     
+      
 
       const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
       
+
+      const [item , setItem] = useState([]);
+      const [itemfill , setItemfill] = useState();
+
       const filterplace = <Filterbox name={filter.place}/> 
       const filterdistance = <Filterbox name={filter.distance}/> 
       const filtertags =   filter.tags.split("~").map( (item) => <Filterbox key={item} name={item}/> )
@@ -245,7 +284,7 @@ export default function Latestitem(props){
         
         if (listInnerRef.current) {
           const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-          console.log(scrollHeight , clientHeight + scrollTop);
+          // console.log(scrollHeight , clientHeight + scrollTop);
           // console.log(scrollHeight , clientHeight + scrollTop);
           if (scrollTop + clientHeight +1  > scrollHeight   ) {
             // TO SOMETHING HERE
@@ -286,8 +325,8 @@ export default function Latestitem(props){
 
 
       const [navsdataclothes , setNavsdataclothes] = useState({
-        "price":{ type:"chip" , data:[{"label":"123123", selected:false },{"label":"12313", selected:false }] , datatype:"integer" , operation:"<",ismeta:false},
-        "distance":{ type:"check" , data:[{"label":"433", selected:false },{"label":"4334", selected:false }] , datatype:"integer" , operation:"<",ismeta:false },
+        "price":{ type:"chip" , data:[{"label":"123", selected:false },{"label":"200", selected:false }] , datatype:"integer" , operation:"<",ismeta:false},
+        "distance":{ type:"check" , data:[{"label":"20", selected:false },{"label":"200", selected:false }] , datatype:"integer" , operation:"<",ismeta:false },
         
         "tags":{ type:"chip" , data:gettags(tagsarr) , datatype:"array" , operation:"&&",ismeta:false},
         "color":{type:"chip" , data:gettags(colorarr) , datatype:"in-array" , operation:"??", ismeta:true }
@@ -332,34 +371,107 @@ export default function Latestitem(props){
               
               }
 
-
+    const reload = () =>{
+      document.getElementById('iteminput').blur() ;
+      taskmap.clear() 
+      
+      // wsitem.close();
+      document.getElementById('iteminput').blur()
+      document.getElementById('iteminput').value = ''
+      setItem([])
+      if(tasklist.length > 0 ){
+       listInnerRef.current.scrollTop = 0
+      }
+      
+      loadmore(filter);
+      router.push(`/itemswindow?place=${getlocal("place")}&item=${getlocal('category')}`)
+    }
+            
+         
 	return(
     <>
-		<div style={{backgroundColor:'white' ,  justifyContent:"center"  }} onScroll={ ()=>{console.log("top elem") }}   >
+		<div style={{backgroundColor:'white' ,  justifyContent:"center"  }} onScroll={ ()=>{ }}   >
                 
-             
+              
               <div className={classes.appbar}>
               
-              <FaArrowLeft color={CLR_HEAD}   style={{  height:50+"%" ,width:10+"%"}} onClick={()=>{router.back()}}/>
+              <FaArrowLeft color={CLR_HEAD}  style={{  height:50+"%" ,marginInline:4+"%"}} onClick={()=>{router.back()}}/>
                
-              <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span> 
+              {/* <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span>  */}
+              <img src='/images/SMOR-192.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.push('/home')}}></img>
               
-              <div style={{ height:100+"%" , width:100+"%", display:"flex" ,flexDirection:"row-reverse" ,flex:1 , alignItems:"center"}}>
+          <div style={{flex:1,display:"flex" , flexDirection:"column" , justifyContent:"flex-start" , height:"100%"}}>
+         <div style={{flex:1 , minWidth:50+"vw" ,marginInline:"2vw" ,backgroundColor:"lightgrey",flexDirection:"row",display:"flex", justifyContent:"flex-start", alignItems:"center",  marginBlock:5+"%" ,borderRadius:7+"vw"}}>
+            
+             <div  name='search' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}} ><FaSearch color={CLR_HEAD}  /></div>
+
+           <InputBase placeholder='Looking for ...' id='iteminput'  
+           style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 }}  
+          //  autoFocus 
+           onFocus={()=>{wsitem.connect() }} 
+           onChange={(e)=>{if (e.target.value.length >= 0) {wsitem.send(e.target.value);setItemfill(e.target.value) ; console.log(e.target.value);}}}
+           onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+            wsitem.close();
+            console.log("enter");
+            console.log(itemfill);
+            storelocal( "category",itemfill) ;
+            document.getElementById('iteminput').blur()
+            router.push(`/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
+          
+         }else{
+         
+         }}}
+           ></InputBase>
+          {item.length > 0 ? <div className={classes.poplist} style={{ position:"absolute",  width:50+"vw" , borderRadius:2+"vw" , backgroundColor:"lightgrey" ,border:"1px solid lightgrey",  display:"flex", flexDirection:"column",overflow:"scroll"}}>
+            {item.map((v)=> 
+            <SearchResbut value={v} 
+            onClick={(e)=>{ storelocal( "category",e)  ;
+             document.getElementById('iteminput').blur() ;
+             taskmap.clear() 
+             
+             wsitem.close();
+             document.getElementById('iteminput').blur()
+             document.getElementById('iteminput').value = ''
+             setItem([])
+             if(tasklist.length > 0 ){
+              listInnerRef.current.scrollTop = 0
+             }
+             
+             loadmore(filter);
+             router.push(`/itemswindow?place=${getlocal("place")}&item=${getlocal('category')}`)
+            }
+            }
+             ></SearchResbut>)
+             }</div>:<></>}
+       
+           </div>
+           
+           
+           </div>
+
+              <div style={{ height:100+"%" ,  display:"flex" , flex:1 , flexDirection:"row-reverse", alignItems:"center"}}>
+           
               
-                <FaFilter color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>setFilteropen(true)}/>
+                  <FaFilter color={CLR_HEAD} style={{  height:50+"%" ,width:50+"%" , marginInline:2+"vw" }} onClick={()=>setFilteropen(true)}/>
                
-                  <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.push('/searchpage')}}/> 
-                 </div>
-               
+                  {/* <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.push('/searchpage')}}/> */}
+
+                
+              </div>
+
                </div>
+
                
+               <FilterTabbar onfilterChange={()=>{ console.log("asdhaosidj;askd'");reload()  }} />
+              
              { tasklist.length > 0 ?
                  <div ref={listInnerRef} className={classes.itemsbucket}  id="itemswin" onScroll={() => {onScroll()}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
-
+      
+                
              
 
         </div>
-             <Modal onHide={()=>{setFilteropen(false)}} style={{zIndex:2000 , flexDirection:"column-reverse",display:"flex" }}  show={filteropen}  
+             <Modal onHide={()=>{setFilteropen(false)}} style={{zIndex:5000 , flexDirection:"column-reverse",display:"flex" }}  show={filteropen}  
              
              children={
              
@@ -375,6 +487,7 @@ export default function Latestitem(props){
 
 
 }
+
 
 function Filterbox(props){
   return(
@@ -681,11 +794,8 @@ function makearrstr (arr){
 function makeformdata(filters){
   const applyfilter = {}
   const filterslist =  Object.keys(filters)
-  
 
   var formdata = new FormData();
-  
- 
 
   for (let j = 0; j < filterslist.length; j++) {
 
@@ -729,4 +839,14 @@ function makeformdata(filters){
 
   formdata.append("created_at|bigint|<", 999999999999)
   return formdata
+}
+
+
+function SearchResbut(props){
+
+  return(
+      
+      <div  onClick={()=>{ console.log(props.value); props.onClick(props.value); }} style={{ borderBottom:"1px solid lightgrey" , width:100+"%", backgroundColor:"white", padding:20}}>{props.value}</div> 
+          
+  );
 }

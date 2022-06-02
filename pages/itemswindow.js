@@ -96,13 +96,7 @@ React.useEffect(()=>{
         setIsLoaded(true);
 	}
 
-	window.onpopstate = ()=> {
-		if(isloaded) {
-		  console.log("fuck me");
-		//   router.push()
-		}
-  
-	  }
+
 // onRefresh(authContext);
 
 })  
