@@ -15,7 +15,7 @@ import InputBase from '@material-ui/core/InputBase';
 
 
 
-import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, } from '../themes.js'
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3, } from '../themes.js'
 
 import router, { useRouter } from 'next/router';
 import { AuthContext } from '../context';
@@ -50,6 +50,8 @@ logo:{
     boxShadow:0+"vw",
     elevation: 0,
     width:100+"vw" ,
+    height: 30+"vw",
+    borderBottom:"1px solid "+CLR_RCARD3,
     backgroundColor: CLR_HEAD,
 		// height:10+"vw",
     boxShadow: "0px 0px",
@@ -57,7 +59,7 @@ logo:{
       height: 5+"vw"
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
-      height: 15+"vw"
+      // height: 15+"vw"
     }
 
 	},
@@ -90,11 +92,12 @@ logo:{
   	elevation: 0,
     width:100+"vw" ,
 		backgroundColor: CLR_HEAD,
+    height:100+"%",
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       height: 5+"vw"
     },
     '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
-      height: 15+"vw"
+      // height: 15+"vw"
     }
 
 	},
@@ -248,7 +251,7 @@ return (
 				          </Drawer>
           </IconButton>
 
-          <img src='/images/SMOR-192.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.reload()}}></img>
+          <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.reload()}}></img>
           {/* <Button onClick={()=> {authContext.accounttype? router.push("/home"):router.push("/home")}}>
 					
 

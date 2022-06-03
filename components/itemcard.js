@@ -154,7 +154,7 @@ const heightimage = () =>{
 
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;
-           router.push(`/itempage`)
+           router.push(`/itempage?itemkey=${props.itemobj.itemKey}` ,`/itempage?itemkey=${props.itemobj.itemKey}` , {shallow:true})
            
            }}    
       /></div>

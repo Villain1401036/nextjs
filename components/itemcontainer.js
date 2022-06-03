@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ButtonAppBar from './headbar'
 import Image from 'next/image'
 
-import { convertToJson, getitemonpage, geturlFormdata, s3rooturl, Shopname } from '../constants'
+import { callwithcache, convertToJson, getitemonpage, geturlFormdata, s3rooturl, Shopname ,setValuesfrommap} from '../constants'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -15,12 +15,18 @@ import { LocalizationProvider, MobileDatePicker, MobileDateRangePicker } from '@
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { postdata } from '../networking/postdata';
 import { style } from '@mui/system';
-import { getdata } from '../networking/getdata';
+import { getdata, getdata_post } from '../networking/getdata';
 import Footer from './footer';
 import { getlocal, getobjlocal, storelocal } from '../localstore';
 import { AuthContext } from '../context';
 import Login from './googlelogin';
 import LoginPage from '../pages/login';
+import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes'
+import { FaMapMarkedAlt, FaMapMarkerAlt } from 'react-icons/fa'
+import MapPage from '../pages/mappage'
+import Latestitem from './containers/latestitem'
+import { getuserdata, sortmap } from '../utils'
+import Itemcard from './itemcard'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,6 +105,9 @@ export default function Itemcontainer(props){
 const [openbid , setOpenbid] = useState(false); 
 const [openbook , setOpenbook] = useState(false); 
 
+
+const [currentloc ,setCurrentloc] = React.useState(null)
+
 const [startdate, setStartdate] = React.useState(Date());
 const [enddate, setEnddate] = React.useState(Date());
 
@@ -115,10 +124,11 @@ const [isbooked , setIsbooked] = useState();
 const [bookings,setBookings] = useState();
 const classes = useStyles();
 
+const [request , setRequest] = useState(false);
 
 const authContext = useContext(AuthContext);
 
-
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const [isloaded,setIsloaded] = React.useState(false);
 
@@ -230,6 +240,14 @@ const images = (list) =>  {
 )
 }
 
+const tolocaltime = (d) =>{
+  var date = new Date(0);
+  console.log(Date.parse(d));
+  date.setUTCMilliseconds(Date.parse(d) - (date.getTimezoneOffset()*60*1000 ))
+  console.log(date);
+  return date
+}
+
 
 const biditem = (item_key,customer_key,bidprice,bid_message) =>{
 
@@ -266,7 +284,7 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
    setFetching(true);
   
   var urlForm = geturlFormdata("booking","create",{},{})
-  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested") }).catch((e)=>{   
+  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested");setValue([null,null]);setRequest(false) ;setFetching(false);}).catch((e)=>{   
    
 
   
@@ -378,7 +396,7 @@ return(
       </Dialog>
 
 <Dialog
-        open={openbook}
+        open={false}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -401,71 +419,7 @@ return(
 
   {fetching?<><div id="booking_title">Booking in Progress</div></>:
     < >
-    
-     
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-       
-      <MobileDateRangePicker
-      
-      
-      allowSameDateSelection={false}
-        disablePast
-        //disableCloseOnSelect
-        startText="Book from"
-        endText="Book to"
-        value={value}
-        onChange={(newValue) => {
-     
-           
-           
-            console.log(newValue);
-            
-            console.log(newValue[0].getTimezoneOffset());
 
-            setValue(newValue)
-          
-        }}
-      
-        shouldDisableDate={ddate}
-        renderInput={(startProps, endProps) => (
-
-          <React.Fragment>
-            
-            {/* <div>from : {startProps.inputProps.value}</div>
-            <div>to : {endProps.inputProps.value}</div> */}
-            { value[1] != null &&
-            <>
-             <Button style={{width:"100%"}} onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
-             <Button style={{width:"100%"}} onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Change Dates</Button>
-             </>
-             }
-            <div style={{border:"1px solid grey",borderRadius:"10px",width:100+"%"}} onClick={()=>{ startProps.inputProps.onClick() }}>Check Availablity</div>
-          
-            {/* <Box sx={{ mx: 2 }}> to </Box>
-            <TextField {...endProps} /> */}
-          </React.Fragment>
-        
-        )}
-      />
-		  {/* <MobileDatePicker
-          label="fromdate"
-          value={startdate}
-          onChange={(newValue) => {
-            setStartdate(newValue);
-            
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-
-      <MobileDatePicker
-          label="tilldate"
-          value={enddate}
-          onChange={(newValue) => {  
-            setEnddate(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
-		</LocalizationProvider>
     </> }
         </DialogActions>
 		</>
@@ -477,38 +431,436 @@ return(
 
 			}
       </Dialog>
+      
 <div className={classes.itemcontainer}>
+
+
+<LocalizationProvider dateAdapter={AdapterDateFns}>
+       
+       <MobileDateRangePicker
+       
+       onAccept={()=>{console.log("ok request"); setRequest(true)}}
+       allowSameDateSelection={false}
+         disablePast
+         //disableCloseOnSelect
+         startText="Book from"
+         endText="Book to"
+         value={value}
+         onChange={(newValue) => {
+      
+            
+            
+             console.log(newValue);
+             
+             console.log(newValue[0].getTimezoneOffset());
+ 
+             setValue(newValue)
+           
+         }}
+       
+         shouldDisableDate={ddate}
+         renderInput={(startProps, endProps) => (
+ 
+           <React.Fragment>
+             
+             { 
+             <>
+              
+              
+              <Dialog
+        open={request}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+		style={{textAlign:"center"}}
+    PaperProps={{style:{minWidth:90+"vw", minHeight:40+"vh"}}}
+      >
+		  { authContext.isLoggedIn ?
+		  <>
+        <DialogTitle id="alert-dialog-title">
+          {itemdata.description}
+        </DialogTitle>
+		
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description" style={{borderBottom:"1px solid lightgray"}}>
+           <>{ `${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</>
+              { `${(value[0] != null? tolocaltime(value[0]).getDate():"")} ${(value[0] != null?months[value[0].getMonth()]:"")} - ${(value[1] != null?value[1].getDate():"")} ${(value[1] != null?months[value[1].getMonth()]:"")}`  }
+              <DialogContentText style={{width:"100%", color:"blue"}} onClick={()=>{ startProps.inputProps.onClick()}} >Change</DialogContentText>
+          </DialogContentText >
+
+		<div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+
+    	<div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+
+    	<div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+       
+    <div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+       
+    <div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+       
+    <div style={{display:"flex" , flex:1 , padding:10 }} ><div style={{display:"flex", flex:1}}>{itemdata.deno} {itemdata.price} X {`${(value[1] != null? (value[1].getDate() - value[0].getDate()):"" )} Days   `  }</div>
+    <div style={{display:"flex", flex:1 , justifyContent:"end"}}>{itemdata.deno} {itemdata.price *(value[1] != null? (value[1].getDate() - value[0].getDate()):0) }</div></div>
+       
+
+        </DialogContent>
+        <DialogActions> 
+
+  {fetching?<><div id="booking_title">Booking in Progress</div></>:
+    < >
+            <Button style={{width:"100%"}} onClick={()=>{  bookitem(itemdata.itemKey,getobjlocal("userdata")[0].userkey,itemdata.customerKey,itemdata.price,itemdata.place, Date.parse(startdate), Date.parse(enddate)) }} autoFocus>Request to Book</Button>
+            
+              
+    </> }
+        </DialogActions>
+		</>
+           :
+           <>
+           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.push('/login')}}>Login</span> to continue </div>
+           
+           </>
+
+			}
+      </Dialog>
+              </>
+              }
+            {!request  && <div style={{ zIndex:100000, position:"fixed" , height:15+"vw", bottom:0 , backgroundColor:"white", width:"100vw", display:"flex" , flex:1 , justifyContent:"center", alignItems:"center"}}><div className='btn' style={{backgroundColor:CLR_HEAD , color:"white" , width:"80%" , borderRadius:"15px" }} onClick={()=>{startProps.inputProps.onClick()}}>        Check Availablity         </div></div>
+         }
+           </React.Fragment>
+         
+         )}
+       />
+ 
+     </LocalizationProvider>
+
 { isloaded && <Carousel className={classes.carousel} style={{height: heightimage() , width:widthtimage() }} onClick={()=>{}}  wrap={false}>
   
 {images(convertToJson(itemdata.metadata).images)}
 
 </Carousel>}
 
-       <div style={{margin:3+"vw"}}> 
-        <div>{"name:"}{itemdata.name}</div>
+       <div style={{margin:3+"vw" }}>
+         
+        <div style={{fontSize:10+"vw"}}>{(itemdata.name != undefined ?itemdata.name:"ITEM Name")}</div>
+
+        <div style={{marginTop:3+"vw" , display:"flex", flex:1 , width:"100%" , marginBlock:"2vh"}}>
+
+          
+          <div style={{fontWeight:"bold", textAlign:"center",display:"flex",flexDirection:"column" ,border:"1px solid grey" , borderRadius:"3px",marginInline:10+"Vw",padding:1+"vw" , justifyContent:"center" , flex:1}}>
+          <div >Daily</div>
+          <div style={{fontWeight:"bold",display:"flex",justifyContent:"center" ,flex:1}}>
+          <div>{itemdata.deno}</div>
+          <div>{itemdata.price}</div>
+          </div>
+          </div>
+
+          <div style={{fontWeight:"bold", textAlign:"center",display:"flex",flexDirection:"column" ,border:"1px solid grey" , borderRadius:"3px",marginInline:10+"Vw",padding:1+"vw" , justifyContent:"center" , flex:1}}>
+          <div >7+ days</div>
+          <div style={{fontWeight:"bold",display:"flex",justifyContent:"center" ,flex:1}}>
+          <div>{itemdata.deno}</div>
+          <div>{itemdata.price}</div>
+          </div>
+          </div>
+
+
+        </div>
+				 
         <div style={{fontWeight:"bold"}}>Description</div>
+         <div>{itemdata.categoryList[0]}</div>
 				 <div>{itemdata.description}</div>
 				 
-				 <div style={{marginTop:5+"vw" ,}}><span style={{fontWeight:"bold"}}>Price : </span><span>{itemdata.price}</span> <span>{itemdata.deno}</span></div>
-				 <div>{itemdata.negotiable?<>it's negotiable , Place your bid</>:<>(Sorry the price is not negotiable)</>}</div>
-        {
+         <div style={{fontWeight:"bold"}}>Location</div>
+         <div style={{fontSize:8+"vw"}} onClick={()=> navigator.geolocation.getCurrentPosition((d)=>{console.log(d); setCurrentloc(d.coords)},(e)=>{console.log(e); } ,{frequency:5000,  enableHighAccuracy: true  ,timeout:10000,} )  }  >Set L<FaMapMarkerAlt />cation</div>
+ 
+ {currentloc != null &&  <div style={{width:100+"%" , height:"20vh"}}><MapPage currentloc={currentloc} /></div>}
 
-        }
-				 <Button className={classes.butt} onClick={()=>{ setOpenbook(true)}}  >Request to book </Button>
-				 <div>{itemdata.negotiable?<Button onClick={()=>{ setOpenbid(true)}} >place bid</Button>:<></>}</div>
-
-				{/* <div><button onClick={()=>{ open(convertToJson(itemdata.metadata).buylink) }}  >buy here</button></div> */}
+       <div id="ownerbox" style={{display:"flex" , flexDirection:"column" ,flex:1 }} >
+       <div style={{fontWeight:"bold"}}>Owned By</div>
+         <div style={{display:"flex" , flex:1 , height:20+"vh"}}>
+         <div style={{display:"flex" , flex:1 , height:20+"vh"}}>
+         <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"contain"}} onClick={()=> {router.reload()}}></img>
+         </div>
+           <div>
+         <div className='btn' style={{display:"flex" , flex:1 }}>ownerName</div>
+         <div className='btn'>Typically replies in <span>x time</span></div> 
+         </div>
+         </div>
+         <div  style={{display:"flex" ,  justifyContent:"center" , height:"14vw" ,alignItems:"center" ,border:"1px solid"+CLR_RCARD1 , borderRadius:"10px" }}>Contact</div>
+         
+         </div>
+        
         </div>
 
+        
+         
+
         </div>
+         
+
+        <SimilarItems />
+        <ItemsbyOwner itemownerkey={itemdata.customerKey}/>
         <Footer />
-				
+
+      	
 		</div>
     :<></>}
 
     </>
 	);
 
+
+
+}
+
+const taskmap = new Map();
+
+function SimilarItems(props){
+
+    const [loaded,setLoaded] = React.useState(false); 
+    
+    const [filter, setFilter] = useState([]);
+  const [filteropen , setFilteropen] = useState(false);
+  
+
+    const [tasklist,setTasklist] = React.useState([]);
+    const classes = useStyles();
+    const [hidden, setHidden] = React.useState();
+
+
+      const [xtime , setXtime] = useState(999999999999);
+
+    // before call the request check if there is some filters or not in the 
+       useEffect (()=>{
+      //   const handleRouteChange = () => {
+      //     console.log("router event");
+      //     setTasklist([])
+          
+      // }
+      // router.events.on('routeChangeStart', handleRouteChange)
+     
+       if (!loaded){
+        // console.log(getlocal("userdata"));
+        // console.log(getlocal("access_token"));
+        // console.log(getlocal("refresh_token"));
+         if(getlocal("userdata") != undefined){
+          //  console.log(getlocal("userdata"));
+          //  console.log(getlocal("access_token"));
+          //  console.log(getlocal("refresh_token"));
+      
+           getuserdata("email",getobjlocal("userdata")[0]["email"]) 
+       }else{
+        console.log("no user LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+       }
+      
+        loadmore(filter);
+       setLoaded(true)
+       taskmap.clear()
+
+       }
+
+       window.onpopstate = ()=> {
+       
+          // console.log("fuck me 2 times");
+        //   router.push()
+        
+      
+        }
+     
+    });
+
+    const listInnerRef = React.useRef();
+
+    const loadmore =  (f , applyfill ) =>{
+      //call the function to update with the latest tasks
+   /// sorts - price ++ , price -- , 
+      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" , "category":( getlocal("category") != null ? getlocal("category").split(",")[0] : "clothes" ) , "place" : ( getlocal("place") != null ? getlocal("place").split(",")[0] : "jharkhand" ) , "xtime": xtime} , {} )
+      var url = urlForm.url + (getlocal("sortorder") != null ? `&sortby=${sortmap[getlocal("sortorder")]}`:"")
+       //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
+      var formdata = new FormData();
+      //  var formdata = makeformdata(navsdataclothes)
+      formdata.append("category|array|&&", getlocal("category") )
+
+      if ( applyfill != undefined ){
+        console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");
+        formdata.set("created_at|bigint|<",xtime)
+        // formdata.set("price")
+      }
+      
+      
+      
+
+      callwithcache(getdata_post, url, "items",formdata).then((value) =>{
+        // setLoaded(true);
+         
+        //taskmap.clear() //for clearing every thing
+        console.log(xtime,tasklist , taskmap);
+        setXtime(getXtime(value))
+        setValuesfrommap(value,loadmore ,setTasklist , taskmap , "itemId")}).catch((err) =>{
+           console.log(err);
+        }
+        )
+        
+  }
+
+  const getXtime = (list) =>{
+
+    var xtimes = 999999999999
+    if (list.length == 0){
+      return 0
+    }
+    list.forEach(element => {
+      if  ( element['createdAt'] < xtimes){
+          xtimes = element['createdAt']
+      } 
+    
+    });
+    return xtimes
+
+  }
+      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+      console.log(wishdata);
+     
+      
+
+      const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
+
+         
+	return(
+    <>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center", fontSizeAdjust:"auto" , fontSize:"8vw", paddingBlock:2+"vh"}}>Similar Items</div>
+             { tasklist.length > 0 ?
+                 <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
+      
+             </>
+	);
+
+
+}
+
+function ItemsbyOwner(props){
+
+  const [loaded,setLoaded] = React.useState(false); 
+  
+  const [filter, setFilter] = useState([]);
+const [filteropen , setFilteropen] = useState(false);
+
+
+  const [tasklist,setTasklist] = React.useState([]);
+  const classes = useStyles();
+  const [hidden, setHidden] = React.useState();
+
+
+    const [xtime , setXtime] = useState(999999999999);
+
+  // before call the request check if there is some filters or not in the 
+     useEffect (()=>{
+    //   const handleRouteChange = () => {
+    //     console.log("router event");
+    //     setTasklist([])
+        
+    // }
+    // router.events.on('routeChangeStart', handleRouteChange)
+   
+     if (!loaded){
+      // console.log(getlocal("userdata"));
+      // console.log(getlocal("access_token"));
+      // console.log(getlocal("refresh_token"));
+       if(getlocal("userdata") != undefined){
+        //  console.log(getlocal("userdata"));
+        //  console.log(getlocal("access_token"));
+        //  console.log(getlocal("refresh_token"));
+    
+         getuserdata("email",getobjlocal("userdata")[0]["email"]) 
+     }else{
+      console.log("no user LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+     }
+    
+      loadmore(filter);
+     setLoaded(true)
+     taskmap.clear()
+
+     }
+
+     window.onpopstate = ()=> {
+     
+        // console.log("fuck me 2 times");
+      //   router.push()
+      
+    
+      }
+   
+  });
+
+  const listInnerRef = React.useRef();
+
+  const loadmore =  (f , applyfill ) =>{
+    //call the function to update with the latest tasks
+ /// sorts - price ++ , price -- , 
+    var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" , "category":( getlocal("category") != null ? getlocal("category").split(",")[0] : "clothes" ) , "place" : ( getlocal("place") != null ? getlocal("place").split(",")[0] : "jharkhand" ) , "xtime": xtime} , {} )
+    var url = urlForm.url + (getlocal("sortorder") != null ? `&sortby=${sortmap[getlocal("sortorder")]}`:"")
+     //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
+    var formdata = new FormData();
+    //  var formdata = makeformdata(navsdataclothes)
+    // formdata.append("category|array|&&", getlocal("category") )
+    formdata.append("customer_key|bigint|=",props.itemownerkey)
+
+    if ( applyfill != undefined ){
+      console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");
+      formdata.set("created_at|bigint|<",xtime)
+      // formdata.set("price")
+    }
+    
+    
+    
+
+    callwithcache(getdata_post, url, "items",formdata).then((value) =>{
+      // setLoaded(true);
+       
+      //taskmap.clear() //for clearing every thing
+      console.log(xtime,tasklist , taskmap);
+      setXtime(getXtime(value))
+      setValuesfrommap(value,loadmore ,setTasklist , taskmap , "itemId")}).catch((err) =>{
+         console.log(err);
+      }
+      )
+      
+}
+
+const getXtime = (list) =>{
+
+  var xtimes = 999999999999
+  if (list.length == 0){
+    return 0
+  }
+  list.forEach(element => {
+    if  ( element['createdAt'] < xtimes){
+        xtimes = element['createdAt']
+    } 
+  
+  });
+  return xtimes
+
+}
+    const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+    console.log(wishdata);
+   
+    
+
+    const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
+
+       
+return(
+  <>
+          <div style={{display:"flex",justifyContent:"center",alignItems:"center", fontSizeAdjust:"3", fontSize:"7vw",paddingBlock:2+"vh"}}>More By Same Owner</div>
+           { tasklist.length > 0 ?
+               <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
+    
+           </>
+);
 
 
 }

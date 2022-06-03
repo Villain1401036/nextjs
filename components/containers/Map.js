@@ -47,7 +47,7 @@ const Map = (props) => {
     return (
 <>
       {loaded ?
-      <MapContainer   center={[props.currentloc.latitude,props.currentloc.longitude]} zoom={15} scrollWheelZoom={false} style={{height: "40vh", width: "90%"}} >
+      <MapContainer   center={[props.currentloc.latitude,props.currentloc.longitude]} zoom={15} scrollWheelZoom={false} style={{height: "100%", width: "100%"}} >
 
         <TileLayer
           //attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -72,11 +72,9 @@ const Map = (props) => {
         />
         <LocationFinderDummy setCord={(e)=>{setCord(e)}} />
 
-         <Marker position={[cord[0],cord[1]]} draggable={true} animate={true} icon={myIcon} ></Marker>
-         <Marker position={[cord[0]+0.004,cord[1]-0.0009]}  animate={true} icon={myIcon} >
-           <Popup>safsd</Popup>
-           </Marker> 
-         <Marker position={[cord[0],cord[1]-0.0009]} animate={true} icon={myIcon} ></Marker> 
+         <Marker position={[cord[0],cord[1]]} draggable={true} animate={true} icon={myIcon} > <Popup>{props.placename}</Popup></Marker>
+        
+        
 
       </MapContainer>
       :<></>}

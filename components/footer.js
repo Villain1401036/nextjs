@@ -63,6 +63,7 @@ export default function Footer(props) {
 
   return (
     <div className={classes.foot}>
+		<div style={{height:20+"vw",backgroundColor:CLR_HEAD}}></div>
 		
 		<Followblocks />
 		<div className={classes.appbar}>
@@ -76,8 +77,12 @@ export default function Footer(props) {
 			<HSblocks />
 		</div>
 		<div className={classes.sweep}></div>
-		
-		
+		<div style={{height:40+"vw",backgroundImage:'url("freebessimagelight.png")',backgroundSize:"100vw"}}>
+		<div style={{height:40+"vw",backgroundColor:CLR_HEAD,borderTopLeftRadius:50+"vw",borderTopRightRadius:50+"vw",display:"flex",justifyContent:"center"}}>
+			<img src='/images/SMOR-192.png' style={{ height:80+"%" ,objectFit:"cover",position:"relative",top:-50}} onClick={()=> {router.push('/home')}}></img>
+		</div>
+		</div>
+		<div style={{height:40+"vw",backgroundColor:"white",backgroundImage:'url("freebessimagelight.png")',backgroundSize:"100vw"}}></div>
     </div>
   );
 }
