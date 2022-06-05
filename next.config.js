@@ -22,5 +22,14 @@ module.exports = withPWA({
  
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/home',
+        permanent: true,
+      },
+    ]
+  },
 });
 
