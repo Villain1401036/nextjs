@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { convertToJson, geturlFormdata, pushtask, s3rooturl } from '../constants';
 import {  postdata } from '../networking/postdata';
+import { CLR_HEAD } from '../themes';
 
 
 
@@ -18,6 +19,17 @@ const useStyles = makeStyles((theme) => ({
      backgroundColor:"white",
      color:"Black"
 
+   },
+   root: 
+   {
+     
+      margin:1+"vw",
+   borderColor:CLR_HEAD,
+    padding:2+"vw" ,
+     borderRadius:1+"vw" ,
+     '@media (min-width:600px)':{
+      
+     }
    }
 }));
 
@@ -76,19 +88,24 @@ const bidhandler = () =>{
 
 	return(
 		
-            <Card variant='outlined'  style={{ margin:1+"vw"}} >
+            <Card variant='outlined' className={classes.root}  style={{ margin:1+"vw"}} >
                 {/*<div name="name">{props.name}</div>*/}
-                <div style={{display:"flex"}} onClick={() =>{ console.log(props.bookingobj) }}>
+                <div style={{display:"flex", flex:1}} onClick={() =>{ console.log(props.bookingobj) }}>
                 <CardMedia
         component="img"
-        style={{ margin:1+"vw" , maxHeight:70+"vw" , minHeight:40+"vw", maxWidth:50+"%", objectFit:"contain" , backgroundColor: "lightgrey" }}
-        image={rooturl+ convertToJson(props.bookingobj.metadata).images[1]}
-        
+        style={{  display:"-ms-flexbox" ,  objectFit:"cover" , backgroundColor: "lightgrey", width:"40%",borderRadius:"2vw" ,  }}
+        image={rooturl+props.image}
+        onError={({ currentTarget }) => {
+          currentTarget.onerror = null; // prevents looping
+          currentTarget.src="/images/no-image.png";
+          currentTarget.alt="no image"
+          
+        }}
         alt="green iguana"
       />
-      <div style={{padding:2+"vw"}}>
+      <div style={{padding:2+"vw",display:"flex",flex:1,flexDirection:"column" }}>
                 <div name="name"  style={{fontSize:5+"vw"}}>{props.name}</div>
-                <div name="description"  style={{fontSize:3+"vw"}}>{props.description}</div>
+                
                 
                 <div name="price"  style={{fontSize:4+"vw"}}>Booking Price: <span style={{ fontWeight:"bold"}}>{props.price}</span></div>
                 
@@ -113,8 +130,8 @@ const bidhandler = () =>{
 
                 {status == "1" && <><Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",2,props.bookingobj.bookingKey)}}>confirm booking</Button> <Button className={classes.returnbutt} onClick={()=>{ catchbooking("status",-1,props.bookingobj.bookingKey)}}>reject</Button></> }
                 {status == "2" && <><Button className={classes.returnbutt}  style={{color:"white",backgroundColor:"green", opacity:20+"%"}} disabled onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange"}} onClick={() => { console.log(props.bookingobj.bookingKey); props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj) ; }}>Verify Pickup</Button> </>}
-                {status == "3" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"}} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)}>Verify Return</Button> </>}
-                {status == "4" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"purple"  , backgroundColor:"purple",color:"white" , opacity:20+"%" }} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)} disabled>Returned</Button> </>}
+                {status == "3" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"blue"}} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)}>Verify Return</Button> </>}
+                {status == "4" && <><Button disabled className={classes.returnbutt} style={{color:"white",backgroundColor:"green", opacity:20+"%"}} onClick={()=>{ }}>confirmed</Button><Button className={classes.returnbutt} style={{borderColor:"orange", backgroundColor:"orange" , color:"white" , opacity:20+"%"}} disabled  onClick={() => props.Verifypickup(props.bookingobj.bookingKey, props.bookingobj)}>Picked up</Button> <Button className={classes.returnbutt} style={{borderColor:"blue"  , backgroundColor:"blue",color:"white" , opacity:20+"%" }} onClick={() => props.Verifyreturn(props.bookingobj.bookingKey, props.bookingobj)} disabled>Returned</Button> </>}
                 </div>
             </Card>
 

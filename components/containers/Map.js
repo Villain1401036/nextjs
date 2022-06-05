@@ -32,14 +32,14 @@ const Map = (props) => {
 
     useEffect( ()=>{
       if(!loaded){
-        setCord([props.currentloc.latitude,props.currentloc.longitude])
+        setCord([props.currentloc[0],props.currentloc[1]])
       //  navigator.geolocation.getCurrentPosition((d)=>{console.log(d);setCord([d.coords.latitude,d.coords.longitude]); },()=>{} ,{enableHighAccuracy: true} ) 
         setLoaded(true)
 
       }
       
     })
-    console.log(cord);
+    
     const lociqapikey = 'pk.f4d28c6a8470e30d29abbfd257863a07'
     const apiKey = 'RbI49y9cYQMEqrerTqxP5-7AHw6CWnVppIPRJpfRNXc'
     const accessToken = 'pk.eyJ1IjoicmFodWxrdW1hcjMxMTIiLCJhIjoiY2wyaHNveXBkMGc1aDNjcDl5N2Rib2Q4bCJ9.HucJLkUWIAv1XHY1d09ESg'
@@ -47,7 +47,7 @@ const Map = (props) => {
     return (
 <>
       {loaded ?
-      <MapContainer   center={[props.currentloc.latitude,props.currentloc.longitude]} zoom={15} scrollWheelZoom={false} style={{height: "100%", width: "100%"}} >
+      <MapContainer   center={[props.currentloc[0],props.currentloc[1]]} zoom={15} scrollWheelZoom={false} style={{height: "100%", width: "100%"}} >
 
         <TileLayer
           //attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -70,7 +70,7 @@ const Map = (props) => {
           url={`https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${Tomtomapikey}`}
 
         />
-        <LocationFinderDummy setCord={(e)=>{setCord(e)}} />
+        <LocationFinderDummy setCord={(e)=>{setCord(e);props.getcoords(e) }} />
 
          <Marker position={[cord[0],cord[1]]} draggable={true} animate={true} icon={myIcon} > <Popup>{props.placename}</Popup></Marker>
         

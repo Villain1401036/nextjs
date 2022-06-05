@@ -489,6 +489,118 @@ export default function Latestitem(props){
 }
 
 
+export function Headerbar(props){
+
+  const [loaded,setLoaded] = React.useState(false); 
+  
+
+  const classes = useStyles();
+  
+
+     useEffect (()=>{
+   
+     if (!loaded){
+   
+       if(getlocal("userdata") != undefined){
+     
+         getuserdata("email",getobjlocal("userdata")[0]["email"])
+     }else{
+      console.log("no user LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+     }
+      
+  
+     setLoaded(true)
+ 
+
+     }
+
+     window.onpopstate = ()=> {
+  
+    
+      }
+   
+  });
+
+    
+  
+const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{if(e !== ""){setItem(e.split("*")) }else{ setItem([]) }  }));
+    
+    const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+    console.log(wishdata);
+   
+
+    const [item , setItem] = useState([]);
+    const [itemfill , setItemfill] = useState();
+  
+return(
+  <>
+  
+              
+            
+            <div className={classes.appbar}>
+            
+            <FaArrowLeft color={CLR_HEAD}  style={{  height:50+"%" ,marginInline:4+"%"}} onClick={()=>{router.back()}}/>
+             
+            {/* <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span>  */}
+            <img src='/images/SMOR-192.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.push('/home')}}></img>
+            
+        <div style={{flex:1,display:"flex" , flexDirection:"column" , justifyContent:"flex-start" , height:"100%"}}>
+       <div style={{flex:1 , minWidth:50+"vw" ,marginInline:"2vw" ,backgroundColor:"lightgrey",flexDirection:"row",display:"flex", justifyContent:"flex-start", alignItems:"center",  marginBlock:5+"%" ,borderRadius:7+"vw"}}>
+          
+           <div  name='search' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}} ><FaSearch color={CLR_HEAD}  /></div>
+
+         <InputBase placeholder='Looking for ...' id='iteminput'  
+         style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 }}  
+        //  autoFocus 
+         onFocus={()=>{wsitem.connect() }} 
+         onChange={(e)=>{if (e.target.value.length >= 0) {wsitem.send(e.target.value);setItemfill(e.target.value) ; console.log(e.target.value);}}}
+         onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
+          wsitem.close();
+          console.log("enter");
+          console.log(itemfill);
+          storelocal( "category",itemfill) ;
+          document.getElementById('iteminput').blur()
+          router.push(`/itemswindow?place=${getlocal("place")}&item=${itemfill}`)
+        
+       }else{
+       
+       }}}
+         ></InputBase>
+        {item.length > 0 ? <div className={classes.poplist} style={{ position:"absolute",  width:50+"vw" , borderRadius:2+"vw" , backgroundColor:"lightgrey" ,border:"1px solid lightgrey",  display:"flex", flexDirection:"column",overflow:"scroll"}}>
+          {item.map((v)=> 
+          <SearchResbut value={v} 
+          onClick={(e)=>{ storelocal( "category",e)  ;
+           document.getElementById('iteminput').blur() ;
+           taskmap.clear() 
+           
+           wsitem.close();
+           document.getElementById('iteminput').blur()
+           document.getElementById('iteminput').value = ''
+           setItem([])
+         
+           router.push(`/itemswindow?place=${getlocal("place")}&item=${getlocal('category')}`)
+          }
+          }
+           ></SearchResbut>)
+           }</div>:<></>}
+     
+         </div>
+         
+         
+         </div>
+
+            <div style={{ height:100+"%" ,  display:"flex" , flex:1 , flexDirection:"row-reverse", alignItems:"center"}}>
+     
+            </div>
+
+             </div>
+
+           </>
+);
+
+
+}
+
 function Filterbox(props){
   return(
     <>

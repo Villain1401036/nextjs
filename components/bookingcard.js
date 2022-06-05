@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 {
    margin:1+"vw",
 borderColor:CLR_HEAD,
- padding:1+"vw" ,
+ padding:2+"vw" ,
   borderRadius:1+"vw" ,
   '@media (min-width:600px)':{
    
@@ -40,15 +40,26 @@ const classes = useStyles();
   const getStatus = (num) =>{
     switch (num){
       case -1:
-            return "Booking cancelled"
+            return <div style={{display:"flex",flex:1,alignItems:"center",color:"red",fontWeight:"bold"}}>Booking Cancelled</div>
         case 1:
-            return <>Booking Requested<button onClick={() =>{ props.Cancelbooking("cancel", props.bookingobj) }}>cancel</button></>
+            return (
+            <div style={{display:"flex",flex:1,alignItems:"center",justifyContent:"flex-start"}}>
+              <div style={{display:"flex",flex:1,alignItems:"center",color:"lightgreen",fontWeight:"bold"}}>Booking Requested</div>
+              <div style={{display:"flex",justifyContent:"flex-end" , alignItems:"center" , backgroundColor:"red" ,color:"white" , fontWeight:"bold"}} className='btn' onClick={() =>{ props.Cancelbooking("cancel", props.bookingobj) }}>cancel</div>
+              </div>)
         case 2:
-            return <>Booking Confirmed<button onClick={() =>{ props.Verifypickup("pickup", props.bookingobj) }}>pickup</button></> 
+            return (<div style={{display:"flex",flex:1,alignItems:"center",justifyContent:"flex-start"}}>
+              <div style={{display:"flex",flex:1,alignItems:"center",color:"green",fontWeight:"bold"}}>Booking Confirmed</div>
+              <div style={{display:"flex",justifyContent:"flex-end" , alignItems:"center", backgroundColor:"orange" ,color:"white" , fontWeight:"bold"}} className='btn' onClick={() =>{ props.Verifypickup("pickup", props.bookingobj) }}>pickup</div>
+              </div>) 
         case 3:
-              return <>Picked up from lender<button onClick={() =>{ props.Verifypickup("return", props.bookingobj) }}>return</button></>
+              return (
+              <div style={{display:"flex",flex:1,alignItems:"center",justifyContent:"flex-start"}}>
+                <div style={{display:"flex",flex:1,alignItems:"center",color:"orange",fontWeight:"bold"}}>Picked up from lender</div>
+                <div style={{display:"flex",justifyContent:"flex-end" , alignItems:"center", backgroundColor:"blue" ,color:"white" , fontWeight:"bold"}} className='btn' onClick={() =>{ props.Verifypickup("return", props.bookingobj) }}>return</div>
+                </div>)
         case 4:
-              return <>returned to lender</>
+              return <div style={{display:"flex",flex:1,alignItems:"center",color:"blue",fontWeight:"bold"}}>Returned to Lender</div>
         default :
               return <>Something wrong  </>
     }
@@ -63,7 +74,7 @@ const classes = useStyles();
 
 
   const statuscolor = (status) =>{
- 
+      return "white"
       switch (status) {
         case -1:
           return "#f04a37"
@@ -84,12 +95,12 @@ const classes = useStyles();
 
 	return(
 		
-            <Card variant='normal'  className={classes.root} style={{backgroundColor:statuscolor(props.bookingobj.status)}} >
+            <Card variant='outlined'   className={classes.root} style={{backgroundColor:statuscolor(props.bookingobj.status), borderColor:"white"}} >
                 {/*<div name="name">{props.name}</div>*/}
-                <div style={{}}>
+                <div style={{display:"flex"}}>
                 <CardMedia
         component="img"
-        style={{  display:"-ms-flexbox" ,  objectFit:"contain" , backgroundColor: "lightgrey"  }}
+        style={{  display:"-ms-flexbox" ,  objectFit:"cover" , backgroundColor: "lightgrey", width:"40%",borderRadius:"2vw" ,  }}
         image={rooturl+props.image}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null; // prevents looping
@@ -99,35 +110,22 @@ const classes = useStyles();
         }}
         alt="green iguana"
       />
-                <div>
+                <div style={{padding:2+"vw"}}>
                 <div name="description"  >{props.description}</div>
                 
-                <div name="price"  >Booking Price: {props.price}</div>
-                <div name="price"  >Item Key: {props.bookingobj.itemKey}</div>
-                <a href=''>go to item</a> 
-                <div name="book_from" >FROM :{props.book_from.getUTCFullYear()} {props.book_from.toUTCString().substring(8,11)} {props.book_from.getUTCDate()}</div>
-                <div name="book_to" >TO : {props.book_to.getUTCFullYear()} {props.book_to.toUTCString().substring(8,11)} {props.book_to.getUTCDate()}</div>
+                <div name="price"  >{props.itemname}saas</div>
+                {/* <div name="price"  >Item Key: {props.bookingobj.itemKey}</div> */}
+          
+                <div name="price"  >Amount : {props.price}</div>
+                <div name="booking" >{props.book_from.toUTCString().substring(8,11)} {props.book_from.getUTCDate()}-{props.book_to.toUTCString().substring(8,11)} {props.book_to.getUTCDate()}</div>
                 </div>
                 </div>
 
 
-                <div name="status" >{getStatus(props.bookingobj.status)}</div>
+                <div name="status" style={{}} >{getStatus(props.bookingobj.status)}</div>
                
 
 
-{/* 
-               {  true?
-                  <div>{convertToJson(props.bookingobj.metadata)["images"]}</div>:<></>
-               } */}
-               <div id="contact">{props.contact}</div>
-               
-               
-
-                <div style={{display:"flex" , flexDirection:"row-reverse" }}>
-                
-            <div style={{display:"flex" , flex:1, flexDirection:"row" }}></div>
-               
-                </div>
             </Card> 
 
         

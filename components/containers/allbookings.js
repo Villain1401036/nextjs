@@ -83,7 +83,7 @@ export default function Bookingorders(props){
 
     const [code, setCode] = React.useState();
 
-
+    const [bookingstatus , setBookingstatus] = React.useState("active");
   
 
     useEffect (()=>{
@@ -196,7 +196,12 @@ const sortbooking = (list, sortkey) =>{
     return list
 }
 
-      const filllatest = sortbooking(bookinglist , "bookFrom").map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
+const filterbooking = (list , filteron , condn) =>{
+    list.filter((item)=>{ return item.status > 0 })
+    return list
+}
+
+      const filllatest = sortbooking(bookinglist , "bookFrom").filter((item)=>{ if(bookingstatus == "active" ){ return item.status > 0 } else{ return true } }).map( (item) =>  <Bookingcard key={item.bookingId} name={item.bookingId} image={convertToJson(item.metadata).images[0]}
        Verifypickup={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  setOpen(true) })} } 
        Cancelbooking={( gettype , bookingobj)=> {   Verifypickup(gettype, bookingobj).then(()=>{  })} } 
        status={item.status} book_from={ tolocaltime(item.bookFrom)} book_to={   tolocaltime(item.bookTo )} price={item.bookingPrice} customerKey={item.customerKey} bookingobj={item} maplink="https://www.google.com/maps?q=23,88"></Bookingcard>  )
@@ -262,6 +267,10 @@ const sortbooking = (list, sortkey) =>{
       </Dialog>
       
              {/* <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button>  */}
+             <div   style={{position:"fixed", right:0 ,color:"white", borderBottomLeftRadius:"2vw", display:"flex",alignItems:"center", backgroundColor:"purple", fontWeight:"bold"}}>
+             { bookingstatus == "active" && <div style={{padding:1+"vw"}} onClick={()=>setBookingstatus("cancel")}>view cancelled</div>}
+             { bookingstatus == "cancel" && <div style={{padding:1+"vw"}} onClick={()=>setBookingstatus("active")}>hide cancelled</div>}
+             </div>
              <div className={classes.bookingcontainer}>
              {filllatest}
              </div>

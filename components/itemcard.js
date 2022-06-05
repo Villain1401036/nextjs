@@ -7,13 +7,16 @@ import React, { memo } from 'react';
 import { convertToJson, geturlFormdata, pushitem, s3rooturl } from '../constants';
 import { bidtask, postdata } from '../networking/postdata';
 import { makeStyles } from '@material-ui/core/styles';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaShare, FaShareAlt, FaShareAltSquare } from 'react-icons/fa';
 import Image from 'next/image'
 import { getobjlocal } from '../localstore';
+import { CLR_RCARD3 } from '../themes';
 
 
 const useStyles = makeStyles((theme) => ({
-
+   imagethumb:{
+    zIndex:0,borderRadius:10+"px" 
+   },
   image:{
     overflowY : "scroll" ,
     display:"grid" , 
@@ -115,9 +118,9 @@ const removefromfav = async () =>{
 const heightimage = () =>{
   // console.log(window.innerWidth);
     if ( window.innerWidth < 600){
-      return window.innerWidth/2
+      return window.innerWidth/2.5
     }else{
-      return window.innerWidth/6
+      return window.innerWidth/7.5
     }
  }
 
@@ -134,9 +137,10 @@ const heightimage = () =>{
 		
             <div >
                 {/*<div name="name">{props.name}</div>*/}
-           <div style={{zIndex:0,borderLeft:"1px solid lightgrey",borderRight:"1px solid lightgrey" ,borderTop:"1px solid lightgrey" }}>
+           <div style={{zIndex:0,borderLeft:"1px solid "+CLR_RCARD3,borderRight:"1px solid "+CLR_RCARD3 ,borderTop:"1px solid "+CLR_RCARD3 , padding:10+"px"}}>
+              
                 <Image 
-              className={{zIndex:0 }}
+              className={classes.imagethumb}
         height={heightimage()}
         width={widthtimage()}
         objectFit='cover'
@@ -154,47 +158,61 @@ const heightimage = () =>{
 
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;
-           router.push(`/itempage?itemkey=${props.itemobj.itemKey}` ,`/itempage?itemkey=${props.itemobj.itemKey}` , {shallow:true})
+          //  router.push(`/itempage?itemkey=${props.itemobj.itemKey}` ,`/itempage?itemkey=${props.itemobj.itemKey}` , {shallow:true})
+           router.push(`/itempage/${props.itemobj.itemKey}`)
+          console.log(router.pathname);
+           if (router.pathname  == '/itempage/[itemkey]'){
+            router.reload()
+           }
            
-           }}    
-      /></div>
-        <div style={{ padding:1+"vw" , borderLeft:"1px solid lightgrey",borderRight:"1px solid lightgrey" , borderBottom:"1px solid lightgrey"}}>
-        <span style={{ flex:1 }}>{props.name}</span>
-        <div name="price"style={{flex:1,flexDirection:"row",display:"flex"}}>
-          <span><span style={{ flex:1 }}>price: </span><span style={{ flex:1,fontWeight:"bold",color:"red" }}>{props.price}</span></span>
           
-          <span style={{flex:1,flexDirection:"row-reverse",flexDirection:"row",display:"flex"}}>
-          <span style={{flex:1,display:"flex"}}></span>
-          { !props.hidefavbutton &&
-          <span style={{}}>
+
+           
+           }}
+           
+      /></div>
+
+        <div style={{ paddingInline:3+"vw", paddingBottom:3+"vw" , borderLeft:"1px solid "+CLR_RCARD3,borderRight:"1px solid "+CLR_RCARD3 , borderBottom:"1px solid "+CLR_RCARD3}}>
+        
+        { !props.hidefavbutton &&
+          <div style={{display:"flex",flex:1,justifyContent:"flex-end"}}>
           {
             !save?<FaRegHeart size={20} color='grey' onClick={()=>{
               
               addtofav()
               setSave(!save)
-            }}/>:<Favorite color='error' fontSize="medium" onClick={()=>{
+            }}/>:<Favorite color='error'  onClick={()=>{
               
               removefromfav()
               setSave(!save)
             }}/>
-          }</span>
+          }
+          {/* <FaShareAlt /> */}
+          </div>
         }
+
+        <span style={{ flex:1 , fontWeight:"500"}}>{props.name}</span>
+        <div name="price"style={{flex:1,flexDirection:"row",display:"flex"}}>
+          <span><span style={{ flex:1 }}></span><span style={{ flex:1,fontWeight:"bold",color:"blue" }}>{props.itemobj.deno} {props.price}/day</span></span>
+          
+          <span style={{flex:1,flexDirection:"row-reverse",flexDirection:"row",display:"flex"}}>
+          <span style={{flex:1,display:"flex"}}></span>
+         
          
           </span>
 
           </div>
          
           
-                <div name="description" style={{}}>{props.description}</div>
+               
                 
-                 <div name="distance">{props.distance}</div>
+                
 
-
-                <span name="discount"style={{ fontWeight:"bold",fontStyle:"italic" ,color:"green" }}>{"upto 50% cashback"}</span>
+                <span name="discount"style={{ fontWeight:"bold",fontStyle:"italic" ,color:"green" }}>{props.offer}</span>
+                { props.hidefavbutton && <div style={{ textAlign:"center" }} onClick={()=>removefromfav()}><div  style={{ border:"2px solid red",marginInline:2+"vw",fontWeight:"bold" ,marginTop:1+"vw",padding:1+"vw",borderRadius:5+"px"}} > remove</div></div>}
                 
                 </div>
-                { props.hidefavbutton && <div style={{backgroundColor:"grey", textAlign:"center" }} onClick={()=>removefromfav()}><div className='btn' > remove from Favorites</div></div>}
-                
+               
                 
              
             </div>
@@ -204,7 +222,7 @@ const heightimage = () =>{
 
 	return(
 		
-    <div variant='outlined'  style={{ width:100+"vw",display:"flex",borderBottom:"1px solid lightgrey" }} >
+    <div variant='outlined'  style={{ width:100+"vw",display:"flex",borderBottom:"1px solid "+CLR_RCARD3 }} >
         {/*<div name="name">{props.name}</div>*/}
         <CardMedia
 component="img"

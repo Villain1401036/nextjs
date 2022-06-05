@@ -29,6 +29,57 @@ import { getuserdata, sortmap } from '../utils'
 import Itemcard from './itemcard'
 
 const useStyles = makeStyles((theme) => ({
+  itemsbucket:{
+    zIndex:0,
+    height:window.innerHeight - window.innerWidth*(.15 + .15),
+    
+    // height:window.outerHeight - window.outerWidth*.15,
+    // marginTop:window.innerHeight*.15,
+    width:100+"vw",
+    overflowY : "scroll" ,
+    
+    // flex:1,
+    display:"grid" , 
+    gridTemplateColumns: "50vw 50vw" ,
+      // gridRowGap: 1+"vw",
+      // gridColumnGap:1+"vw" ,
+    // gridTemplateColumns: "100vw" ,
+    // gridColumnGap:1+"vw" ,
+    //  gridRowGap: 1+"vw",
+    
+    // marginBottom:1+"vw",
+    // margin: 1+"vw",
+    '@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
+      
+
+      // overflow:"scroll",
+      height:window.innerHeight - window.innerWidth*(.05+.05),
+    
+    },
+    
+    '@media (min-width:800px)': { // eslint-disable-line no-useless-computed-key
+      
+      // overflow:"scroll",
+      // height:window.innerHeight - window.innerWidth*(.1+.05),
+      
+      
+      "*":{
+        "-ms-overflow-style": "none"
+    },
+      "::-webkit-scrollbar": {
+        display: "none"
+    },
+    justifyContent:"center",
+    display:"grid",
+      gridTemplateColumns: "20vw 20vw 20vw 20vw" ,
+      gridRowGap: 1+"vw",
+      gridColumnGap:1+"vw" ,
+      
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      
+    }
+  },
   root: {
 		margin:"auto",
 		
@@ -189,6 +240,8 @@ const handleClickOpen = () => {
 	setOpenbook(false);
 	setOpenbid(false);
   setFetching(false);
+  setValue([null,null]);
+  setRequest(false);
   };
 
 
@@ -468,6 +521,8 @@ return(
               
               
               <Dialog
+
+              cancel
         open={request}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -741,7 +796,7 @@ function SimilarItems(props){
 
 }
 
-function ItemsbyOwner(props){
+export function ItemsbyOwner(props){
 
   const [loaded,setLoaded] = React.useState(false); 
   
@@ -857,7 +912,8 @@ return(
   <>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center", fontSizeAdjust:"3", fontSize:"7vw",paddingBlock:2+"vh"}}>More By Same Owner</div>
            { tasklist.length > 0 ?
-               <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}
+             <>{ !props.percustomer ? <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} {xtime == 0 && <></> }</div>
+             :  <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {}} >  {filllatest} </div>  }</> :<div style={{position:"fixed",bottom:0}}></div>} 
     
            </>
 );

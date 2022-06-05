@@ -11,6 +11,7 @@ import { callwithcache, geturlFormdata, setValuesfrommap } from '../../constants
 import { CLR_RCARD1 } from '../../themes';
 import { FaMapMarked, FaMapMarkedAlt, FaMapMarker, FaMapMarkerAlt, FaMapPin } from 'react-icons/fa';
 import { Navigate, useLocation } from 'react-router-dom';
+import { getobjlocal } from '../../localstore';
 
 
 
@@ -73,7 +74,7 @@ export default function Addresses(props){
 
     const refreshlatest =  () =>{
         //call the function to update with the latest tasks 
-        var urlForm = geturlFormdata("address","get", {"customer_key":0}) //address links
+        var urlForm = geturlFormdata("address","get", {"customer_key":getobjlocal("userdata")[0]["userkey"]}) //address links
         var url = urlForm.url
      
         callwithcache(getdata, url, "address").then((value) =>{

@@ -294,7 +294,7 @@ export function EditText(props){
                   
                   autoFocus
                   defaultValue={currvalue}
-                    onBlur={()=>setEditing(false) }
+                    onBlur={(e)=>{setEditing(false);props.onSet(e.target.value); }}
                  onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
                    setEditing(false)
                  }else{
@@ -310,7 +310,7 @@ export function EditText(props){
     <div placeholder='yourname'  style={{ borderColor:"white",borderStyle:"hidden",borderStyle:"hidden", flexDirection:"row",fontSize:15, color:'black'   }}
            onClick={()=>{setEditing(true)}}
           
-          >{currvalue}</div>
+          >{(currvalue != undefined?currvalue:props.placeholder)}</div>
           
 </div>
  }
@@ -321,6 +321,8 @@ function Profile_Info(props){
     const classes = useStyles()
     const [changed , setChanged ] = React.useState(false);
   
+
+
   return (
         <div style={{display:"flex" , flex:1 , justifyContent:"center" ,flexDirection:"column" ,alignItems:"center"  }} >
           <div className={classes.pinfo} >
