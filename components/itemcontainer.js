@@ -25,8 +25,10 @@ import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes'
 import { FaMapMarkedAlt, FaMapMarkerAlt } from 'react-icons/fa'
 import MapPage from '../pages/mappage'
 import Latestitem from './containers/latestitem'
-import { getuserdata, sortmap } from '../utils'
+import { sortmap } from '../utils'
 import Itemcard from './itemcard'
+import { getuserdata } from '../utils/signinUtils'
+
 
 const useStyles = makeStyles((theme) => ({
   itemsbucket:{
