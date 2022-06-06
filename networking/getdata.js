@@ -216,10 +216,10 @@ export const getTokens = async(url , user , pass ) =>{
      return k
 }
 
+// response => { "access_token": __ , "refresh_token": __ }
+
+
 export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
-
-
-
   var k = await axios( {method: 'post' , 
   url: url,
   data:formdata,
@@ -231,19 +231,21 @@ export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
       
    try {
    //when request is successful check if data can be serialized
-   
-
+   //when the user is verified  
+   //response is data with id access and refresh id tokens
    return response
+
    }
    catch (e) {
     //when request is successful but not good
-       
+       //something went wrong
   }
 }
    ).catch(error => {
     //failed result
           
-          
+    //not verified correctly 
+    //toast something went wrong
 
          return error.response
      });

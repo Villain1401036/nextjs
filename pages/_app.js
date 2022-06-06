@@ -6,6 +6,7 @@ import {initializeApp} from "firebase/app";
 import "firebase/auth";
 import {SSRProvider} from '@react-aria/ssr'; 
 import { getlocal, storelocal } from '../localstore';
+import { getAuth } from 'firebase/auth';
 
 
 function MyApp({ Component, pageProps }) {
@@ -16,10 +17,27 @@ function MyApp({ Component, pageProps }) {
   const [loaded, setLoaded] = React.useState(false);
   const [premium, setPremium] = React.useState(false);
   
+
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyARcLufTeUZbGue0-k9iZJVxmKlp0l0HQU",
+    authDomain: "freebees-24743.firebaseapp.com",
+    projectId: "freebees-24743",
+    storageBucket: "freebees-24743.appspot.com",
+    messagingSenderId: "1084271040061",
+    appId: "1:1084271040061:web:91df1dc11b58f5a4807c54",
+    measurementId: "G-6Z61GFCN05"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth()
     const login = () => {
         setLoggedIn(true);
     }
     const logout = () => {
+      auth.signOut().then(()=>{
+        console.log("successfully signed out");
+      })
         setLoggedIn(false);
     }
 
@@ -78,17 +96,6 @@ function MyApp({ Component, pageProps }) {
       }
    });
 
-   const firebaseConfig = {
-    apiKey: "AIzaSyARcLufTeUZbGue0-k9iZJVxmKlp0l0HQU",
-    authDomain: "freebees-24743.firebaseapp.com",
-    projectId: "freebees-24743",
-    storageBucket: "freebees-24743.appspot.com",
-    messagingSenderId: "1084271040061",
-    appId: "1:1084271040061:web:91df1dc11b58f5a4807c54",
-    measurementId: "G-6Z61GFCN05"
-  };
-
-  const app = initializeApp(firebaseConfig);
  
   return (
 

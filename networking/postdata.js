@@ -14,34 +14,25 @@ export const postdata = async(url , object , formdata , options ) => {
     },}
     )
     .then(response  => {
-        
-     try {
-     //when request is successful check if data can be serialized
-     
-     }
-     catch (e) {
-      //when request is successful but not good
-         
-    }
-}
+         return response
+                      }
      ).catch(error => {
       //failed result
       //failed result
       if (error.response.status == 401){
         var urlForm = geturlFormdata("user","refreshtoken")
        refreshTokens(urlForm.url)
+       
         throw Error(401)
         
-        
-
      }
 
      else if (error.response.status == 500){
-          
+          //something went wrong
          throw Error("url not ok")
      }
      else {
-        
+         //something went wrong
          throw Error("other than unauthorized and internal server")
      }
 

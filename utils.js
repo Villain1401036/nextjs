@@ -59,72 +59,7 @@ export  const handleEnterKeyPress =(e , setValues ,values , value, emptyelement)
      }
    }
 
-   export async function getuserdata(idtype,user_id) {
-      try {
- 
-     var k =  await getdata( geturlFormdata("customer","get", {"idtype":idtype , "user_id":user_id } ,{} ).url,"customers" ).then((value)=>{
-      
-      if( value.length == 0 ){
-         throw "no user found";
-      }
-      storeobjlocal("userdata" , value)
-      return value
-     }).catch((err)=>{
-       
-         throw err;
-        
-         
-     })
-     
- 
-      return k
-      }
-      catch (e) {
-          
-         throw e;
-         
-      }
-  }
-    
   
-   export const setup_after_LoginSuccess = async(data , idtype, email) =>{
-      
-     
-      
-      storelocal("access_token",data["AccessToken"])
-       storelocal("refresh_token",data["RefreshToken"])
-       storelocal("at_expiresin",data["AtExpires"])
-       storelocal("rt_expiresin",data["RtExpires"])
-       //console.log(AuthContext);
-       try{
-
-       
-       //checks if userdata exist or not if exist then  to homepage else to infofill 
-      await getuserdata(idtype , email).then((value)=>{
-         console.log("user exist in database");
-            
-           // onRefresh(AuthContext)
-           var path = getlocal('currentpath')
-           console.log(path);
-           if (path == undefined){
-            router.push("/home")
-            
-           }else{
-            router.push(path)
-           }
-           
-
-         }).catch((err) =>{
-             console.log(err);
-             var path = getlocal('currentpath')
-            router.push(`/info`)
-              
-             // 
-         })
-      }catch(e){
-          
-      }
-    }
   
 
    export  const getQrCode = async (Id ,gettype , booking_key) =>{

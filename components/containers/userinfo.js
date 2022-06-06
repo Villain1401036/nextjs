@@ -61,6 +61,9 @@ var count = 0;
 //all statistics will be seen here
 //******************************************************************************************* */
 
+
+
+
 export default function Userinfo(props){
     
      
@@ -92,6 +95,9 @@ export default function Userinfo(props){
     const [district , setDistrict] = useState();
     const [state , setState] = useState();
 
+
+
+
 const handleSubmit = async () =>{
     
     try{
@@ -106,7 +112,7 @@ const handleSubmit = async () =>{
     
     
     if (aadhar){ formdatas.set("aadhar_id", aadhar)}
-      var temp = getlocal("temp_id")
+    var temp = getlocal("temp_id")
        
     if(temp.startsWith("+")){
        formdatas.set("phone_number", getlocal("temp_id"))
