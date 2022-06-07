@@ -65,12 +65,25 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
                router.push('home')
                var path = getlocal('currentpath')
                console.log(path);
-               if (path == undefined){
-                router.push("/home")
-                
-               }else{
-                router.push(path)
-               }
+               getuserdata(idtype , email).then((value)=>{ 
+                console.log("user exist in database");
+         
+                  // onRefresh(AuthContext)
+                  var path = getlocal('currentpath')
+                  console.log(path);
+                  if (path == undefined){
+                   router.push("/home")
+                   
+                  }else{
+                   router.push(path)
+                  }
+                  
+         
+                }).catch(err => {
+                  console.log(err);
+                })
+
+              
            }).catch(()=>{
                throw(  'something went wrong in creating user' )
            })
