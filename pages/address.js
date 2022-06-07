@@ -104,6 +104,7 @@ const authContext = useContext(AuthContext);
 	  formData.append("state",editaddress.state)
 	  formData.append("country",editaddress.country)
 	  formData.append("pincode",editaddress.pincode)
+	  formData.append("metadata",'{}')
 	//   console.log(location);
 	//   formData.append("location",`POINT(${location[0]} ${location[1]})`)
 	  console.log(loc);
