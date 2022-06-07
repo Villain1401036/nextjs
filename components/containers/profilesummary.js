@@ -12,6 +12,8 @@ import { CLR_HEAD, CLR_RCARD2 } from '../../themes';
 import { getlocal } from '../../localstore';
 
 
+
+
 const useStyles = makeStyles((theme) => ({
 
   root: {
@@ -98,7 +100,7 @@ export default function Profilesummary(props){
 	const [profile , setProfile] = React.useState({});
     const [edit , setEdit] = React.useState(true);
 
-	    
+
     
 
     
@@ -134,8 +136,10 @@ const  refreshprofile = async () =>{
 		<>
 
        { loaded &&  
-		<div style={{alignSelf:"center" , textAlign:"center" , marginTop:"10vw" }}>
 
+		<div style={{alignSelf:"center" , textAlign:"center" , marginTop:"10vw" }}>
+           
+	        
 			 <div style={{width:80+"vw" , marginLeft:"10vw", flex:1,display:"flex"}} >
                 <img src = {convertToJson(profile.metadata)["photoURL"]} className={classes.profilepic}></img>
 				<div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}} >

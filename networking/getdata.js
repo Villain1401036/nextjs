@@ -233,6 +233,7 @@ export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
    //when request is successful check if data can be serialized
    //when the user is verified  
    //response is data with id access and refresh id tokens
+   console.log("getTokenswithIdToken response" ,response);
    return response
 
    }
@@ -243,7 +244,7 @@ export const getTokenswithIdToken = async(url , idToken ,formdata ) =>{
 }
    ).catch(error => {
     //failed result
-          
+          console.log(error);
     //not verified correctly 
     //toast something went wrong
 

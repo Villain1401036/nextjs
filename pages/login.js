@@ -1,5 +1,5 @@
 
-import { makeStyles } from '@material-ui/core';
+import { fade, makeStyles  } from '@material-ui/core/styles';
 import React from 'react'
 import Logincomponent from '../components/containers/logincomponent';
 import Login from '../components/googlelogin';
@@ -54,9 +54,10 @@ const useStyles = makeStyles((theme) => ({
 	  }
   }));
   
-
+  
 
 export default function LoginPage(props){
+	
 	
 	const classes = useStyles();
 

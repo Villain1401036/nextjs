@@ -1,4 +1,5 @@
 import { TextField } from "@material-ui/core";
+import { fade, makeStyles  } from '@material-ui/core/styles';
 import { initializeApp } from "firebase/app";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber ,signInWithEmailAndPassword ,isSignInWithEmailLink,sendSignInLinkToEmail ,signInWithEmailLink } from "firebase/auth";
 import { useRouter } from "next/router";
@@ -12,9 +13,60 @@ import { getuserdata } from "../../utils";
 import { verifyonServer } from "../../utils/signinUtils";
 import Login from "../googlelogin";
 
-export default function Logincomponent(props){
-    
 
+const useStyles = makeStyles((theme) => ({    
+
+  contentArea:{ 
+    
+    marginTop:10+"vw",
+    
+  
+    '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+    marginTop: 5+"vw"
+    },
+    '@media (max-width:360px)': { // eslint-disable-line no-useless-computed-key
+      marginTop: 15+"vw"
+    }
+    },
+icon:{
+  margin:"25vw auto 12px auto" , width:20+"vw" , height:20+"vw",
+  '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
+    width:15+"vw" , height:15+"vw",margin:"2vw auto 12px auto" ,
+    },
+},
+  appbar:{
+    
+    backgroundColor:"white",
+
+    top: 12+"vw",
+    position:'sticky',
+    
+  
+  
+  
+
+  },
+  container:{
+    minHeight:100+"vh"
+  },
+  innerExtend:{
+  margin: "auto",
+  background: "#ffffff",
+  boxShadow: "0px 14px 80px rgba(34, 35, 58, 0.2)",
+  padding: "40px 30px 45px 30px",
+  borderRadius: "15px",
+  transition: "all .3s",
+  width: "80vw",
+  '@media (min-width:750px)':{
+    width: "30vw"
+    }
+  }
+}));
+
+
+export default function Loginpush(props){
+    
+    const classes = useStyles();
 
     const auth = getAuth();
 
@@ -236,33 +288,24 @@ const onFailure = () => {
      
 
     return (
-            <div >
-              { !linksent && <>
-                <h3>Log in</h3>
-                <div className={"form-group"} > 
-                    <input type="email" className="form-control" style={{width:100+"%"}} autoFocus placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+      <div style={{ display:"flex", flex:1 , height:100+"vh", flexDirection:"column", justifyContent:"center", alignItems:"center", backgroundColor:CLR_HEAD   } }>
+		
 
-                  {/* <input  type="password" className="form-control" style={{width:100+"%",marginTop:10+"px"}} placeholder="Enter password" value={password}
-            onChange={(e) => setPassword(e.target.value)}/> */}
-                </div>
-                 <button className="btn" style={{ margin:2+"vw" ,borderRadius: 1+"vw", backgroundColor:CLR_HEAD,color:"white" ,borderWidth:1+"vw" }}  onClick={signinWithLink} >Continue</button>
-                <p >--- or ---</p>
-                <p >Sign in with</p>
-                <Login /> 
-                </>}
 
-                { linksent && <>
-                <h4>Signin Link sent</h4>
-                <div className={"form-group"} > 
-                     
-                   <div style={{marginBlock:"10%"}}>Check your provided email , And Click on the Link to verify </div>
-                   <h3>WE are already waiting for you</h3>
-                </div>
-                </>
-
-                }
-
+      <div style={{width :100+"vw" , textAlign:"center" } } className="outer">
+      <img className={classes.icon } src={"/SMOR-192.png"} />
+              <div  className={classes.innerExtend} >
+               
+       
+           
+             {/* <Infoput /> */}
+      
+              </div>
             </div>
+         
+          </div>	
+
+
         );
               
 }

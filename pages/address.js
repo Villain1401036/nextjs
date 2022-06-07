@@ -9,7 +9,7 @@ import { convertToJson, geturlFormdata, onRefresh, Shopname } from '../constants
 import { makeStyles } from '@material-ui/core/styles';
 import Addresses from '../components/containers/addresses'
 import { AuthContext } from '../context'
-import Logincontainer from '../components/containers/logincontainer'
+
 import MapPage from './mappage';
 
 
@@ -51,15 +51,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-import router from 'next/router'
+import router, { useRouter } from 'next/router'
 import { Button, ButtonBase } from '@material-ui/core';
 import { CLR_HEAD } from '../themes';
 import { FaDumpster, FaMapMarkedAlt, FaMapMarkerAlt, FaReact, FaRecycle, FaSave, FaTrash } from 'react-icons/fa';
 import { postdata } from '../networking/postdata';
 import { getobjlocal } from '../localstore';
+import Loginpush from '../components/containers/loginpush';
+import LoginPage from './login';
 
 function Addresspage(props){
 
+const router = useRouter();
 
 const classes = useStyles();
 const authContext = useContext(AuthContext);
@@ -130,11 +133,11 @@ const authContext = useContext(AuthContext);
 	}
 
 
-
+     if ( !authContext.isLoggedIn){
+		return (<LoginPage /> );
+	 } 
+	 else{
 	return(
-    <>
-		{ authContext.isLoggedIn && 
-			(
 		<div >
 		<Head>
 			<title>Spook</title>
@@ -142,19 +145,15 @@ const authContext = useContext(AuthContext);
 		</Head>
 		
         <NameHead label="Addresses" onClick={()=>router.back()} onHomeClick={()=>{router.push('/home')}}  />
-		
-		
-		 
-			 
-				{/***here we will have a the addresses for the  */}
-				
-				<div style={{flex:1,display:"flex",flexDirection:"column",flexGrow:1}} ></div>
-                   
-			{ !editing && <div style={{flex:1,display:"flex",flexDirection:"row-reverse" , bottom:0 ,minHeight:10+"vw",width:"100%",backgroundColor:"white",position:"sticky",top:13+"vw",zIndex:1500}}> 
-			   <Button style={{margin:2+"vw",backgroundColor:CLR_HEAD ,color:"white" }} onClick={()=>{setEditing(true); setEditaddress({});setCurrentloc(null)}} >Add new Address</Button>
-			 </div> }
 
-			 {!editing ? <Addresses onEditClick={(Editdata)=> {setEditaddress(Editdata); setEditing(true);setCurrentloc(null)}} /> :
+{/***here we will have a the addresses for the  */}
+<div style={{flex:1,display:"flex",flexDirection:"column",flexGrow:1}} ></div>
+                   
+{ !editing && <div style={{flex:1,display:"flex",flexDirection:"row-reverse" , bottom:0 ,minHeight:10+"vw",width:"100%",backgroundColor:"white",position:"sticky",top:13+"vw",zIndex:1500}}> 
+<Button style={{margin:2+"vw",backgroundColor:CLR_HEAD ,color:"white" }} onClick={()=>{setEditing(true); setEditaddress({});setCurrentloc(null)}} >Add new Address</Button>
+</div> }
+
+{!editing ? <Addresses onEditClick={(Editdata)=> {setEditaddress(Editdata); setEditing(true);setCurrentloc(null)}} /> :
 
 <div style={{display:"flex",flex:1,justifyContent:"center" , alignItems:"center",flexDirection:"column",width:"100%" }}>
 
@@ -165,8 +164,6 @@ const authContext = useContext(AuthContext);
 
  <EditText label="addressLine1" value={editaddress.addressLine1} onSet={(val)=>{onSet(val,"addressLine1")}} placeholder={"enter address here.."} />
  <EditText label="addressLine2" value={editaddress.addressLine2} onSet={(val)=>{onSet(val,"addressLine2")}} placeholder={"enter address here.."}/>
-
-
  <EditText label="city" value={editaddress.city} onSet={(val)=>{onSet(val,"city")}} placeholder={"enter city here.."}/>
  <EditText label="state" value={editaddress.state} onSet={(val)=>{onSet(val,"state")}} placeholder={"enter state here.."}/>
  <EditText label="Country" value={editaddress.country} onSet={(val)=>{onSet(val,"country")}} placeholder={"enter Country here.."}/>
@@ -177,28 +174,18 @@ const authContext = useContext(AuthContext);
  
  {currentloc != null && <div style={{width:"90%",height:"30vh",borderRadius:10+"px",overflow:"hidden"}}><MapPage currentloc={currentloc} getcoords={(e) => { loc =  e;console.log(e) }}/></div>}
  <Button style={{margin:2+"vw" , borderRadius:2+"vw" , backgroundColor:CLR_HEAD , color:"white"}} onClick={()=>{setEditing(false);postaddress(); console.log(editaddress); setEditaddress({});setCurrentloc(null)}} > SAVE Address<FaSave color={"white"} size={20} style={{marginLeft:"2vw"}} /></Button>
-  
-  
+
   </div>
 
+	}
 
-			}
+<div style={{flex:1,display:"flex",flexDirection:"column",flexGrow:1}} ></div>
 
+</div>
 
-			 <div style={{flex:1,display:"flex",flexDirection:"column",flexGrow:1}} ></div>
-
-       
-		
-		
-		</div>
-		
-		)
-		}
-	
-
-</>
 	);
 
+	}
 
 
 }

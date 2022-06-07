@@ -30,7 +30,8 @@ function Login() {
   const onSuccess = (res) => {
  
     console.log(res);
-    verifyonServer(res._tokenResponse.idToken, "email" ,res.user.email,res)
+    
+    verifyonServer(res._tokenResponse.idToken, "email" ,res.user.email, res)
 
   };
 

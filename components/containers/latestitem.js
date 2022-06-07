@@ -256,7 +256,7 @@ export default function Latestitem(props){
    
   const [wsitem,setWsitem] = useState(new Wsocket(`wss://api.smorentel.com/search`, (e)=>{if(e !== ""){setItem(e.split("*")) }else{ setItem([]) }  }));
       
-      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishdata"]: [] )
       console.log(wishdata);
      
       

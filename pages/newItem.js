@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 var tasksdata = []
 
-export default function NewService(props){
+export default function NewItem(props){
 
 const classes = useStyles();
 const router = useRouter();

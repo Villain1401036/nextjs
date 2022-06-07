@@ -12,9 +12,10 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
     console.log(userdata);
     var urlForm = geturlFormdata("user","verify",{},{"token":idToken})
     try {
+        
      await getTokenswithIdToken(urlForm.url , idToken , urlForm.formdata).then((response)=>{
-      //  console.log(response.data,"resp");
-      
+       console.log(response.data,"resp");
+       
        setup_after_LoginSuccess(response.data , idtype , id,userdata).then((val)=>{
           
          storelocal("temp_id",id)
@@ -32,8 +33,8 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
 
   export const setup_after_LoginSuccess = async(data , idtype, email,userdata) =>{
       
-     
-      
+     console.log("-------------------=-------------------------------=--------------------------------=---------------")
+       console.log(data);
     storelocal("access_token",data["AccessToken"])
      storelocal("refresh_token",data["RefreshToken"])
      storelocal("at_expiresin",data["AtExpires"])
@@ -85,15 +86,16 @@ export const create_user = async (userdata) =>{
     var urlform = geturlFormdata("customer","create",{},{}) 
     var formdatas = new FormData();
      formdatas.set("first_name", userdata.user.displayName)
-     var temp = getlocal("temp_id")
+     var temp =userdata.user.email
+
      if(temp.startsWith("+")){
-      formdatas.set("phone_number", getlocal("temp_id"))
+      formdatas.set("phone_number", userdata.user.email)
       }else{
-      formdatas.set("email", getlocal("temp_id"))
+      formdatas.set("email",  userdata.user.email)
       }
-      formdatas.set("iden", getlocal("temp_id"))
+      formdatas.set("iden",  userdata.user.email)
   
-      formdatas.set("metadata",`{"photoURL":"${userdata.user.photoURL}"}`)
+      formdatas.set("metadata",`{"photoURL":"${userdata.user.photoURL}","wishdata":[]}`)
      
       await postdata(urlform.url , "customer" ,formdatas ).then((response) =>{
          if (response.status == 201){

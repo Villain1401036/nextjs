@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
   const [premium, setPremium] = React.useState(false);
   
 
-  
+  //initialize firebase  
   const firebaseConfig = {
     apiKey: "AIzaSyARcLufTeUZbGue0-k9iZJVxmKlp0l0HQU",
     authDomain: "freebees-24743.firebaseapp.com",
@@ -31,14 +31,19 @@ function MyApp({ Component, pageProps }) {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth()
+
+
     const login = () => {
         setLoggedIn(true);
     }
+
     const logout = () => {
+      setLoggedIn(false);
       auth.signOut().then(()=>{
         console.log("successfully signed out");
       })
-        setLoggedIn(false);
+        localStorage.clear()
+        
     }
 
       const checkType = () => {

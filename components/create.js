@@ -24,6 +24,7 @@ import { Dropdown } from "react-bootstrap";
 import { getlocal, getobjlocal, storelocal } from "../localstore";
 import ClothesInfo from "./filterfills/clothes";
 import { FaTag } from "react-icons/fa";
+import { Modal, ModalBody, ModalDialog } from 'react-bootstrap';
 
 
 
@@ -38,6 +39,8 @@ export function Itemform(props){
   const [uimages , setUimages ] = useState(false);
   const [categorydone , setCategorydone ] = useState(false);
 
+
+  const [show , setShow ] = useState(false);
 
   const[customerkey, setCustomerkey] = React.useState();
   const[description, setDescription] = React.useState();
@@ -125,9 +128,11 @@ const  readyform = async() => {
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
  
   await postdata(geturlFormdata("item","create",{}).url , "item" , formdatas ).then((val)=>{
+    setShow(true)
       
-  }).catch((e)=>console.log(e))
-  //router.reload();
+
+  }).catch((e)=>{console.log(e); alert("error posting item") })
+     
    
   }
   catch(e){
@@ -156,7 +161,7 @@ const handlesubmit = async () =>{
   if (file3 != undefined){
     files.push(file3)
   } 
-  handleupload(files);
+   handleupload(files);
 
   await readyform()
 
@@ -172,7 +177,8 @@ const handlesubmit = async () =>{
    const [file3,setFile3] = useState();
 
   return (
-
+   <> { loaded &&
+    <>
       <div style={{textAlign:"center" , display:"flex", flex:1,flexDirection:"column", backgroundColor:"white"}}>
        
         <h1 style={{margin:5+"vw"}}>Enter Item Details</h1>
@@ -261,6 +267,16 @@ const handlesubmit = async () =>{
             </div>
  :<></>}
       </div>
+      <Modal onBackdropClick={()=> console.log("close") }  style={{zIndex:20000, display:"flex" , justifyContent:"center" ,alignItems:"center" , height:window.innerHeight , width:window.innerWidth*.8 ,marginBlock : 20+"vh" ,marginInline: window.innerWidth*.1 }}  show={show} >
+        <div style={{width:80+"vw" ,height:"40vh", display:"flex",justifyContent:"center",flexDirection:"column-reverse" ,alignItems:"center" }}>
+		    <Button onClick={()=>{ router.push('/home')}} >go back</Button>
+        <div className='btn' style={{padding:20 }} onClick={()=>{ router.reload()}} >Create another Item</div>
+        </div>
+		</Modal>
+      </>
+}
+</>
+
   );
 }
 

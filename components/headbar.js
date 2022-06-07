@@ -252,20 +252,7 @@ return (
           </IconButton>
 
           <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.reload()}}></img>
-          {/* <Button onClick={()=> {authContext.accounttype? router.push("/home"):router.push("/home")}}>
-					
-
-          <Typography variant="h6" className={classes.title}>
-            {props.itemName }
-          </Typography>
-          </Button> */}
-             {/* {
-               authContext.accounttype?
-             <Button  className={classes.createbtn} onClick={()=>{router.push("/newTask")}}>create Task</Button>
-            :
-            <Button  className={classes.createbtn} onClick={()=>{router.push("/newService")}}>create Service</Button>
-            }
-            <Button  className={classes.createbtn} onClick={()=>{router.push("/newItem")}}>Post Item</Button> */}
+       
           {false?
             <div></div>:
             <>
@@ -277,8 +264,7 @@ return (
             
 					
            <div style={{marginLeft: 2+"vw", display:"flex",flex:1, flexDirection:"row"}} >
-           {/* <div style={{height:100+"%",marginRight:20+"px",marginTop:2+"px"}} ><FaSearch fontSize={150+"%"} onClick={()=>{router.push("/searchpage")}} /></div> */}
-         { props.placebutt &&
+           { props.placebutt &&
             <>{
               locfocus? <div><InputBase
               placeholder="Location"
@@ -290,7 +276,7 @@ return (
               onKeyPress={(event)=>{ if(event.key === 'Enter'){
                  
                 storelocal("place",location);
-                // router.reload()
+             
                 setLocfocus(false)
                 
               }}}
@@ -320,8 +306,7 @@ return (
       <>
       
         <Modal  style={{zIndex:2000}}  show={filteropen} backdrop={"static"} children={<EditFilter onClickgetfilter={(data)=>{ setLocation(getlocal("place"))}} closemodal={()=>{setFilteropen(false)}} filters={{"place":"" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />} >
-       {/* <EditFilter filters={{"place":"bokaro" , "distance":34 ,"price":34 ,"tags":"asd~dfsd" ,"category":"asdasd~dsfsd"}} />
-         */}
+  
          </Modal>
       
         </>
@@ -332,12 +317,6 @@ return (
   
 }
 
-
-
-
-{ /* const handleClose = () => {
-    setOpen(false);
-  };  */}
 
 
 function Drawercomponent(props){
@@ -364,14 +343,7 @@ if (authContext.accounttype == true){
       
 
    { authContext.isLoggedIn ?
-     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
-    
-      
-     {/* <div className={classes.type} >   user   </div>
-     <div  style={{display:"flex",justifyContent:"center",alignItems:"center"}} >
-      <Switch style={{  color:CLR_RCARD2}} size="medium" checked={ authContext.accounttype} onChange={()=>{authContext.changeaccount() ;router.push("/home")}}></Switch>
-     </div> */}
-      </div>: <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} ></div>
+     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} ></div>: <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , minHeight:"15vw" }} ></div>
       }
 
 <div className={classes.drawButt}>
@@ -450,18 +422,8 @@ else{
 
     </div>
 
-
-    {/* <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/orders")}}>{"orders"}</div>
-    </div> */}
-{/* 
-    <div className={classes.drawButt}>
-    <div className={classes.drawButtinner} onClick={()=>{router.push("/dashboard")}}>{"Dashboard"}</div>
-    </div> */}
-
-<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}>
-    {/* <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div> */}
-    </div>
+{ authContext.isLoggedIn && <>
+<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div>
 <>
 
 <div className={classes.drawButt}>
@@ -483,9 +445,7 @@ else{
 </>
 
 
-<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}>
-    {/* <div className={classes.drawButtinner} onClick={()=>{router.push("/bookingreqpage")}}>{"Requests"}</div> */}
-    </div>
+<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div>
 
     
     <div className={classes.drawButt}>
@@ -495,7 +455,7 @@ else{
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
     </div>
-    
+    </>}
     </div>
   );
 }
