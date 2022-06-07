@@ -60,7 +60,19 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
            console.log(err);
            var path = getlocal('currentpath')
            // no user found then create user
-           create_user(userdata)
+           create_user(userdata).then(()=>{
+               router.push('home')
+               var path = getlocal('currentpath')
+               console.log(path);
+               if (path == undefined){
+                router.push("/home")
+                
+               }else{
+                router.push(path)
+               }
+           }).catch(()=>{
+               throw(  'something went wrong in creating user' )
+           })
            // 
        })
     }catch(e){

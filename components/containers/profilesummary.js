@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import Taskcard from '../taskcard';
 import { Edit, EditAttributesOutlined, EditOutlined, MapSharp } from '@material-ui/icons';
 import Addresscard from '../addresscard';
-import { callwithcache, geturlFormdata, setValue } from '../../constants';
+import { callwithcache, convertToJson, geturlFormdata, setValue } from '../../constants';
 import { CLR_HEAD, CLR_RCARD2 } from '../../themes';
 import { getlocal } from '../../localstore';
 
@@ -115,6 +115,7 @@ const  refreshprofile = async () =>{
 	callwithcache(getdata, url, "customers" ).then((value) =>{
 
         
+		console.log(value[0]);
 		 
         setValue(value[0],refreshprofile , setProfile )}).then((val)=>{
 			setLoaded(true);
@@ -136,7 +137,7 @@ const  refreshprofile = async () =>{
 		<div style={{alignSelf:"center" , textAlign:"center" , marginTop:"10vw" }}>
 
 			 <div style={{width:80+"vw" , marginLeft:"10vw", flex:1,display:"flex"}} >
-                <img src = {picurl} className={classes.profilepic}></img>
+                <img src = {convertToJson(profile.metadata)["photoURL"]} className={classes.profilepic}></img>
 				<div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}} >
 						{edit?<div><span className={classes.proname} >{profile.firstName} {profile.lastName}</span></div>:<input inputMode="numeric"></input>}
 						<div ><span className={classes.proname} >{profile.email}</span></div>
