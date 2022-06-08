@@ -7,11 +7,16 @@ import "firebase/auth";
 import {SSRProvider} from '@react-aria/ssr'; 
 import { getlocal, storelocal } from '../localstore';
 import { getAuth } from 'firebase/auth';
+import { checktokensexpiry } from '../utils';
+import { refreshTokenSetup } from '../utils/refreshToken';
+import { Modal } from 'react-bootstrap';
+import AddPhone from '../components/addphone';
 
 
 function MyApp({ Component, pageProps }) {
 
-  const authContext = useContext(AuthContext);
+
+  const [modelopen, setModelopen] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [acctype, setAcctype] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
@@ -32,9 +37,13 @@ function MyApp({ Component, pageProps }) {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth()
 
-
+  const setModel = (data) => {
+     setModelopen(data)
+  }    
+   
     const login = () => {
         setLoggedIn(true);
+       
     }
 
     const logout = () => {
@@ -43,7 +52,7 @@ function MyApp({ Component, pageProps }) {
         console.log("successfully signed out");
       })
         localStorage.clear()
-        
+        window.clearTimeout(getlocal("refreshtimeout")) 
     }
 
       const checkType = () => {
@@ -99,15 +108,24 @@ function MyApp({ Component, pageProps }) {
         setLoaded(true)
          
       }
+
+
+      refreshTokenSetup()
    });
 
  
   return (
 
     <SSRProvider>
-      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype ,changeaccount:changeaccount, checkType:checkType }} >
+      <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype , modelopen:modelopen, setModel:setModel  ,changeaccount:changeaccount, checkType:checkType }} >
       
         <Component {...pageProps} />
+        
+        <Modal  show={modelopen} style={{zIndex:34534534 , marginBlock:25+"vh"}}>
+         
+           <AddPhone />
+          
+        </Modal>
      
     </AuthContext.Provider>
     </SSRProvider>

@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 	searchbut:{
 		width:100+"vw",height:14+"vw",backgroundColor:CLR_HEAD,display:"flex",justifyContent:"center",alignItems:"center",
 		 position:"sticky" , 
-		 top:13+"vw" ,
+		 top:30+"vw" ,
 		 zIndex:10,
 		'@media (min-width:600px)': { // eslint-disable-line no-useless-computed-key
 		
@@ -179,7 +179,7 @@ if (isloaded){
 }else{
 	return (
 
-	<div style={{display:"flex", flex:1,height: ( typeof window !== "undefined" ? window.screen.availHeight:100+"vh" ) , flexDirection:"column", justifyContent:"center" ,alignItems:"center",backgroundColor:CLR_HEAD  }}>
+	<div style={{display:"flex", flex:1 , flexDirection:"column", justifyContent:"center" ,alignItems:"center",backgroundColor:CLR_HEAD  }}>
 		 <img src="/images/SMOR-512.png" style={{height:"30vw",weight:"30vw"}}></img>
 
 		 

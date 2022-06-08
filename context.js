@@ -8,13 +8,17 @@ export const AuthContext = createContext({
     accounttype: true ,
     firebase: null,
     premium : false,
+    modelopen: false,
+    setModel : () =>{
+
+    },
     changeaccount: () => {
         accounttype = !accounttype ;
         storelocal("accounttype",accounttype)
     
     },
     checkType:async( ) => {
-       var at = await getlocal("accounttype")
+       var at =  getlocal("accounttype")
        accounttype = at ;
     },
     login: () => {isLoggedIn = true  },

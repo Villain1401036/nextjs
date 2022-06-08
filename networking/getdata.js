@@ -5,7 +5,6 @@ import { cache } from '../cache';
 import { geturlFormdata } from '../constants';
 import { AuthContext } from '../context';
 import { getlocal } from '../localstore';
-import { checktokensexpiry } from '../utils';
 
 var  proto = require('../build/gen/user_pb.js');
 
@@ -17,7 +16,6 @@ var  proto = require('../build/gen/user_pb.js');
 
 export const getdata_post = async(url, obj, options,data) => {
   
-  //  var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
 
    var k = await axios.post(url,
     data
@@ -96,7 +94,6 @@ export const getdata_post = async(url, obj, options,data) => {
 
 export const getdata = async(url, obj, options) => {
   
-      //  var atoken = await checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin")); 
     
        var k = await axios.get(url
         ,{responseType:"arraybuffer",
@@ -308,12 +305,9 @@ export const refreshTokens = async(url ) =>{
   headers: {
       'Content-Type': `multipart/form-data`
   },}
-  )
-  .then(response  => {
+  ).then(response  => {
       
    try {
-   //when request is successful check if data can be serialized
-   //console.log(response.data.access_token)
 
    localStorage.setItem("access_token",response.data.access_token )
    localStorage.setItem("at_expiresin",response.data.at_expiresin )
@@ -323,11 +317,13 @@ export const refreshTokens = async(url ) =>{
     //when request is successful but not good
        
   }
+  return response
 }
    ).catch(error => {
     //failed result
           
          return error
+
      });
      
      return k

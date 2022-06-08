@@ -3,6 +3,7 @@ import { geturlFormdata } from "../constants";
 import { getlocal, storelocal, storeobjlocal } from "../localstore";
 import { getdata, getTokenswithIdToken } from "../networking/getdata";
 import { postdata } from "../networking/postdata";
+import { refreshTokenSetup } from "./refreshToken";
 
 
 
@@ -55,7 +56,8 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
          }else{
           router.push(path)
          }
-         
+
+         refreshTokenSetup()
 
        }).catch((err) =>{
            console.log(err);
@@ -72,13 +74,13 @@ export const verifyonServer = async(idToken,idtype , id , userdata) =>{
                   var path = getlocal('currentpath')
                   console.log(path);
                   if (path == undefined){
+
                    router.push("/home")
                    
                   }else{
                    router.push(path)
                   }
-                  
-         
+                  refreshTokenSetup()
                 }).catch(err => {
                   console.log(err);
                 })

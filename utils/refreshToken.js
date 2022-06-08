@@ -1,18 +1,29 @@
-export const refreshTokenSetup = (res) => {
+import { getlocal, storelocal } from "../localstore";
+import { checktokensexpiry } from "../utils";
+
+export const refreshTokenSetup = () => {
     // Timing to renew access token
-    let refreshTiming = (res.expiresIn || 3600 - 5 * 60) * 1000;
-  
+    let refreshTiming = ( 900 - 2 * 60) * 1000;
+    console.log("+++++++++++++++++++++ refresh token setup +++++++++++++++++++++++++");
     const refreshToken = async () => {
-      const newAuthRes = await res.reloadAuthResponse();
-      refreshTiming = (newAuthRes.expiresIn || 3600 - 5 * 60) * 1000;
        
-      // saveUserToken(newAuthRes.access_token);  <-- save new token
-      localStorage.setItem('authToken', newAuthRes.idToken);
-  
+      checktokensexpiry(getlocal("access_token"),getlocal("at_expiresin"),getlocal("rt_expiresin"))
+      refreshTiming = ( 900 - 2 * 60) * 1000;
+      
       // Setup the other timer after the first one
-      setTimeout(refreshToken, refreshTiming);
+      window.clearTimeout(getlocal("refreshtimeout"))
+      const refreshtimeout = setTimeout(refreshToken, refreshTiming);
+      storelocal("refreshtimeout" ,refreshtimeout  )
+      
+      
+
     };
   
     // Setup first refresh timer
-    setTimeout(refreshToken, refreshTiming);
+    window.clearTimeout(getlocal("refreshtimeout"))
+    refreshToken()
+    const refreshtimeout = setTimeout(refreshToken, refreshTiming);
+    console.log("refreshtimeout" , refreshtimeout);
+
+    
   };

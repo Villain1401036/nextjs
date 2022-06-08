@@ -251,7 +251,7 @@ return (
 				          </Drawer>
           </IconButton>
 
-          <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> {router.reload()}}></img>
+          <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> { authContext.setModel(!authContext.modelopen) }}></img>
        
           {false?
             <div></div>:

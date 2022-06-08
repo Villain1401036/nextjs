@@ -33,7 +33,27 @@ export const checktokensexpiry = async (atoken,aexpiry,rexpiry) =>{
    }else{
        //request for accesstoken
        var urlForm = geturlFormdata("user","refreshtoken")
-       await refreshTokens(urlForm.url)
+       await refreshTokens(urlForm.url).then((response)=>{
+         if (response.status == 201){
+           
+         }
+       }).catch((error)=>{
+         //failed result
+        if (error.response.status == 401){
+            localStorage.clear()
+       }
+
+       else if (error.response.status == 500){
+            
+           throw Error("url not ok")
+       }
+       else {
+          
+           throw Error("other than unauthorized and internal server")
+       }
+
+       })
+
        atoken = getlocal("access_token")
        return atoken
    }

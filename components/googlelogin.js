@@ -5,7 +5,6 @@ import { GoogleLogin } from 'react-google-login';
 import { GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { getAuth, signInWithPopup } from "firebase/auth";
 // refresh token
-import { refreshTokenSetup } from '../utils/refreshToken';
 import { AuthContext } from '../context';
 import { Button, TextField } from '@material-ui/core';
 import { FcGoogle } from 'react-icons/fc';

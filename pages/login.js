@@ -1,8 +1,11 @@
 
 import { fade, makeStyles  } from '@material-ui/core/styles';
-import React from 'react'
+import router from 'next/router';
+import React, { useContext, useEffect } from 'react'
 import Logincomponent from '../components/containers/logincomponent';
 import Login from '../components/googlelogin';
+import { onRefresh } from '../constants';
+import { AuthContext } from '../context';
 import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3 } from '../themes';
 
 const useStyles = makeStyles((theme) => ({    
@@ -56,15 +59,27 @@ const useStyles = makeStyles((theme) => ({
   
   
 
+
 export default function LoginPage(props){
 	
 	
 	const classes = useStyles();
-
-  const [isloaded,setIsLoaded] = React.useState(true);
+    const authContext = useContext(AuthContext);
+  const [isloaded,setIsLoaded] = React.useState(false);
 
   //if ( typeof window !== "undefined" ){ localStorage.clear() }
 
+  useEffect(()=>{
+	  console.log(authContext.isLoggedIn);
+	  onRefresh(authContext)
+	  if (!isloaded){
+            setIsLoaded(true);	
+	  }
+	  if (authContext.isLoggedIn){
+		router.push('/home')
+	}
+  })
+   
 	return(
 		<div style={{ display:"flex", flex:1 , height:100+"vh", flexDirection:"column", justifyContent:"center", alignItems:"center", backgroundColor:CLR_HEAD   } }>
 		
@@ -74,6 +89,7 @@ export default function LoginPage(props){
 <img className={classes.icon } src={"/SMOR-192.png"} />
         <div  className={classes.innerExtend} >
          
+
 		<Logincomponent />
          
 		 

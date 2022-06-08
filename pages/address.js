@@ -77,7 +77,9 @@ const authContext = useContext(AuthContext);
  var loc = null;
   useEffect(()=>{
 	  onRefresh(authContext);
-	  
+	  if (!authContext.isLoggedIn){
+		router.push('/login')
+	}
 	  if (currentloc == null && editing){
 		  
 		 if (!("addressLine1" in editaddress)){
