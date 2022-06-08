@@ -778,7 +778,7 @@ function SimilarItems(props){
     return xtimes
 
   }
-      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+      const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishdata"]: [] )
       console.log(wishdata);
      
       
@@ -902,7 +902,7 @@ const getXtime = (list) =>{
   return xtimes
 
 }
-    const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishlist"]: [] )
+    const wishdata = (getlocal("userdata") != null ? convertToJson(getobjlocal("userdata")[0]["metadata"] )["wishdata"]: [] )
     console.log(wishdata);
    
     
