@@ -137,7 +137,7 @@ const heightimage = () =>{
 		
             <div >
                 {/*<div name="name">{props.name}</div>*/}
-           <div style={{zIndex:0,borderLeft:"1px solid "+CLR_RCARD3,borderRight:"1px solid "+CLR_RCARD3 ,borderTop:"1px solid "+CLR_RCARD3 , padding:10+"px"}}>
+           <div style={{zIndex:0 , padding:10+"px"}}>
               
                 <Image 
               className={classes.imagethumb}
@@ -172,7 +172,7 @@ const heightimage = () =>{
            
       /></div>
 
-        <div style={{ paddingInline:3+"vw", paddingBottom:3+"vw" , borderLeft:"1px solid "+CLR_RCARD3,borderRight:"1px solid "+CLR_RCARD3 , borderBottom:"1px solid "+CLR_RCARD3}}>
+        <div style={{ paddingInline:3+"vw", paddingBottom:3+"vw" }}>
         
         { !props.hidefavbutton &&
           <div style={{display:"flex",flex:1,justifyContent:"flex-end"}}>

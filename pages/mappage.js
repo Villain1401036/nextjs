@@ -5,7 +5,7 @@ function MapPage(props) {
     () => import('/components/containers/Map'), 
     { ssr: false } 
   )
-  return ( <><Map currentloc={props.currentloc} getcoords={(e)=> props.getcoords(e)}/></> )
+  return ( <><Map currentloc={props.currentloc} nochange={props.nochange} getcoords={(e)=> props.getcoords(e)}/></> )
 }
 
 export default MapPage

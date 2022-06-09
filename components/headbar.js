@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { latestworkobj, ongoingwork, Shopname, user } from '../constants'
+import { convertToJson, latestworkobj, ongoingwork, Shopname, user } from '../constants'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
 import { fade, makeStyles  } from '@material-ui/core/styles';
-import {Chip, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
+import {Avatar, Chip, Slider, Switch, TextField, useMediaQuery } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu'; 
 import InputBase from '@material-ui/core/InputBase';
 
@@ -24,7 +24,7 @@ import {  FormGroup ,Modal, Tab, Tabs } from 'react-bootstrap';
 
 import {FiMapPin , FiFilter} from 'react-icons/fi';
 import { FaArrowLeft, FaHome, FaSearch} from 'react-icons/fa';
-import { getlocal, localkeys, storelocal } from '../localstore';
+import { getlocal, getobjlocal, localkeys, storelocal } from '../localstore';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -156,21 +156,23 @@ logo:{
   },
   drawerroot :{
     backgroundColor:CLR_HEAD,
-    width:60+"vw",
-    height:100+"%",
+    width:60+"vw",  
+
+    flex:1 , 
+    display:"flex",
+    flexDirection:"column",
+   
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       width:50+"vw",
     },
   },
   drawButt:{
     width:60+"vw",
-    padding:2+"%",
-    borderStyle:"solid",
-    borderWidth:0,
-    borderTopWidth:1+"px",
+    paddingBlock:3+"%",
+    paddingInline:"20%",
     opacity:100,
     textAlign:"right",
-    backgroundColor:CLR_RCARD2,
+    color:CLR_RCARD2,
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       width:50+"vw",
       
@@ -236,20 +238,13 @@ export default function ButtonAppBar(props) {
    
   // 
 
-  
+  // console.log(convertToJson(getobjlocal("userdata")[0]["metadata"])["photoURL"]);
  
 return (
    <>
       <AppBar position="sticky" className={classes.appbar} >
         <Toolbar className={classes.toolbar} >    
-          <IconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>toogleDstate()} >
-
-            <MenuIcon />
-
-					<Drawer anchor={"left"} open={drawerState}  onClose={()=>console.log("closed")} variant='temporary'>
-             <Drawercomponent />
-				          </Drawer>
-          </IconButton>
+         
 
           <img src='/images/SMOR-512.png' style={{ height:80+"%" ,objectFit:"cover"}} onClick={()=> { authContext.setModel(!authContext.modelopen) }}></img>
        
@@ -300,7 +295,14 @@ return (
 				 </>
           }
 					
+          <IconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>toogleDstate()} >
 
+ { authContext.isLoggedIn ? <Avatar src={convertToJson(getobjlocal("userdata")[0]["metadata"])["photoURL"]} /> : <MenuIcon /> }
+
+<Drawer anchor={"right"} open={drawerState}  onClose={()=>console.log("closed")} variant='temporary'>
+   <Drawercomponent />
+        </Drawer>
+</IconButton >
         </Toolbar>
       </AppBar>
       <>
@@ -351,7 +353,7 @@ if (authContext.accounttype == true){
       {authContext.isLoggedIn ?
       <>
       <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token");localStorage.removeItem("userdata") ;authContext.logout() }} >{"logout"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>Profile</span> 
       
       </>:
 <>
@@ -396,27 +398,26 @@ if (authContext.accounttype == true){
 }
 else{
   return (
-    <div className={classes.drawerroot}>
+    <div className={classes.drawerroot} >
    <div style={{ display:"flex"  ,marginBlock:"5vh",justifyContent:"center", color:CLR_RCARD2}}>
    <img style={{width:50+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
       <div style={{ marginTop:8+"vw",textAlign:"bottom"}}>MOR</div>
    </div>
       
-     <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
+     {/* <div style={{ display:"flex", flex:1 , flexDirection:"row-reverse" , justifyContent:"center"  }} >
        
      
-      </div>
+      </div> */}
 
 <div className={classes.drawButt}>
       {authContext.isLoggedIn ?
       <>
-      <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); localStorage.removeItem("userdata");authContext.logout() }} >{"logout"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>{user.name}</span> 
+      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}>Profile</span> 
       
       </>:
 <>
 <span className={classes.drawButtinner} style={{paddingRight:50 }} onClick={()=>{ router.push('/login') }} >{"login"}</span>
-      <span className={classes.drawButtinner}  onClick={()=>{router.push("/profile")}}></span> 
+
 </>
 }
 
@@ -455,6 +456,10 @@ else{
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
     </div>
+ { authContext.isLoggedIn && 
+    <div className={classes.drawButt}>
+    <span className={classes.drawButtinner}  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); localStorage.removeItem("userdata");authContext.logout() }} >{"logout"}</span>
+     </div>}
     </>}
     </div>
   );

@@ -47,7 +47,7 @@ const Map = (props) => {
     return (
 <>
       {loaded ?
-      <MapContainer   center={[props.currentloc[0],props.currentloc[1]]} zoom={15} scrollWheelZoom={false} style={{height: "100%", width: "100%"}} >
+      <MapContainer   center={[props.currentloc[0],props.currentloc[1]]} zoom={15} scrollWheelZoom={false} style={{height: "100%", width: "100%" , zIndex:0}} >
 
         <TileLayer
           //attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -70,7 +70,7 @@ const Map = (props) => {
           url={`https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${Tomtomapikey}`}
 
         />
-        <LocationFinderDummy setCord={(e)=>{setCord(e);props.getcoords(e) }} />
+        {!props.nochange && <LocationFinderDummy setCord={(e)=>{setCord(e);props.getcoords(e) }} /> } 
 
          <Marker position={[cord[0],cord[1]]} draggable={true} animate={true} icon={myIcon} > <Popup>{props.placename}</Popup></Marker>
         

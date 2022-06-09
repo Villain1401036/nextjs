@@ -149,15 +149,12 @@ const useStyles = makeStyles((theme) => ({
 //progress of the work 
 //any pictures related to the work 
 
-function checkifLogin(){
-
-}
-
 export default function Itemcontainer(props){
 
 const [openbid , setOpenbid] = useState(false); 
 const [openbook , setOpenbook] = useState(false); 
 
+const [ordered , setOrdered] = useState(false);
 
 const [currentloc ,setCurrentloc] = React.useState(null)
 
@@ -271,7 +268,7 @@ const handleClickOpen = () => {
 
 
 const images = (list) =>  { 
-	return list.map((item)=> <Carousel.Item style={{ height: heightimage() , width:widthtimage() , backgroundColor:"lightgrey"}}>
+	return list.map((item)=> <Carousel.Item style={{ height: heightimage()*.9  , width:widthtimage()*.9 , borderRadius: widthtimage()*.05, backgroundColor:"lightgrey",overflow:"hidden" }}>
     <Image 
     
     objectFit="cover"
@@ -339,7 +336,10 @@ const bookitem = async(item_key,customer_key,lender,bookprice,place,bookfrom,boo
    setFetching(true);
   
   var urlForm = geturlFormdata("booking","create",{},{})
-  await postdata( urlForm.url , "booking" , formdatas ).then((val)=>{ document.getElementById("booking_title").replaceChildren("booking requested");setValue([null,null]);setRequest(false) ;setFetching(false);}).catch((e)=>{   
+  await postdata( urlForm.url , "booking" , formdatas )
+  .then((val)=>{ 
+    document.getElementById("booking_title").replaceChildren("booking requested");setValue([null,null]);setRequest(false) ;setFetching(false);setOrdered(true)  })
+    .catch((e)=>{   
    
 
   
@@ -401,7 +401,8 @@ const ddate =(date) =>{
  console.log(isloaded);
  
 
-
+ console.log(router.pathname);
+ console.log(router.asPath);
 
 return(
     <>
@@ -409,6 +410,60 @@ return(
  
 		<div >
 		
+    <Dialog
+        open={ordered}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+		style={{textAlign:"center"}}
+    PaperProps={{style:{minWidth:80+"vw", minHeight:40+"vh"}}}
+      >
+        <h2>Order Successfully Placed</h2>
+      <div className='btn' onClick={()=>{router.push("/orders")}}>go to orders</div>
+
+      <div className='btn' onClick={()=>{router.push("/home")}} >Home</div>
+
+      <div className='btn' onClick={()=> {setOrdered(false)}} >Close</div>
+			
+      </Dialog>
+
+    <Dialog
+        open={false}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+		style={{textAlign:"center"}}
+    PaperProps={{style:{minWidth:80+"vw", minHeight:40+"vh"}}}
+      >
+		  { authContext.isLoggedIn ?
+		  <>
+        <DialogTitle id="alert-dialog-title">
+          BOOK ITEM
+        </DialogTitle>
+		
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            
+          </DialogContentText>
+		<div  >AT price : INR {itemdata.price}</div>
+        </DialogContent>
+        <DialogActions> 
+
+  {fetching?<><div id="booking_title">Booking in Progress</div></>:
+    < >
+
+    </> }
+        </DialogActions>
+		</>
+           :
+           <>
+           <div><span onClick={()=>{ storelocal('currentpath',router.asPath) ;router.push('/login')}}>Login</span> to continue </div>
+           
+           </>
+
+			}
+      </Dialog>
+
 <Dialog
         open={openbid}
         onClose={handleClose}
@@ -480,7 +535,7 @@ return(
 		</>
            :
            <>
-           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.push('/login')}}>Login</span> to continue </div>
+           <div><span onClick={()=>{ storelocal('currentpath',router.asPath) ;router.push('/login')}}>Login</span> to continue </div>
            
            </>
 
@@ -577,7 +632,7 @@ return(
 		</>
            :
            <>
-           <div><span onClick={()=>{ storelocal('currentpath',router.pathname) ;router.push('/login')}}>Login</span> to continue </div>
+           <div><span onClick={()=>{ storelocal('currentpath',router.asPath) ;router.push('/login')}}>Login</span> to continue </div>
            
            </>
 
@@ -594,7 +649,7 @@ return(
  
      </LocalizationProvider>
 
-{ isloaded && <Carousel className={classes.carousel} style={{height: heightimage() , width:widthtimage() }} onClick={()=>{}}  wrap={false}>
+{ isloaded && <Carousel className={classes.carousel} style={{ padding:widthtimage()*.05 ,borderRadius:3+"vw" }} onClick={()=>{}}  wrap={false}>
   
 {images(convertToJson(itemdata.metadata).images)}
 
@@ -631,7 +686,7 @@ return(
 				 <div>{itemdata.description}</div>
 				 
          <div style={{fontWeight:"bold"}}>Location</div>
-         <div style={{fontSize:8+"vw"}} onClick={()=> navigator.geolocation.getCurrentPosition((d)=>{console.log(d); setCurrentloc(d.coords)},(e)=>{console.log(e); } ,{frequency:5000,  enableHighAccuracy: true  ,timeout:10000,} )  }  >Set L<FaMapMarkerAlt />cation</div>
+         <div style={{fontSize:8+"vw"}} onClick={()=> navigator.geolocation.getCurrentPosition((d)=>{console.log(d); setCurrentloc([d.coords.latitude,d.coords.longitude])},(e)=>{console.log(e); } ,{frequency:5000,  enableHighAccuracy: true  ,timeout:10000,} )  }  >Set L<FaMapMarkerAlt />cation</div>
  
  {currentloc != null &&  <div style={{width:100+"%" , height:"20vh"}}><MapPage currentloc={currentloc} /></div>}
 
@@ -922,6 +977,9 @@ return(
 
 
 }
+
+
+
 
 
 

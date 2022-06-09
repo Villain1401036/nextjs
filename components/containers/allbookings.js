@@ -267,9 +267,9 @@ const filterbooking = (list , filteron , condn) =>{
       </Dialog>
       
              {/* <Button onClick={async()=>{refreshongoing()}} title="asdasd"  >refresh bookings</Button>  */}
-             <div   style={{position:"fixed", right:0 ,color:"white", borderBottomLeftRadius:"2vw", display:"flex",alignItems:"center", backgroundColor:"purple", fontWeight:"bold"}}>
-             { bookingstatus == "active" && <div style={{padding:1+"vw"}} onClick={()=>setBookingstatus("cancel")}>view cancelled</div>}
-             { bookingstatus == "cancel" && <div style={{padding:1+"vw"}} onClick={()=>setBookingstatus("active")}>hide cancelled</div>}
+             <div   style={{position:"fixed", zIndex:1999, right:0 ,color:"white", borderBottomLeftRadius:"2vw", display:"flex",alignItems:"center", backgroundColor:"purple", fontWeight:"bold"}}>
+             { bookingstatus == "active" && <div style={{padding:1+"vw" , zIndex:1999}} onClick={()=>setBookingstatus("cancel")}>view cancelled</div>}
+             { bookingstatus == "cancel" && <div style={{padding:1+"vw", zIndex:1999}} onClick={()=>setBookingstatus("active")}>hide cancelled</div>}
              </div>
              <div className={classes.bookingcontainer}>
              {filllatest}
@@ -279,3 +279,5 @@ const filterbooking = (list , filteron , condn) =>{
 	);
 
 }
+
+
