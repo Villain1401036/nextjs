@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+const  capFirst = (str) => {
+   return str.substring(0,1).toUpperCase() + str.substring(1).toLowerCase()
+}
 
 
 
@@ -138,6 +141,8 @@ const SearchContainer = (props) => {
 
 
   const [loaded , setLoaded] = useState(false); 
+
+
   
   const [filteropen , setFilteropen] = useState(false);
   
@@ -246,7 +251,7 @@ const SearchContainer = (props) => {
 
        {
          placesearch?
-<div style={{flex:1 ,borderTopColor:"white", borderTopWidth:10 , display:"flex", flexDirection:"column",marginTop:10+"px"}}>{place.map((v)=> <SearchResbut value={v} onClick={(e)=>{setPlacefill(e);setPlacesearch(false),storelocal("place",e)}} ></SearchResbut>)}</div>
+<div style={{flex:1 ,borderTopColor:"white", borderTopWidth:10 , display:"flex", flexDirection:"column",marginTop:10+"px"}}>{place.map((v)=> <SearchResbut value={capFirst(v)} onClick={(e)=>{setPlacefill(e);setPlacesearch(false),storelocal("place",e)}} ></SearchResbut>)}</div>
          :
          <>
          <div style={{backgroundColor:CLR_HEAD,height:2+"vw" }}>
@@ -273,7 +278,7 @@ const SearchContainer = (props) => {
            
          </div>
          
-         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{item.map((v)=> <SearchResbut value={v} onClick={(e)=>{ storelocal( "category",e)  ; document.getElementById('iteminput').blur() ;router.push(`/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbut>)}</div>
+         <div style={{flex:1 ,borderTopColor:CLR_HEAD, borderTopWidth:10 , display:"flex", flexDirection:"column",overflow:"scroll"}}>{ item[0] != "" && item.map((v)=> <SearchResbutitem value={v} onClick={(e)=>{ storelocal( "category",e)  ; document.getElementById('iteminput').blur() ;router.push(`/itemswindow?place=${getlocal("place")}&item=${e}`)}}></SearchResbutitem>)}</div>
        
        </div>
        
@@ -291,15 +296,42 @@ const SearchContainer = (props) => {
   
 }
 
+
 function SearchResbut(props){
+
+  return(
+      
+      <div  onClick={()=>{ console.log(props.value); props.onClick(props.value); }} style={{  width:100+"%", backgroundColor:"white", borderBottomWidth:0 , borderBottomColor:CLR_RCARD1  , padding:20}}>{props.value}</div> 
+          
+      
+  );
+}
+
+function SearchResbutitem(props){
 
     return(
         
-        <div  onClick={()=>{ console.log(props.value); props.onClick(props.value); }} style={{  height: 10+"vw", width:100+"%", backgroundColor:"white", borderBottomWidth:0 , borderBottomColor:CLR_RCARD1  , padding:20}}>{props.value}</div> 
+        <div  onClick={()=>{ console.log(props.value); props.onClick(searchtoAPI(props.value)); }} style={{  width:100+"%", backgroundColor:"white", borderBottomWidth:0 , borderBottomColor:CLR_RCARD1  , padding:20}}><span>{props.value.split(" in ")[0]}</span> in <span style={{color:"lightgray"}}>{ props.value.split(" in ")[1]}</span></div> 
             
         
     );
 }
+
+
+function searchtoAPI ( str ) {
+    
+    var k = str.split(" in ")
+    var l = k.length
+    k =  k.reverse()
+    var res = k[0]
+    for (let index = 1; index < l; index++) {
+       res += " > " + k[index]
+    }
+   var s = []
+    
+       return res.toLowerCase()
+} 
+
 
 function FilterComp(props){
   

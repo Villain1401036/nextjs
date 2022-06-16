@@ -307,6 +307,7 @@ message Addresses {
 	repeated string tags = 10;
 	repeated string category = 11;
 	string place = 12;
+	string title = 13;
 	
 }
 

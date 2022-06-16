@@ -32,9 +32,7 @@ export default class Wsocket {
         console.log(msg);
         var msgstr = Buffer.from(msg.data ).toString()
         this.receiveMethod(msgstr)
-        console.log(
-         msgstr
-        );
+        console.log(msgstr);
 
       };
     

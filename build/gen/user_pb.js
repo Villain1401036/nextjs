@@ -7778,7 +7778,8 @@ proto.user.Item.toObject = function(includeInstance, msg) {
     metadata: msg.getMetadata_asB64(),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
     categoryList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
-    place: jspb.Message.getFieldWithDefault(msg, 12, "")
+    place: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 13, "")
   };
 
   if (includeInstance) {
@@ -7862,6 +7863,10 @@ proto.user.Item.deserializeBinaryFromReader = function(msg, reader) {
     case 12:
       var value = /** @type {string} */ (reader.readString());
       msg.setPlace(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
       break;
     default:
       reader.skipField();
@@ -7973,6 +7978,13 @@ proto.user.Item.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       12,
+      f
+    );
+  }
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
       f
     );
   }
@@ -8254,6 +8266,24 @@ proto.user.Item.prototype.getPlace = function() {
  */
 proto.user.Item.prototype.setPlace = function(value) {
   return jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional string title = 13;
+ * @return {string}
+ */
+proto.user.Item.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.user.Item} returns this
+ */
+proto.user.Item.prototype.setTitle = function(value) {
+  return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 

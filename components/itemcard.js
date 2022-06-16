@@ -191,7 +191,7 @@ const heightimage = () =>{
           </div>
         }
 
-        <span style={{ flex:1 , fontWeight:"500"}}>{props.name}</span>
+        <span style={{ flex:1 , fontWeight:"500"}}>{props.itemobj.title}</span>
         <div name="price"style={{flex:1,flexDirection:"row",display:"flex"}}>
           <span><span style={{ flex:1 }}></span><span style={{ flex:1,fontWeight:"bold",color:"blue" }}>{props.itemobj.deno} {props.price}/day</span></span>
           
@@ -202,11 +202,6 @@ const heightimage = () =>{
           </span>
 
           </div>
-         
-          
-               
-                
-                
 
                 <span name="discount"style={{ fontWeight:"bold",fontStyle:"italic" ,color:"green" }}>{props.offer}</span>
                 { props.hidefavbutton && <div style={{ textAlign:"center" }} onClick={()=>removefromfav()}><div  style={{ border:"2px solid red",marginInline:2+"vw",fontWeight:"bold" ,marginTop:1+"vw",padding:1+"vw",borderRadius:5+"px"}} > remove</div></div>}

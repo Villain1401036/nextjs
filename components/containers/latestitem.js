@@ -190,7 +190,7 @@ export default function Latestitem(props){
     const loadmore =  (f , applyfill ) =>{
       //call the function to update with the latest tasks
    /// sorts - price ++ , price -- , 
-      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":( getlocal("category") != null ? getlocal("category").split(",")[0] : "clothes" ) , "place" : ( getlocal("place") != null ? getlocal("place").split(",")[0] : "jharkhand" ) , "xtime": xtime} , {} )
+      var urlForm = geturlFormdata("item", "getform" ,{ "gettype": "cp" ,"tags": f.tags , "category":( getlocal("category") != null ? getlocal("category").split(",")[0] : "clothes" ) , "place" : ( getlocal("place") != null ? getlocal("place").toLowerCase() : "jharkhand" ) , "xtime": xtime} , {} )
       var url = urlForm.url + (getlocal("sortorder") != null ? `&sortby=${sortmap[getlocal("sortorder")]}`:"")
        //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
