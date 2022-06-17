@@ -244,7 +244,7 @@ const handlesubmit = async () =>{
   } 
    handleupload(files);
 
-  await readyform()
+   readyform()
 
 }
 
