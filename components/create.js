@@ -196,7 +196,7 @@ const  readyform = async() => {
 
   if (tag){ formdatas.append("tags", tags)}
 
-  if (category){ formdatas.append("category",  category.split(" > ").join('~').toLowerCase() )}
+  if (category){ formdatas.append("category",  category.split(" > ").join('~').toLowerCase() ) ; console.log(category.split(" > ").join('~').toLowerCase());}
 
   if (negotiable){
     formdatas.append("negotiable", negotiable)
