@@ -195,7 +195,12 @@ export default function Latestitem(props){
        //var url = `http://127.0.0.1:8082/item/getform?place=bokaro&xtime=${xtime}&item=${getlocal("category")}`
 
        var formdata = makeformdata(navsdataclothes)
-      formdata.append("category|array|&&", getlocal("category") )
+       var catarray = getlocal("category").split(' > ')
+       var actualcategory = catarray[0]
+
+      formdata.append("category|array|@>", actualcategory )
+
+      formdata.append("title" , catarray[1].split(" ").join(" & ") )
 
       if ( applyfill != undefined ){
         console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");

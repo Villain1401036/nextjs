@@ -131,6 +131,7 @@ const getkeywordsfromtitle = (str , category) =>{
 
   var res = []
   var words = str.split(' ')
+  var newords = []
   for(var i=0;i<words.length;i++) {
     //clean words having any different char like . , / etc
       var s = ""
@@ -139,9 +140,18 @@ const getkeywordsfromtitle = (str , category) =>{
 
      var word_clean = words[i]
      if(!stopwords.includes(word_clean)) {
+         newords.push(word_clean)
          res.push( word_clean  + " in " + category.split(" > ")[ len - 1 ])
      }
+
+
   }
+
+  for(var i=0;i<newords.length - 1;i++) {
+    var word2 = newords[i] + " "+ newords[i+1]
+    res.push( word2  + " in " + category.split(" > ")[ len - 1 ])
+  }
+
 
   return res.join("~")
 
