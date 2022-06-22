@@ -15,6 +15,7 @@ import BannerComponent from '../components/containers/banner'
 import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes'
 import { FaSearch, FaTruckLoading } from 'react-icons/fa'
 import SimpleBottomNavigation from '../components/bottomnav'
+import { getMessaging, onMessage } from 'firebase/messaging'
 
 
 
@@ -97,7 +98,6 @@ const authContext = useContext(AuthContext);
  
   const [isloaded,setIsLoaded] = React.useState(false);
    
-
 console.log(authContext.isLoggedIn);
 
 useEffect(()=>{
@@ -113,7 +113,6 @@ useEffect(()=>{
   const [key,setKey] = useState();
   
   
-
   console.log(authContext);
 
 

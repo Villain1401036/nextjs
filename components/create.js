@@ -27,6 +27,7 @@ import { FaPlus, FaTag } from "react-icons/fa";
 import { Modal, ModalBody, ModalDialog } from 'react-bootstrap';
 import { categoriesjson } from "../utils/categories";
 import { MdClear } from "react-icons/md";
+import { PlaceChoose } from "./filtertabbar";
 
 
 
@@ -127,7 +128,7 @@ const getkeywordsfromtitle = (str , category) =>{
   'there','when','where','why','how','all','any','both','each',
   'few','more','most','other','some','such','no','nor','not',
   'only','own','same','so','than','too','very','s','t',
-  'can','will','just','don','should','now']
+  'can','will','just','don','should','now','|||']
 
   var res = []
   var words = str.split(' ')
@@ -158,7 +159,7 @@ const getkeywordsfromtitle = (str , category) =>{
 }
 
 const insert_tags = async(tags , title , category ) => {
-
+    
      var urlForm = geturlFormdata("insert","tags" ,{},{})
 
      var formdata = new FormData();
@@ -203,7 +204,7 @@ const  readyform = async() => {
   }else{
     formdatas.append("negotiable", false)
   }
-  formdatas.append("title", title )
+  formdatas.append("title", title + "||| "+  category.split(" > ")[category.split(" > ").length - 1].toLowerCase() )
 
   formdatas.set("metadata", `{"images":[${makearr()}]}` )
  
@@ -272,8 +273,10 @@ const handlesubmit = async () =>{
   return (
    <> { loaded &&
     <>
+
+        
       <div style={{textAlign:"center" , display:"flex", flex:1,flexDirection:"column", backgroundColor:"white",justifyContent:"center",alignItems:"center",textAlign:"center"}}>
-       
+        <PlaceChoose  onfilterChange={()=>{ console.log("asdhaosidj;askd'");  }} />
         <h1 style={{margin:5+"vw"}}>Enter Item Details</h1>
           <FormGroup>
           

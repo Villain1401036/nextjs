@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "vapid" : "web-push generate-vapid-keys"
   },
   "dependencies": {
     "@date-io/date-fns": "^2.11.0",
@@ -61,7 +62,8 @@
     "react-webcam-barcode-scanner": "^0.0.2-rc2",
     "redux": "^4.1.2",
     "redux-typescript": "^1.2.1",
-    "sharp": "^0.30.3"
+    "sharp": "^0.30.3",
+    "web-push": "^3.5.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.7.9",

@@ -150,6 +150,33 @@ export default function FilterTabbar(props) {
   );
 }
 
+
+export  function PlaceChoose(props) {
+
+	const classes = useStyles();
+
+	const [placefilter , setPlacefilter] = useState(false);
+
+	const [change , setChange ] = useState(false);
+
+	return (
+	  <>
+	 
+							  {getlocal("place") != null ?<Chip label={getlocal("place")} variant='outlined' className={classes.filterchip} style={{borderColor:CLR_HEAD  }}  deleteIcon={<MdClear size={30} /> } onDelete={()=>{ localStorage.removeItem("place") ; setChange(!change) }} onClick={() => { setPlacefilter(true); } } />:<Chip label="Location" variant='outlined' className={classes.filterchip} style={{borderColor:"lightgrey" , fontWeight: "200"  }}  deleteIcon={<MdClear size={30} /> }  onClick={() => { setPlacefilter(true); } } /> }
+							 
+		  <Modal onBackdropClick={()=> console.log("ASDasd") }  style={{zIndex:20000, display:"flex" , paddingTop:"15vw"   }}  show={(placefilter)} 
+		   onHide={()=>{setPlacefilter(false) ; setCategoryfilter(false)}} >
+			
+			 
+				{placefilter && <Placemodal closemodal={()=>{setPlacefilter(false)}} onfilterChange={props.onfilterChange} />}
+			
+		  </Modal>
+		  </>
+	 
+	);
+  }
+
+
 function Placemodal (props){
 
 	const [place , setPlace] = useState([]);

@@ -102,7 +102,14 @@ const taskmap = new Map();
 
 //this will be a container for all the recent work that is going on
 
+
 export default function Latestitem(props){
+
+
+
+        showNotification()
+       
+
 
     const [loaded,setLoaded] = React.useState(false); 
     
@@ -196,11 +203,12 @@ export default function Latestitem(props){
 
        var formdata = makeformdata(navsdataclothes)
        var catarray = getlocal("category").split(' > ')
-       var actualcategory = catarray[0]
+       var catlen = getlocal("category").split(' > ').length
+       
+       
+      formdata.append("category|array|@>", catarray[catlen - 2] )
 
-      formdata.append("category|array|@>", actualcategory )
-
-      formdata.append("title" , catarray[1].split(" ").join(" & ") )
+      formdata.append("title" , catarray[catlen - 1].split(" ").join(" & ") )
 
       if ( applyfill != undefined ){
         console.log(")))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");

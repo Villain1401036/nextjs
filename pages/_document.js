@@ -2,6 +2,10 @@ import { ServerStyleSheets } from "@material-ui/core";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
 
+
+const APP_NAME = 'SMOR'
+const APP_DESCRIPTION = 'This is a rental platform'
+
 class MyDocument extends Document {
   render() {
     return (
@@ -10,6 +14,14 @@ class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta name="theme-color" content="#fff" />
+          <meta name='application-name' content={APP_NAME} />
+          <meta name='apple-mobile-web-app-capable' content='yes' />
+          <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+          <meta name='apple-mobile-web-app-title' content={APP_NAME} />
+          <meta name='description' content={APP_DESCRIPTION} />
+          <meta name='format-detection' content='telephone=no' />
+          <meta name='mobile-web-app-capable' content='yes' />
+          <meta name='theme-color' content='#FFFFFF' />
         </Head>
         <body>
           <Main />

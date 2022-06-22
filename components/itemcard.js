@@ -191,7 +191,7 @@ const heightimage = () =>{
           </div>
         }
 
-        <span style={{ flex:1 , fontWeight:"500"}}>{props.itemobj.title}</span>
+        <span style={{ flex:1 , fontWeight:"500"}}>{props.itemobj.title.split('|||')[0]}</span>
         <div name="price"style={{flex:1,flexDirection:"row",display:"flex"}}>
           <span><span style={{ flex:1 }}></span><span style={{ flex:1,fontWeight:"bold",color:"blue" }}>{props.itemobj.deno} {props.price}/day</span></span>
           
