@@ -18,9 +18,6 @@ import SimpleBottomNavigation from '../components/bottomnav'
 import { getMessaging, onMessage } from 'firebase/messaging'
 
 
-
-
-
 const useStyles = makeStyles((theme) => ({    
   root: {
 		margin:"auto",

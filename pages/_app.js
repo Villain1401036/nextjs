@@ -12,6 +12,8 @@ import { refreshTokenSetup } from '../utils/refreshToken';
 import { Modal } from 'react-bootstrap';
 import AddPhone from '../components/addphone';
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { geturlFormdata } from '../constants';
+import { postdata } from '../networking/postdata';
 
 const base64ToUint8Array = base64 => {
   const padding = '='.repeat((4 - (base64.length % 4)) % 4)
@@ -41,6 +43,7 @@ function MyApp({ Component, pageProps }) {
   const [loaded, setLoaded] = React.useState(false);
   const [premium, setPremium] = React.useState(false);
   
+  const [notif ,setNotif] = React.useState(false);
 
   //initialize firebase  
   const firebaseConfig = {
@@ -54,6 +57,7 @@ function MyApp({ Component, pageProps }) {
   };
 
   const app = initializeApp(firebaseConfig);
+
   const auth = getAuth()
 
   const setModel = (data) => {
@@ -100,7 +104,8 @@ function MyApp({ Component, pageProps }) {
         // event.preventDefault()
         const sub = await registration.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: base64ToUint8Array(WEB_PUSH_PUBLIC_KEY)
+          applicationServerKey : WEB_PUSH_PUBLIC_KEY
+
         })
         // TODO: you should call your API to save subscription data on server in order to send web push notification from server
         setSubscription(sub)
@@ -111,7 +116,12 @@ function MyApp({ Component, pageProps }) {
       }
     
       const unsubscribeButtonOnClick = async event => {
-        event.preventDefault()
+        // event.preventDefault()
+        console.log(subscription);
+        if (subscription == null ){
+          console.log("sub not set");
+          return
+        }
         await subscription.unsubscribe()
         // TODO: you should call your API to delete or invalidate subscription data on server
         setSubscription(null)
@@ -138,17 +148,45 @@ function MyApp({ Component, pageProps }) {
       }
     }
 
+    const requestPermission = async (  ) => {
+
+      console.log('Requesting permission...');
+      try {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+          
+        }
+      })
+    }
+     catch{
+      console.log('Notification permission granted.');
+     }
+
+    }
+
+    const postregistrationtoken = async (email , regToken) =>{
+      var  urlForm = geturlFormdata("notification","subscribe" , {},{"email": email , "registrationToken":regToken})  
+     await  postdata(urlForm.url , "",urlForm.formdata ,{} )
+     .then((res) =>{
+        console.log(res);
+      }
+     ).catch(err=>{
+      console.log(err);
+     })
+    }
 
     useEffect (()=>{
       const app = initializeApp(firebaseConfig);
-
+     
       if (!loaded){
         
-         
+        
         if ("serviceWorker" in navigator) {
           window.addEventListener("load", function () {
             navigator.serviceWorker.register("/sw.js").then(
               function (registration) {
+                
                 console.log(
                   "Service Worker registration successful with scope: ",
                   registration.scope
@@ -161,24 +199,38 @@ function MyApp({ Component, pageProps }) {
           });
         }
 
-        if (typeof window !== 'undefined' && 'serviceWorker' in navigator ) {
-          // run only in browser
-          console.log("Asd");
-          navigator.serviceWorker.ready.then(reg => {
-            console.log("re++++++++++++" ,reg);
-            reg.pushManager.getSubscription().then(sub => {
-              if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
-                // console.log(sub.getKey());
-                console.log(sub);
-                setSubscription(sub)
-                setIsSubscribed(true)
+        // if (typeof window !== 'undefined' && 'serviceWorker' in navigator ) {
+        //   // run only in browser
+        //   console.log("Asd");
+          
 
-              }
-            }).catch(res =>{console.log("reason" , res);})
-            setRegistration(reg)
-          })
-        }
+        //   // if(Notification.permission != 'granted'){
+        //   //   setNotif(true);
+        //   // }
 
+        //   console.log("in reg");
+          
+        //   navigator.serviceWorker.ready.then(reg => {
+        //     console.log("re++++++++++++" ,reg);
+        //     reg.pushManager.getSubscription().then(sub => {
+        //       // console.log(sub);
+        //       if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+               
+        //         console.log(sub);
+        //         console.log( Buffer.from(sub.getKey('p256dh')).toString("base64") );
+        //         // console.log(sub.getKey('name'));
+        //         console.log( Buffer.from(sub.getKey('auth')).toString("base64") );
+                
+        //         setSubscription(sub)
+        //         setIsSubscribed(true)
+
+        //       }
+        //     }).catch(res =>{console.log("reason" , res);})
+        //     setRegistration(reg)
+        //   })
+
+        // }
+       
 
         const messaging = getMessaging(app);
         
@@ -187,6 +239,9 @@ function MyApp({ Component, pageProps }) {
             console.log(currentToken);
             // Send the token to your server and update the UI if necessary
             // ...
+            postregistrationtoken(getlocal("temp_id"), currentToken )
+
+
           } else {
             // Show permission request UI
             console.log('No registration token available. Request permission to generate one.');
@@ -196,13 +251,21 @@ function MyApp({ Component, pageProps }) {
           console.log('An error occurred while retrieving token. ', err);
           // ...
         });
+
+        // onMessage(messaging, (payload) => {
+        //   console.log('Message received. ', payload);
+        //   // alert("asdasd")
+        //   // ...
+        //   // window.Notification.show()
+        // });
+        
         
       
 
         setLoaded(true)  
          
       }
-     
+      
 
 
       refreshTokenSetup()
@@ -221,11 +284,14 @@ function MyApp({ Component, pageProps }) {
            <AddPhone />
            
         </Modal>
-        <Modal  show={true} style={{zIndex:34534534 , marginBlock:25+"vh"}}>
-         
+
+{/* 
+        <Modal  show={true} style={{zIndex:34534534 , marginBlock:25+"vh"}}>  
          <div className='btn' onClick={()=>{ subscribeButtonOnClick() }}>subscribe Notifications</div>
-         
-      </Modal>
+         <div className='btn' onClick={()=>{ unsubscribeButtonOnClick() }}>unsubscribe Notifications</div>
+      </Modal> */}
+
+
     </AuthContext.Provider>
     </SSRProvider>
 
