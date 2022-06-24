@@ -21,6 +21,7 @@ import { sortlist, sortmap } from '../../utils';
 import FilterTabbar from '../filtertabbar';
 import Wsocket from '../../Wsocket';
 import { getuserdata } from '../../utils/signinUtils';
+import { SearchResbut, SearchResbutitem } from '../../pages/searchpage';
 
 
 
@@ -106,8 +107,6 @@ const taskmap = new Map();
 export default function Latestitem(props){
 
 
-
-        showNotification()
        
 
 
@@ -419,10 +418,7 @@ export default function Latestitem(props){
             
              <div  name='search' style={{color:CLR_RCARD1,marginLeft:2+"vw",marginRight:2+"vw"}} ><FaSearch color={CLR_HEAD}  /></div>
 
-           <InputBase placeholder='Looking for ...' id='iteminput'  
-           style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 }}  
-          //  autoFocus 
-           onFocus={()=>{wsitem.connect() }} 
+             <InputBase placeholder='Looking for ...' id='iteminput'  style={{ borderBottomWidth:1 , borderBottomColor:CLR_RCARD1 , color:'black' ,  flex:1 ,fontSize:5+"vw" , fontWeight:"300"}}  autoFocus onFocus={()=>{wsitem.connect() }} 
            onChange={(e)=>{if (e.target.value.length >= 0) {wsitem.send(e.target.value);setItemfill(e.target.value) ; console.log(e.target.value);}}}
            onKeyPress={(e)=>{ console.log(e.key);  if (e.key=='Enter'){
             wsitem.close();
@@ -436,9 +432,11 @@ export default function Latestitem(props){
          
          }}}
            ></InputBase>
+
           {item.length > 0 ? <div className={classes.poplist} style={{ position:"absolute",  width:50+"vw" , borderRadius:2+"vw" , backgroundColor:"lightgrey" ,border:"1px solid lightgrey",  display:"flex", flexDirection:"column",overflow:"scroll"}}>
             {item.map((v)=> 
-            <SearchResbut value={v} 
+            
+            <SearchResbutitem value={v} 
             onClick={(e)=>{ storelocal( "category",e)  ;
              document.getElementById('iteminput').blur() ;
              taskmap.clear() 
@@ -455,7 +453,7 @@ export default function Latestitem(props){
              router.push(`/itemswindow?place=${getlocal("place")}&item=${getlocal('category')}`)
             }
             }
-             ></SearchResbut>)
+             ></SearchResbutitem>)
              }</div>:<></>}
        
            </div>
@@ -968,11 +966,3 @@ function makeformdata(filters){
 }
 
 
-function SearchResbut(props){
-
-  return(
-      
-      <div  onClick={()=>{ console.log(props.value); props.onClick(props.value); }} style={{ borderBottom:"1px solid lightgrey" , width:100+"%", backgroundColor:"white", padding:20}}>{props.value}</div> 
-          
-  );
-}

@@ -73,7 +73,7 @@ export default function Footer(props) {
 			
 			
 			<Aboutblocks />
-			<Locationblocks />
+			{/* <Locationblocks /> */}
 			<HSblocks />
 		</div>
 		<div className={classes.sweep}></div>
@@ -123,10 +123,10 @@ function HSblocks(props) {
 	  return (
 		  <div className={classes.infoblocks}>
 		  <div className={classes.contentHead}>Help and Support</div>
-		  <div  className={classes.contentSubHead} >Blogs</div>
-			 <div  className={classes.contentSubHead} >Security</div>
-			 <div   className={classes.contentSubHead} >Terms and Conditions</div>
-			 <div    className={classes.contentSubHead} >Privacy Policy</div>
+		  <div  className={classes.contentSubHead}  >Blogs</div>
+			 <div  className={classes.contentSubHead}  onClick={()=>{ window.open("https://blogs.smorentel.com") }} >Security</div>
+			 <div   className={classes.contentSubHead}  onClick={()=>{ window.open("/termsandconditions") }} >Terms and Conditions</div>
+			 <div    className={classes.contentSubHead}  onClick={()=>{ window.open("/privacypolicy") }}>Privacy Policy</div>
 	  </div>
   
 	  );
@@ -165,10 +165,10 @@ function Followblocks(props) {
 	   <div style={{ display:"flex",  flex:1 , flexDirection:"row" , paddingLeft:5+"vw",paddingTop:2+"vw", backgroundColor:CLR_HEAD }}>
 		   
 	   <div className={classes.contentHead} tyle={{ display:"flex", flex:1 , flexDirection:"row" ,  justifyContent:"center" , alignItems:"center"}} >Follow Us On:</div>
-	   <span><Facebook fontSize='large' htmlColor={CLR_RCARD2} style={{margin:1+"vw"}} />
-       <Instagram fontSize='large' htmlColor={CLR_RCARD2} style={{margin:1+"vw"}}/>
-       <Twitter fontSize='large' htmlColor={CLR_RCARD2} style={{margin:1+"vw"}}/>
-		<YouTube fontSize='large' htmlColor={CLR_RCARD2} style={{margin:1+"vw"}}/>
+	   <span><Facebook fontSize='large' htmlColor={CLR_RCARD2} onClick={() =>{ window.open("https://facebook.com/Smorentel-10362569063264")  }} style={{margin:1+"vw"}} />
+       <Instagram fontSize='large' htmlColor={CLR_RCARD2} onClick={() =>{ window.open("https://instagram.com/smorentel")  }} style={{margin:1+"vw"}}/>
+       <Twitter fontSize='large' htmlColor={CLR_RCARD2} onClick={() =>{ window.open("https://twitter.com/smorentel")  }} style={{margin:1+"vw"}}/> 
+		<YouTube fontSize='large' htmlColor={CLR_RCARD2} onClick={() =>{ window.open("https://www.youtube.com/channel/UCSMCHj8GqY-VbHzKw1MowRg")  }} style={{margin:1+"vw"}}/>
 		</span>
 	   
 		</div>

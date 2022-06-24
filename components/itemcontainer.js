@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     
     // height:window.outerHeight - window.outerWidth*.15,
     // marginTop:window.innerHeight*.15,
-    width:100+"vw",
+    // width:100+"vw",
     overflowY : "scroll" ,
     
     // flex:1,
@@ -408,7 +408,7 @@ return(
     <>
 		{isloaded?
  
-		<div >
+		< >
 		
     <Dialog
         open={ordered}
@@ -718,7 +718,7 @@ return(
         <Footer />
 
       	
-		</div>
+		</>
     :<></>}
 
     </>
@@ -962,16 +962,22 @@ const getXtime = (list) =>{
    
     
 
-    const filllatest =  tasklist.map( (item) => <Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
+    const filllatest =  tasklist.map( (item) =><Itemcard key={item.itemId} fav={(wishdata.includes(item.itemKey))} name={item.itemId} itemobj={item} description={item.description} place={item.place} price={item.price} scheduled_at={item.scheduled_at} maplink="https://www.google.com/maps?q=23,88" ></Itemcard> )
 
        
 return(
   <>
-          <div style={{display:"flex",justifyContent:"center",alignItems:"center", fontSizeAdjust:"3", fontSize:"7vw",paddingBlock:2+"vh"}}>More By Same Owner</div>
+
+<div style={{display:"flex"   ,justifyContent:"center",alignItems:"center",  fontSizeAdjust:"3", fontSize:"7vw",paddingBlock:2+"vh"}}>More By Same Owner</div>
            { tasklist.length > 0 ?
-             <>{ !props.percustomer ? <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} {xtime == 0 && <></> }</div>
-             :  <div ref={listInnerRef} className={classes.itemsbucket} id="itemswin" onScroll={() => {}} >  {filllatest} </div>  }</> :<div style={{position:"fixed",bottom:0}}></div>} 
+             <div ref={listInnerRef} style={{display:"flex" ,  width:100+"vw", overflow:"scroll"}}  id="itemswin"  >{filllatest} </div> :<></>}
+
     
+          {/* <div style={{display:"flex"  ,justifyContent:"center",alignItems:"center",  fontSizeAdjust:"3", fontSize:"7vw",paddingBlock:2+"vh"}}>More By Same Owner</div>
+           { tasklist.length > 0 ?
+             <>{ !props.percustomer ? <div ref={listInnerRef} style={{display:"flex" ,flexDirection:"row", overflow:"scroll"}}  id="itemswin" onScroll={() => {}} >  {filllatest} </div>
+             :  <div ref={listInnerRef} style={{width:"100vw",display:"flex", overflow:"scroll"}} id="itemswin" onScroll={() => {}} >  {filllatest} </div>  }</> :<div style={{position:"fixed",bottom:0}}></div>} 
+     */}
            </>
 );
 

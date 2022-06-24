@@ -136,8 +136,8 @@ const heightimage = () =>{
 	return(
 		
             <div >
-                {/*<div name="name">{props.name}</div>*/}
-           <div style={{zIndex:0 , padding:10+"px"}}>
+           
+           <div style={{zIndex:0 , padding:10+"px" ,width:widthtimage() }}>
               
                 <Image 
               className={classes.imagethumb}
@@ -159,7 +159,7 @@ const heightimage = () =>{
         onClick={() => { pushitem(props.itemobj);console.log(props.itemobj)
            ;
           //  router.push(`/itempage?itemkey=${props.itemobj.itemKey}` ,`/itempage?itemkey=${props.itemobj.itemKey}` , {shallow:true})
-           router.push(`/itempage/${props.itemobj.itemKey}`)
+          router.push(`/itempage/${props.itemobj.itemKey}`)
           console.log(router.pathname);
            if (router.pathname  == '/itempage/[itemkey]'){
             router.reload()
@@ -175,7 +175,7 @@ const heightimage = () =>{
         <div style={{ paddingInline:3+"vw", paddingBottom:3+"vw" }}>
         
         { !props.hidefavbutton &&
-          <div style={{display:"flex",flex:1,justifyContent:"flex-end"}}>
+          <div style={{display:"flex",justifyContent:"flex-end"}}>
           {
             !save?<FaRegHeart size={20} color='grey' onClick={()=>{
               
@@ -191,12 +191,12 @@ const heightimage = () =>{
           </div>
         }
 
-        <span style={{ flex:1 , fontWeight:"500"}}>{props.itemobj.title.split('|||')[0]}</span>
-        <div name="price"style={{flex:1,flexDirection:"row",display:"flex"}}>
-          <span><span style={{ flex:1 }}></span><span style={{ flex:1,fontWeight:"bold",color:"blue" }}>{props.itemobj.deno} {props.price}/day</span></span>
+        <span style={{ fontWeight:"500"}}>{props.itemobj.title.split('|||')[0]}</span>
+        <div name="price"style={{flexDirection:"row",display:"flex"}}>
+          <span><span style={{  }}></span><span style={{ fontWeight:"bold",color:"blue" }}>{props.itemobj.deno} {props.price}/day</span></span>
           
-          <span style={{flex:1,flexDirection:"row-reverse",flexDirection:"row",display:"flex"}}>
-          <span style={{flex:1,display:"flex"}}></span>
+          <span style={{flexDirection:"row-reverse",flexDirection:"row",display:"flex"}}>
+          <span style={{display:"flex"}}></span>
          
          
           </span>
@@ -208,9 +208,9 @@ const heightimage = () =>{
                 
                 </div>
                
-                
+                </div>
              
-            </div>
+               
 
         
 	);

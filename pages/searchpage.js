@@ -219,7 +219,7 @@ const SearchContainer = (props) => {
           <div style={{  alignItems:"center", backgroundColor:"white",width:70+"vw",borderRadius:15+"vw" ,height:100+"%"}}>
             {
               !placesearch ?
-               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:100+"%" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center",paddingLeft:4+"vw",paddingRight:4+"vw"}}><span style={{ overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color:"black" ,  }}>{placefill}</span></div> 
+               <div onClick={()=>{wsplace.connect() ; setPlacesearch(true) }} style={{flex:1, height:100+"%" , justifyContent:"center", alignItems:"center",display:"flex",  alignContent:"center",paddingLeft:4+"vw",paddingRight:4+"vw"}}><span style={{ overflow: "hidden", textOverflow:"ellipsis",whiteSpace: "nowrap",color:"black" , fontWeight:"500"  }}>{(placefill != null ? placefill : "set Location" )}</span></div> 
               :<div style={{  display:"flex",alignItems:"center",height:"100%"}}>
                 <InputBase placeholder='Place' style={{ fontSize:20,height:100+"%" , color:'black' , paddingLeft:10+"vw"}}
                   autoFocus
@@ -244,7 +244,7 @@ const SearchContainer = (props) => {
           </div>
          
          { !placesearch && <div size={25} name='filter' style={{height:8+"vw" ,width:8+"vw" ,marginLeft:4+"vw" ,color:CLR_RCARD1}} onClick={()=>{setFilteropen(true);}}>
-         
+           
          </div> }
 
       </div>
@@ -297,7 +297,7 @@ const SearchContainer = (props) => {
 }
 
 
-function SearchResbut(props){
+export function SearchResbut(props){
 
   return(
       
@@ -307,7 +307,7 @@ function SearchResbut(props){
   );
 }
 
-function SearchResbutitem(props){
+export function SearchResbutitem(props){
 
     return(
         
@@ -318,7 +318,7 @@ function SearchResbutitem(props){
 }
 
 
-function searchtoAPI ( str ) {
+export function  searchtoAPI ( str ) {
     
     var k = str.split(" in ")
     var l = k.length

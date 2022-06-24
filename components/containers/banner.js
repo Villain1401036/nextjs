@@ -2,7 +2,7 @@ import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2, CLR_RCARD3 } from '../../themes';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import { Button, Carousel, CarouselItem, Stack } from 'react-bootstrap';
 import { Chip } from '@material-ui/core';
 import { ArrowDownward, ArrowDropDown, ArrowDropDownCircle, ArrowForward, Search } from '@material-ui/icons';
@@ -186,7 +186,7 @@ export default function BannerComponent(props) {
 
 
                  <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}>Put things to work , Make money from by sharing </div>
-                 <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}><span className='btn' style={{color:"white" , fontWeight:"bold" , fontSize:"7vw" ,margin:"2vw" , border:"1px solid "+CLR_RCARD2 , borderRadius: 5+"vw"}} >Start Earning</span></div>
+                 <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}><span className='btn' style={{color:"white" , fontWeight:"bold" , fontSize:"7vw" ,margin:"2vw" , border:"1px solid "+CLR_RCARD2 , borderRadius: 5+"vw"}} onClick={()=> router.push({path:'/settings',params:{selected:""}}) } >Start Earning</span></div>
 			 
                  <div style={{height:"5vh"}}></div>
                  <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}>Start renting to save more money</div>
@@ -241,7 +241,10 @@ function SeeCat(props){
 
      const listcats = getallCategories()
     //  const categories = listcats.map((item) => <Chip key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, padding:2+"vw", margin:.5+"vw" , borderColor:CLR_RCARD2}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} /> )
-    const categories = listcats.map((item) => <div key={item} label={item}  variant="outlined" style={{color:CLR_RCARD2, borderRadius:5+"vw" ,padding:2+"vw", margin:2+"vw" , minHeight:40+"vw" , width:40+"vw" , border:"1px solid"+CLR_RCARD2 , textAlign:"center"}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} >{item}</div> )
+    const categories = listcats.map((item) => <div key={item} label={item}  variant="outlined" style={{color:"white", borderRadius:5+"vw" ,padding:2+"vw", margin:2+"vw" , minHeight:40+"vw" , width:40+"vw" ,flexDirection:"row" ,overflow:"hidden" ,border:"1px solid"+CLR_RCARD2 , textAlign:"center"}}  onClick={()=>{   storelocal( "category",item)  ; router.push("/itemswindow?items="+item) }} >
+      <img  src="/images/SMOR-512.png" style={{flex:1 , display:"flex" , width:100+"%", opacity:.1, objectFit:"fill" }}></img>
+       <div>{item}</div>
+      </div> )
      
     return (
           

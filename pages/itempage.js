@@ -96,7 +96,7 @@ const authContext = useContext(AuthContext);
 	</Head>
 
 	
-	<NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/orders')}} children={<MdOutlineBackpack size={25} /> }  />
+	{/* <NameHead label="Item" onClick={()=>router.back()} onHomeClick={()=>{router.push('/orders')}} children={<MdOutlineBackpack size={25} /> }  /> */}
 	<Headerbar />
 	<div >
 	<Itemcontainer />

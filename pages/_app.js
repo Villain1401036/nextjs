@@ -181,12 +181,13 @@ function MyApp({ Component, pageProps }) {
      
       if (!loaded){
         
-        
+        var reg = null
         if ("serviceWorker" in navigator) {
           window.addEventListener("load", function () {
             navigator.serviceWorker.register("/sw.js").then(
               function (registration) {
-                
+                  reg = registration
+                  setRegistration(registration)
                 console.log(
                   "Service Worker registration successful with scope: ",
                   registration.scope
@@ -239,7 +240,15 @@ function MyApp({ Component, pageProps }) {
             console.log(currentToken);
             // Send the token to your server and update the UI if necessary
             // ...
-            postregistrationtoken(getlocal("temp_id"), currentToken )
+           var regtoken =  getlocal("regtoken")
+           console.log(regtoken);
+           if ( regtoken == null || regtoken != currentToken  ){
+            postregistrationtoken(getlocal("temp_id"), currentToken ).then(
+              ()=>{
+                storelocal("regtoken", currentToken )
+              }
+            )
+           }
 
 
           } else {
@@ -251,30 +260,35 @@ function MyApp({ Component, pageProps }) {
           console.log('An error occurred while retrieving token. ', err);
           // ...
         });
-
-        // onMessage(messaging, (payload) => {
-        //   console.log('Message received. ', payload);
-        //   // alert("asdasd")
-        //   // ...
-        //   // window.Notification.show()
-        // });
         
+        onMessage(messaging, (payload) => {
+          console.log('[firebase-messaging-sw.js] Received background message ', payload);
+          // Customize notification here
+          const Title =  payload.data.title
+          const Options = {
+            body: payload.data.body,
+            icon: '/images/SMOR-192.png'
+          };
+           if(reg != null ){
+            reg.showNotification(Title,Options);
+           }
+        }
         
+        );
       
-
         setLoaded(true)  
          
       }
       
-
-
       refreshTokenSetup()
+
    });
 
  
   return (
 
     <SSRProvider>
+      
       <AuthContext.Provider value={{isLoggedIn:loggedIn , firebase:app , premium:premium  , login:login , logout:logout , accounttype: acctype , modelopen:modelopen, setModel:setModel  ,changeaccount:changeaccount, checkType:checkType }} >
       
         <Component {...pageProps} />

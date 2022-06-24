@@ -124,8 +124,9 @@ if (isloaded){
 			<Head>
 				<title>Spook</title>
 				<link rel="icon" href="/favicon.ico" />
+				
 			</Head>
-
+			
 			<ButtonAppBar itemName={Shopname}/>
 		     
 			
@@ -145,7 +146,7 @@ if (isloaded){
 
 			
 				 <div className={classes.searchbut}>
-			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white",borderRadius:"5vw", display:"flex" , alignItems:"center" }}  onClick={()=>router.push("/searchpage")}>
+			  <div style={{width:85+"vw",height:75+"%",backgroundColor:"white" ,border:"1px solid black" , borderRadius:"5vw", display:"flex" , alignItems:"center" }}  onClick={()=>router.push("/searchpage")}>
 			 <FaSearch color={CLR_HEAD} overlineThickness={1}  style={{height:70+"%",width:15+"%"}} />
 				 </div> 
 				
@@ -153,7 +154,7 @@ if (isloaded){
 			 </div>
 			 <img src={'/freebessimagelight.png'} style={{ width:100+"%" ,objectFit:"cover"}} />
 
-			 <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}>Or<span className='btn' style={{color:"white" , fontWeight:"bold" , fontSize:"5vw" ,margin:"2vw" , border:"1px solid "+CLR_RCARD2}}>Post Item</span></div>
+			 <div style={{backgroundColor:CLR_HEAD , color:"white" , display:"flex", justifyContent:"center" , alignItems:"center" }}>Or<span className='btn' style={{color:"white" , fontWeight:"bold" , fontSize:"5vw" ,margin:"2vw" , border:"1px solid white"}} onClick={()=>{router.push("/newItem") }}>Post Item</span></div>
 			 
 			 <BannerComponent />
 			 

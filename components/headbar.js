@@ -51,7 +51,7 @@ logo:{
     elevation: 0,
     width:100+"vw" ,
     height: 30+"vw",
-    borderBottom:"1px solid "+CLR_RCARD3,
+    borderBottom:"1px solid white",
     backgroundColor: CLR_HEAD,
 		// height:10+"vw",
     boxShadow: "0px 0px",

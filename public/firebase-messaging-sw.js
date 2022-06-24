@@ -47,10 +47,11 @@ messaging.onBackgroundMessage( (payload) => {
     self.registration.showNotification(Title,Options);
 }
 
-)
+);
 
-;
 
+
+  
 self.addEventListener('notificationclick', function (event) {
     event.notification.close()
     event.waitUntil(

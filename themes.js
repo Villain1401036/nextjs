@@ -3,11 +3,11 @@
 
 
 
-// export const CLR_HEAD = '#0b0c10' ;  
+// export const CLR_HEAD = '#ffffff' ;  
 
-// export const CLR_RCARD1 = '#ffffff';
+// export const CLR_RCARD1 = 'orange';
 
-// export const CLR_RCARD2 = '#ffffff';
+// export const CLR_RCARD2 = 'orange';
 
 // export const CLR_RCARD3 = '#ffffff';
 
