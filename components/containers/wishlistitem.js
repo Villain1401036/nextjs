@@ -15,6 +15,7 @@ import { CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../../themes';
 import router from 'next/router';
 import Footer from '../footer';
 import { MdClear } from 'react-icons/md';
+import { NameHead } from '../headbar';
 
 const useStyles = makeStyles((theme) => ({
   appbar:{ display:"flex" ,flexDirection:"row", position:"sticky",top:0 , height:window.innerWidth*.15 , backgroundColor:"white", alignItems:"center",
@@ -330,20 +331,9 @@ export default function WishlistItem(props){
 		<div style={{backgroundColor:'white' ,  justifyContent:"center"  }} onScroll={ ()=>{console.log("top elem"); }}   >
                 
              
-              <div className={classes.appbar}>
-              
-              <FaArrowLeft color={CLR_HEAD}   style={{  height:50+"%" ,width:10+"%"}} onClick={()=>{router.back()}}/>
-               
-              {/* <span><span style={{fontWeight:"bold"}}>{getlocal("category")}</span> in <span style={{fontWeight:"bold"}} >{getlocal("place")}</span></span>  */}
-              <span style={{fontWeight:"bold"}}>wishlist</span>
-              <div style={{ height:100+"%" , width:100+"%", display:"flex" ,flexDirection:"row-reverse" ,flex:1 , alignItems:"center"}}>
-              
-                <FaFilter color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>setFilteropen(true)}/>
-               
-                  <FaSearch color={CLR_HEAD}  style={{  height:50+"%" ,width:50+"%"}} onClick={()=>{router.push('/searchpage')}}/> 
-                 </div>
-               
-               </div>
+             
+
+               <NameHead label={"Wishlist"} onClick={() => {router.back()}} onHomeClick={()=>{router.push('/home')}}/>
                {/* <Button onClick={()=>{ gobottom()}} >bottom</Button> */}
              { tasklist.length > 0 ?
                  <div ref={listInnerRef} className={classes.itemsbucket}  id="itemswin" onScroll={() => {onScroll()}} >  {filllatest} {xtime == 0 && <></> }</div> :<div style={{position:"fixed",bottom:0}}></div>}

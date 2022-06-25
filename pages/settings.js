@@ -1,16 +1,20 @@
 
-import { Button, Input, InputBase, makeStyles, } from '@material-ui/core';
+import { Avatar, Button, Input, InputBase, makeStyles, } from '@material-ui/core';
 import { Business } from '@material-ui/icons';
-import router from 'next/router';
-import React, { useEffect } from 'react'
+import router, { useRouter } from 'next/router';
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FaArrowLeft, FaEdit } from 'react-icons/fa';
-import { storelocal } from '../localstore';
+import { getobjlocal, storelocal } from '../localstore';
 import { CLR_FBAR, CLR_HEAD, CLR_RCARD1, CLR_RCARD2 } from '../themes';
 
-
-
+import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+import MenuIcon from '@material-ui/icons/Menu'; 
+import { AuthContext } from '../context';
+import { Drawercomponent } from '../components/headbar';
+import { convertToJson, onRefresh } from '../constants';
 
 const useStyles = makeStyles((theme) => ({    
     root: {
@@ -113,8 +117,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SettingsPage(props){
 
+
   const classes = useStyles();
-  const [isloaded,setIsLoaded] = React.useState(true);
+
+  const [drawerState,setDrawerState] = React.useState(false);
+   
+   const authContext = useContext(AuthContext);
+
+
+   console.log(authContext);
+  const toogleDstate = () => {
+      setDrawerState(!drawerState); 
+	}
+
+  useEffect(()=>{
+    onRefresh(authContext);
+    authContext.checkType()
+  })
+
+
+  
+
+  // const [isloaded,setIsLoaded] = React.useState(true);
 
    const [selected , setSelected] = React.useState("");
 	return(
@@ -126,7 +150,7 @@ export default function SettingsPage(props){
          
         <div style={{padding:2+"vw"}} >
         
-        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", zIndex:"10000"  }}>
+        <div style={{display:"flex",flex:1,flexDirection:"row",alignItems:"center",alignItems:"center", position:"sticky",top:0+"vw" , backgroundColor:"white",borderBottomWidth:1 , borderBottomStyle:"solid", borderColor:"lightgrey", zIndex:"2000"  }}>
         {selected != ""  && <span onClick={()=> setSelected("") }><FaArrowLeft />back</span>}
         {selected == ""  && <span onClick={()=> router.back() }><FaArrowLeft /></span>}
         <div style={{color:CLR_RCARD2 ,color:CLR_HEAD,backgroundColor:"white",padding:2+"vw",flex:1,display:"flex" , fontSize:25}}>Settings</div>
@@ -135,6 +159,16 @@ export default function SettingsPage(props){
          <span style={{fontSize:20 }}>{selected}</span>
         </div>
          }
+   
+  
+          <IconButton edge="start"  color="inherit" aria-label="menu"  onClick={()=>toogleDstate()} >
+    { authContext.isLoggedIn ? <Avatar src={convertToJson(getobjlocal("userdata")[0]["metadata"])["photoURL"]} style={{ width: 30, height: 30 }} /> : <MenuIcon /> }
+    <Drawer anchor={"right"} open={drawerState} style={{zIndex:2100}}  onClose={()=>console.log("closed")} variant='temporary'>
+   <Drawercomponent />
+   
+        </Drawer>
+        </IconButton>
+
         </div>
        {selected == "" &&
         <>

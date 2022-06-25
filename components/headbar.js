@@ -65,7 +65,7 @@ logo:{
 	},
 
    namebar:{
-     zIndex:2000,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 ,
+     zIndex:1000,display:"flex",height:"13vw", alignItems:"center" , borderBottomWidth:1 ,
       borderBottomStyle:"solid", borderColor:"lightgrey", position:"sticky",top:0,backgroundColor:"white" 
    ,'@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
     height: 5+"vw"
@@ -77,6 +77,9 @@ logo:{
   
   },
   labelname:{
+    display:"flex",
+    flex:1,
+    marginLeft:10,
     fontSize: 7+"vw",
     '@media (min-width:845px)': { // eslint-disable-line no-useless-computed-key
       fontSize: 3+"vw"
@@ -157,7 +160,7 @@ logo:{
   drawerroot :{
     backgroundColor:CLR_HEAD,
     width:60+"vw",  
-
+    zIndex:2000,
     flex:1 , 
     display:"flex",
     flexDirection:"column",
@@ -183,7 +186,7 @@ logo:{
     
   },
   drawButtinner:{
-    fontSize: 150+"%"
+    fontSize: 140+"%"
   },
   type:{
     fontSize:40+"px",
@@ -321,7 +324,7 @@ return (
 
 
 
-function Drawercomponent(props){
+export function Drawercomponent(props){
 
   const classes = useStyles();
   const router = useRouter();
@@ -338,8 +341,8 @@ if (authContext.accounttype == true){
 
   return (
     <div className={classes.drawerroot}>
-   <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}>
-   <img style={{width:100+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
+   <div style={{ display:"flex"  , width:15+"%",margin:"auto",color:CLR_RCARD2}}  >
+   <img style={{width:100+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"} />
       <span style={{ marginTop:8+"vw"}}>MOR</span>
    </div>
       
@@ -399,7 +402,7 @@ if (authContext.accounttype == true){
 else{
   return (
     <div className={classes.drawerroot} >
-   <div style={{ display:"flex"  ,marginBlock:"5vh",justifyContent:"center", color:CLR_RCARD2}}>
+   <div style={{ display:"flex"  ,marginBlock:"5vh",justifyContent:"center", color:CLR_RCARD2}}  onClick={()=>{console.log("go home"); router.push('/home')}} >
    <img style={{width:50+"%", marginTop:5+"vw"}} src={"/SMOR-192.png"}/>
       <div style={{ marginTop:8+"vw",textAlign:"bottom"}}>MOR</div>
    </div>
@@ -424,7 +427,7 @@ else{
     </div>
 
 { authContext.isLoggedIn && <>
-<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div>
+{/* <div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div> */}
 <>
 
 <div className={classes.drawButt}>
@@ -446,7 +449,7 @@ else{
 </>
 
 
-<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div>
+{/* <div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div> */}
 
     
     <div className={classes.drawButt}>
@@ -456,6 +459,9 @@ else{
     <div className={classes.drawButt}>
     <div className={classes.drawButtinner} onClick={()=>{router.push("/newItem")}}>{"Post Item"}</div>
     </div>
+
+<div className={classes.drawButt} style={{backgroundColor:CLR_HEAD}}></div>
+
  { authContext.isLoggedIn && 
     <div className={classes.drawButt}>
     <span className={classes.drawButtinner}  onClick={()=>{ localStorage.removeItem("access_token"); localStorage.removeItem("refresh_token"); localStorage.removeItem("userdata");authContext.logout() }} >{"logout"}</span>
@@ -635,14 +641,31 @@ style={{width:80+"vw"}}
 export const NameHead = (props) =>{
   
   const classes = useStyles();
+
+  const [drawerState,setDrawerState] = React.useState(false);
+  const router = useRouter()
+   const authContext = useContext(AuthContext);
+  const toogleDstate = () => {
+      setDrawerState(!drawerState); 
+	}
+
   return(
     <div className={classes.namebar}  >
-    <FaArrowLeft  style={{height:"80%",width:10+"%"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
+    <FaArrowLeft  style={{height:"50%",width:10+"%"}} color={CLR_HEAD} onClick={()=>props.onClick()} />
     <div className={classes.labelname}>{props.label}</div>
     <div style={{flex:1,display:"flex",height:"100%", alignItems:"center" , flexDirection:"row-reverse", position:"sticky",top:0,backgroundColor:"white" }} >
-    <div size={7+"vw"} style={{margin:3+"vw"}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} >
-       {props.children}  
+   
+    <IconButton edge="start"  color="inherit" aria-label="menu"  onClick={()=>toogleDstate()} >
+    { authContext.isLoggedIn ? <Avatar src={convertToJson(getobjlocal("userdata")[0]["metadata"])["photoURL"]} style={{ width: 30, height: 30 }} /> : <MenuIcon /> }
+    <Drawer anchor={"right"} open={drawerState} style={{zIndex:2100}}  onClose={()=>console.log("closed")} variant='temporary'>
+   <Drawercomponent />
+        </Drawer>
+        </IconButton>
+
+    <div style={{  marginRight:10}} color={CLR_HEAD} onClick={()=>{props.onHomeClick()}} >
+    {/* <FaHome   style={{height:"100%",width:100+"%"}} color={CLR_HEAD} onClick={()=>props.onClick()} /> */}
      </div>
+     
      </div>
     
 </div>
